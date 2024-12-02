@@ -1,4 +1,4 @@
-package java_mastermind.src.main.java.org.rws.mastermind.utils;
+package org.rws.mastermind.utils;
 
 public class Scorer {
     public static int[] score(String guess, String code) {

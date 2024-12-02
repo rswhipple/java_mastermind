@@ -1,4 +1,4 @@
-package java_mastermind.src.main.java.org.rws.mastermind.utils;
+package org.rws.mastermind.utils;
 
 public class Validator {
     private static int codeLength;

@@ -1,7 +1,7 @@
 package org.rws.mastermind.interfaces;
 
-import org.rws.mastermind.models.GameSession;
-import org.rws.mastermind.models.Turn;
+import org.rws.mastermind.models.GameSession; // Ensure this class exists in the specified package
+import org.rws.mastermind.models.TurnResult;
 
 import java.util.List;
 
@@ -24,5 +24,5 @@ public interface GameService {
      * @param guess The Turn object representing the player's guess.
      * @return A string representing the result of the guess.
      */
-    String processGuess(String sessionId, Turn guess);
+    String processGuess(String sessionId, TurnResult guess);
 }
