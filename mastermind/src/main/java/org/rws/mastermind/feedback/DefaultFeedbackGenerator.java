@@ -2,6 +2,7 @@ package org.rws.mastermind.feedback;
 
 import org.rws.mastermind.interfaces.FeedbackGenerator;
 import org.rws.mastermind.interfaces.GameSettingsProvider;
+import org.rws.mastermind.models.Code;
 import org.rws.mastermind.utils.Validator;
 import org.rws.mastermind.utils.Scorer;
 
@@ -17,7 +18,8 @@ public class DefaultFeedbackGenerator implements FeedbackGenerator {
     }
 
     @Override
-    public String generateFeedback(String secretCode, String guess) {
+    public String generateFeedback(Code code, String guess) {
+        String secretCode = code.toString();
         if (!Validator.isValidGuess(guess)) {
             return "Invalid guess. Please try again.";
         }
