@@ -71,6 +71,10 @@ public class MastermindGameEngine implements GameEngine {
     public void startGameSession() {
         // Generate secretCode and create Validator
         secretCode = codeGen.generateCode();
+
+        // Debug mode
+        showCode();
+
         validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
     
         // Game loop
@@ -87,7 +91,7 @@ public class MastermindGameEngine implements GameEngine {
         for (String message : settings.getOuttro()) {
             input.displayMessage(message);
         }
-        if (input.getInput() == "yes") {
+        if (input.getInput() == "yes\n") {
             resetSession();
             startGameSession();
         } else {
@@ -142,5 +146,9 @@ public class MastermindGameEngine implements GameEngine {
         for (String message : settings.getGameInstructions()) {
             input.displayMessage(message);
         }
+    }
+
+    public void showCode() {
+        input.displayMessage(secretCode.toString());
     }
 }

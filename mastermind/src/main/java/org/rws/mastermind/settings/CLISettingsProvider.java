@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class CLISettingsProvider extends DefaultSettingsProvider {
     private final Scanner scanner = new Scanner(System.in);
-    private final boolean optionsFlag = false;
+    private final boolean optionsFlag = true;
 
     /**
      * Gets the options flag.
@@ -33,6 +33,7 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
                 "2. Select number of rounds",
                 "3. Select length of code",
                 "4. Select feedback type",
+                "5. Open-hand mode"
         };
     }
 
