@@ -15,7 +15,7 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
      */
     @Override
     public int getNumberOfPlayers() {
-        return 2; // Default: 2 players
+        return 1; // Default: 1 players
     }
 
     /**
