@@ -9,7 +9,7 @@ public class Validator {
         Validator.validCharacters = validCharacters;
     }
 
-    public static boolean isValidGuess(String guess) {
+    public boolean isValidGuess(String guess) {
         if (guess.length() != codeLength) {
             return false;
         }

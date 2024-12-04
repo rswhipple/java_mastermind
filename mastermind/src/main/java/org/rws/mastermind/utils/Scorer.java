@@ -12,4 +12,12 @@ public class Scorer {
         }
         return result;
     }
+
+    public static int[] detailedScore(String guess, String code) {
+        int[] result = new int[4];
+
+        // add logic here
+        
+        return result;
+    }
 }
