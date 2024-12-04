@@ -22,7 +22,7 @@ public class DefaultCodeGenerator implements CodeGenerator {
      */
     public DefaultCodeGenerator(GameSettingsProvider settingsProvider) {
         this.codeLength = settingsProvider.getCodeLength();
-        this.validCharacters = settingsProvider.getCodeOptions();
+        this.validCharacters = settingsProvider.getCodeCharsString();
         this.random = new Random();
     }
 
