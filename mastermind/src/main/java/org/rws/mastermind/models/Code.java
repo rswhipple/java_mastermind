@@ -5,17 +5,29 @@ import java.util.Arrays;
 
 public class Code {
     private final char[] code;
+    private final int length;
+    private final String validCharacters;
 
-    public Code(String code) {
+    public Code(String code, String validCharacters) {
         this.code = code.toCharArray();
+        this.length = code.length();
+        this.validCharacters = validCharacters;
     }
 
     public char[] getCode() {
         return code;
     }
 
-    public boolean matches(Code other) {
-        return Arrays.equals(this.code, other.getCode());
+    public int getLength() {
+        return length;
+    }
+
+    public String getValidCharacters() {
+        return validCharacters;
+    }
+
+    public boolean matches(String guess) {
+        return Arrays.equals(code, guess.toCharArray());
     }
 
     @Override
