@@ -101,6 +101,7 @@ public class MastermindGameEngine implements GameEngine {
 
         if (secretCode.matches(guess)) {
             input.displayMessage("Congratulations! You've cracked the code!");
+            session.setGameWon(true);
             gameOver = true;
             return;
         }
