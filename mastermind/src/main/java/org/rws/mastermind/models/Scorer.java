@@ -1,4 +1,4 @@
-package org.rws.mastermind.utils;
+package org.rws.mastermind.models;
 
 /**
  * The Scorer class provides methods to score guesses in the Mastermind game.

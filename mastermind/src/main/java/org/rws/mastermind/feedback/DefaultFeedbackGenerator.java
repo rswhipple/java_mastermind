@@ -3,7 +3,7 @@ package org.rws.mastermind.feedback;
 import org.rws.mastermind.interfaces.FeedbackGenerator;
 import org.rws.mastermind.interfaces.GameSettingsProvider;
 import org.rws.mastermind.models.Code;
-import org.rws.mastermind.utils.Scorer;
+import org.rws.mastermind.models.Scorer;
 
 /**
  * The DefaultFeedbackGenerator class implements the FeedbackGenerator interface

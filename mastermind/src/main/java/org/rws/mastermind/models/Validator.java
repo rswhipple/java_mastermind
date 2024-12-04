@@ -1,4 +1,4 @@
-package org.rws.mastermind.utils;
+package org.rws.mastermind.models;
 
 /**
  * The Validator class provides methods to validate guesses in the Mastermind game.

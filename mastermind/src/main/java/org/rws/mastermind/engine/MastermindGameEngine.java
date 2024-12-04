@@ -8,8 +8,7 @@ import org.rws.mastermind.interfaces.CodeGenerator;
 import org.rws.mastermind.models.Code;
 import org.rws.mastermind.models.GameSession;
 import org.rws.mastermind.models.Player;
-import org.rws.mastermind.utils.Validator;
-
+import org.rws.mastermind.models.Validator;
 
 import java.util.List;
 import java.util.ArrayList;
