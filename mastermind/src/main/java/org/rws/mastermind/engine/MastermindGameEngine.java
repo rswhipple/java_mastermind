@@ -5,8 +5,8 @@ import org.rws.mastermind.interfaces.GameEngine;
 import org.rws.mastermind.interfaces.InputHandler;
 import org.rws.mastermind.interfaces.FeedbackGenerator;
 import org.rws.mastermind.interfaces.CodeGenerator;
-import org.rws.mastermind.models.Code;
 import org.rws.mastermind.models.GameSession;
+import org.rws.mastermind.models.Code;
 import org.rws.mastermind.models.Player;
 import org.rws.mastermind.models.Validator;
 
@@ -41,40 +41,38 @@ public class MastermindGameEngine implements GameEngine {
         this.validator = null;
     }
 
-    public void resetSession() {
-
-    }
-
-    public Player createPlayer() {
-        input.displayMessage("Welcome to Mastermind! What's your name?");
-        Player player = new Player(input.getInput());
-
-        return player;
-    }
-
-    public List<Player> compilePlayersList() {
-        List<Player> players = new ArrayList<>();
-        int numPlayers = settings.getNumberOfPlayers();
-        for (int i = 0; i < numPlayers; i++) {
-            players.add(createPlayer());
+    @Override
+    public GameSession createGameSession() {
+        // If options flag is set, display code options
+        if (settings.getOptionsFlag()) {
+            input.displayMessage("Options Menu:");
+            for (String message : settings.getOptionsMenu()) {
+                input.displayMessage(message);
+            }
         }
 
-        return players;
+        // Compile Player Names
+        List<Player> players = compilePlayersList();
+
+        // Create the session
+        String sessionID = UUID.randomUUID().toString();
+        session = new GameSession(settings, sessionID, players);
+
+        return session;
     }
 
     @Override
-    public GameSession startGameSession() {
-        // Get Player Names
-        List<Player> players = compilePlayersList();
+    public void resetSession() {
+        String sessionID = UUID.randomUUID().toString();
+        session = new GameSession(settings, sessionID, session.getPlayers());
+    }
 
+    @Override
+    public void startGameSession() {
         // Generate secretCode and create Validator
         secretCode = codeGen.generateCode();
-        validator = new Validator(settings.getCodeLength(), settings.getCodeOptions());
+        validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
     
-        // Start the game
-        String sessionID = UUID.randomUUID().toString();
-        session = new GameSession(settings, sessionID, players);
-       
         // Game loop
         while (!gameOver) {
             input.displayMessage("Make a guess: ");
@@ -85,9 +83,18 @@ public class MastermindGameEngine implements GameEngine {
             }
         }
 
-        return session;
-    }
+        // Display outtro message
+        for (String message : settings.getOuttro()) {
+            input.displayMessage(message);
+        }
+        if (input.getInput() == "yes") {
+            resetSession();
+            startGameSession();
+        } else {
+            input.displayMessage("Goodbye!");
+        }
 
+    }
 
     @Override
     public void processGuess(String guess) {
@@ -107,5 +114,33 @@ public class MastermindGameEngine implements GameEngine {
 
         String result = feedback.generateFeedback(secretCode, guess);
         input.displayMessage("Feedback: " + result);
+    }
+
+    public Player createPlayer() {
+        input.displayMessage("Welcome to Mastermind! What's your name?");
+        Player player = new Player(input.getInput());
+
+        return player;
+    }
+
+    public List<Player> compilePlayersList() {
+        List<Player> players = new ArrayList<>();
+        int numPlayers = settings.getNumberOfPlayers();
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(createPlayer());
+        }
+
+        return players;
+    }
+
+    public void welcomeMessage() {
+        // Display welcome message and game instructions
+        for (String message : settings.getIntro()) {
+            input.displayMessage(message);
+        }
+        
+        for (String message : settings.getGameInstructions()) {
+            input.displayMessage(message);
+        }
     }
 }
