@@ -8,7 +8,6 @@ import org.rws.mastermind.codegen.DefaultCodeGenerator;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         DefaultSettingsProvider settingsProvider = new DefaultSettingsProvider();
         CLIInputHandler inputHandler = new CLIInputHandler();
         DefaultFeedbackGenerator feedbackGenerator = new DefaultFeedbackGenerator(settingsProvider);
