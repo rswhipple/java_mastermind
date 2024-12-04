@@ -7,6 +7,22 @@ package org.rws.mastermind.interfaces;
 public interface GameSettingsProvider {
 
     /**
+     * Gets the options flag.
+     * The options flag is used to determine whether the user can adjust the game settings.
+     *
+     * @return The options flag.
+     */
+    boolean getOptionsFlag();
+
+    String[] getIntro();
+
+    String[] getGameInstructions();
+
+    String[] getOptionsMenu();
+
+    String[] getOuttro();
+
+    /**
      * Gets the number of players in the game.
      *
      * @return The number of players.
@@ -32,5 +48,5 @@ public interface GameSettingsProvider {
      *
      * @return A string representing the valid code characters.
      */
-    String getCodeOptions();
+    String getCodeCharsString();
 }
