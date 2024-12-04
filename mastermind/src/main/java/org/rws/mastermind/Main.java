@@ -13,18 +13,15 @@ public class Main {
         DefaultFeedbackGenerator feedbackGenerator = new DefaultFeedbackGenerator(settingsProvider);
         DefaultCodeGenerator codeGenerator = new DefaultCodeGenerator(settingsProvider);
 
-        boolean keepPlaying = true;
-
         MastermindGameEngine game = new MastermindGameEngine(
                 settingsProvider, 
                 inputHandler,
                 feedbackGenerator,
                 codeGenerator
             );
-        while (keepPlaying) {
-            game.startGameSession();
-            game.resetSession();
-        }
+
+        game.createGameSession();
+        game.startGameSession();
 
         // Add shutdown handler here
     }
