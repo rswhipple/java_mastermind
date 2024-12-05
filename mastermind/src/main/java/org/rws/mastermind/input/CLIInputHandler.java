@@ -63,4 +63,14 @@ public class CLIInputHandler implements InputHandler {
     public void displayMessage(String message) {
         System.out.println(message);
     }
+
+    /**
+     * Closes the scanner.
+     */
+    public void cleanup() {
+        if (scanner != null) {
+            scanner.close();
+            scanner = null;
+        }
+    }
 }
