@@ -97,7 +97,6 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
             try {
                 if (userNum > 0 && userNum < 50) {
                     numberOfRounds = userNum;
-                    input.displayMessage("Number of rounds set to " + numberOfRounds);
                     break;
                 } else {
                     input.displayMessage("The maximum number of rounds is 50.");
@@ -131,7 +130,6 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
                 int userNum = Integer.parseInt(userInput);
                 if (userNum >= 2 && userNum <= 12) {
                     codeLength = userNum;
-                    input.displayMessage("Code lenght set to " + codeLength);
                     break;
                 } else {
                     input.displayMessage("Please enter an integer between 2 and 12.");
@@ -160,7 +158,7 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     @Override
     public void initOptionsMenu() {
         String[] menu = {
-            "\n",
+            "",
             "Options Menu:",
             "",
             "1. Select number of players",
