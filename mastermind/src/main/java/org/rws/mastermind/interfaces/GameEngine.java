@@ -32,4 +32,14 @@ public interface GameEngine {
      * @param guess The String representing the player's guess.
      */
     void processGuess(String guess);
+
+    /**
+     * Displays the welcome message.
+     */
+    void welcomeMessage();
+
+    /**
+     * Displays the goodbye message.
+     */
+    void goodbyeMessage();
 }
