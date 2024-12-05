@@ -56,12 +56,9 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
 
     /**
      * Gets the options menu.
-     *
-     * @return An array of strings representing the options menu.
-     */
+    */
     @Override
-    public String[] getOptionsMenu() {
-        return null;
+    public void initOptionsMenu() {
     }
 
     /**

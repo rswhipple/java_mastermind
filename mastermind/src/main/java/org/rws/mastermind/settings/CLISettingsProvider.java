@@ -39,22 +39,6 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     }
 
     /**
-     * Gets the Options Menu for game settings from the command-line interface.
-     *
-     * @return The number of players.
-     */
-    @Override
-    public String[] getOptionsMenu() {
-        return new String[]{
-                "1. Select number of players",
-                "2. Select number of rounds",
-                "3. Select length of code",
-                "4. Select feedback type",
-                "5. Open-hand mode"
-        };
-    }
-
-    /**
      * Gets the number of players in the game from the command-line interface.
      *
      * @return The number of players.
@@ -74,10 +58,12 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
 
         while (true) {
             // Validate input
-            int numPlayers = Integer.parseInt(userInput);
+            int userNum = Integer.parseInt(userInput);
             try {
-                if (numPlayers > 0 && numPlayers < 5) {
-                    numberOfPlayers = numPlayers;
+                if (userNum > 0 && userNum < 5) {
+                    numberOfPlayers = userNum;
+                    input.displayMessage("Number of players set to " + numberOfPlayers);
+                    break;
                 } else {
                     input.displayMessage("Please enter an integer between 1 and 5.");
                 }
@@ -107,10 +93,12 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
 
         while (true) {
             // Validate input
-            int numRounds = Integer.parseInt(userInput);
+            int userNum = Integer.parseInt(userInput);
             try {
-                if (numRounds > 0 && numRounds < 50) {
-                    numberOfPlayers = numRounds;
+                if (userNum > 0 && userNum < 50) {
+                    numberOfRounds = userNum;
+                    input.displayMessage("Number of rounds set to " + numberOfRounds);
+                    break;
                 } else {
                     input.displayMessage("The maximum number of rounds is 50.");
                 }
@@ -140,9 +128,11 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
 
         while (true) {
             try {
-                int length = Integer.parseInt(userInput);
-                if (length >= 2 && length <= 12) {
-                    codeLength = length;
+                int userNum = Integer.parseInt(userInput);
+                if (userNum >= 2 && userNum <= 12) {
+                    codeLength = userNum;
+                    input.displayMessage("Code lenght set to " + codeLength);
+                    break;
                 } else {
                     input.displayMessage("Please enter an integer between 2 and 12.");
                 }
@@ -160,5 +150,85 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     @Override
     public String getCodeCharsString() {
         return "12345678"; // Default: 12345678
+    }
+
+
+    /**
+     * Initiates the Options Menu integrated process.
+     * 
+    */
+    @Override
+    public void initOptionsMenu() {
+        String[] menu = {
+            "\n",
+            "Options Menu:",
+            "",
+            "1. Select number of players",
+            "2. Select number of rounds",
+            "3. Select length of code",
+            "4. Select feedback type",
+            "5. Open-hand mode",
+            ""
+        };
+
+        for (String message : menu) {
+            input.displayMessage(message);
+        }
+
+        int option = getUserOptionSelection();
+        execOptionsMenu(option);
+    }
+
+    /**
+     * Gets the user's Options Menu seleciton.
+     *
+     * @return The int representing a valid option menu selection.
+     */
+    public int getUserOptionSelection() {
+        input.displayMessage("Enter the menu number (example '1'): ");
+        int userInput;
+
+        while (true) {
+            // Validate input
+            userInput = Integer.parseInt(input.validateInput());
+            try {
+                if (userInput > 0 && userInput < 6) {
+                    break;
+                } else {
+                    input.displayMessage("Please enter an integer between 1 and 5.");
+                }
+            } catch (NumberFormatException e) {
+                input.displayMessage("Invalid input. Please enter a valid integer.");
+            }
+        }
+
+        return userInput;
+    }
+
+    /**
+     * Executes the options menu using a switch/case.
+     *
+     * @param option An integer representing the user's selection.
+     */
+    public void execOptionsMenu(int option) {
+        switch(option) {
+            case 1:
+                input.displayMessage("Multiplayer is not functional yet. Sorry!");
+                break;
+            case 2:
+                setNumberOfRounds();
+                break;
+            case 3:
+                setCodeLength();
+                break;
+            case 4:
+                input.displayMessage("Feedback type is not functional yet. Sorry!");
+                break;
+            case 5:
+                input.displayMessage("This option is not functional yet. Sorry!");
+                break;
+            default:
+                break;
+        }
     }
 }
