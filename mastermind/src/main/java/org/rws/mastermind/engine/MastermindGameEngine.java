@@ -43,11 +43,17 @@ public class MastermindGameEngine implements GameEngine {
 
     @Override
     public GameSession createGameSession() {
+        // Display welcome message and game instructions
+        welcomeMessage();
+
         // If options flag is set, display code options
         if (settings.getOptionsFlag()) {
-            input.displayMessage("Options Menu:");
-            for (String message : settings.getOptionsMenu()) {
-                input.displayMessage(message);
+            input.displayMessage("Would you like to see the options menu? (yes/no)");
+            if (input.getInput() == "yes\n") {
+                input.displayMessage("Options Menu:");
+                for (String message : settings.getOptionsMenu()) {
+                    input.displayMessage(message);
+                }
             }
         }
 
@@ -79,6 +85,13 @@ public class MastermindGameEngine implements GameEngine {
     
         // Game loop
         while (!gameOver) {
+            if (session.getAttemptsLeft() == 0) {
+                input.displayMessage("\nGame over! The code was: " + secretCode.toString());
+                gameOver = true;
+                break;
+            } else {
+                input.displayMessage("\nROUND " + (11 - session.getAttemptsLeft()));
+            }
             input.displayMessage("Make a guess: ");
             processGuess(input.getInput());
 
@@ -110,7 +123,7 @@ public class MastermindGameEngine implements GameEngine {
         session.decrementAttempts();
 
         if (secretCode.matches(guess)) {
-            input.displayMessage("Congratulations! You've cracked the code!");
+            input.displayMessage("Congratulations! You've cracked the code!\n");
             session.setGameWon(true);
             gameOver = true;
             return;
@@ -121,7 +134,7 @@ public class MastermindGameEngine implements GameEngine {
     }
 
     public Player createPlayer() {
-        input.displayMessage("Welcome to Mastermind! What's your name?");
+        input.displayMessage("\nWhat's your name?");
         Player player = new Player(input.getInput());
 
         return player;
