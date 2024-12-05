@@ -83,7 +83,7 @@ public class MastermindGameEngine implements GameEngine {
     @Override
     public void startGameSession() {
         // Generate secretCode and create Validator
-        secretCode = codeGen.generateCode();
+        secretCode = codeGen.generateCode(settings.getCodeLength());
         feedback = new Feedback(secretCode);
         validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
 
@@ -126,7 +126,6 @@ public class MastermindGameEngine implements GameEngine {
         if (secretCode.matches(guess)) {
             input.displayMessage("Congratulations! You've cracked the code!\n");
             session.setGameWon(true);
-            gameOver = true;
             return;
         }
 
