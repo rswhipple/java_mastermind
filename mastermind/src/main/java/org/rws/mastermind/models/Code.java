@@ -10,6 +10,7 @@ public class Code {
     private final char[] code;
     private final int length;
     private final String validCharacters;
+    private final int numVariables;
 
     /**
      * Constructs a Code object with the specified code and valid characters.
@@ -21,6 +22,7 @@ public class Code {
         this.code = code.toCharArray();
         this.length = code.length();
         this.validCharacters = validCharacters;
+        this.numVariables = validCharacters.length();
     }
 
     /**
@@ -48,6 +50,15 @@ public class Code {
      */
     public String getValidCharacters() {
         return validCharacters;
+    }
+
+    /**
+     * Gets the number of valid characters for the code.
+     *
+     * @return An integer representing the number of valid characters for the code.
+     */
+    public int getNumVars() {
+        return numVariables;
     }
 
     /**
