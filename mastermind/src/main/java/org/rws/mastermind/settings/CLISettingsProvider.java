@@ -1,14 +1,26 @@
 package org.rws.mastermind.settings;
 
-import java.util.Scanner;
+import org.rws.mastermind.input.CLIInputHandler;
 
 /**
  * The CLISettingsProvider class implements the GameSettingsProvider interface
  * and provides methods to retrieve game settings via the command-line interface (CLI).
  */
 public class CLISettingsProvider extends DefaultSettingsProvider {
-    private final Scanner scanner = new Scanner(System.in);
+
+    private final CLIInputHandler input;
     private final boolean optionsFlag = true;
+
+    private int numberOfPlayers;
+    private int numberOfRounds;
+    private int codeLength;
+
+    public CLISettingsProvider(CLIInputHandler input) {
+        this.input = input;
+        this.numberOfPlayers = 1;
+        this.numberOfRounds = 10;
+        this.codeLength = 4;
+    }
 
     /**
      * Gets the options flag.
@@ -44,8 +56,28 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      */
     @Override
     public int getNumberOfPlayers() {
-        System.out.println("Enter number of players: ");
-        return scanner.nextInt();
+        return this.numberOfPlayers;
+    }
+
+    /**
+     * Sets the number of players in the game from the command-line interface.
+     *
+     */
+    public void setNumberOfPlayers() {
+        input.displayMessage("Enter number of players (max 4): ");
+        while (true) {
+            try {
+                String userInput = input.getInput();
+                int numPlayers = Integer.parseInt(userInput);
+                if (numPlayers > 0 && numPlayers < 5) {
+                    numberOfPlayers = numPlayers;
+                } else {
+                    input.displayMessage("Please enter an integer between 1 and 5.");
+                }
+            } catch (NumberFormatException e) {
+                input.displayMessage("Invalid input. Please enter a valid integer.");
+            }
+        }
     }
 
     /**
@@ -55,8 +87,28 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      */
     @Override
     public int getNumberOfRounds() {
-        System.out.println("Enter number of rounds: ");
-        return scanner.nextInt();
+        return this.numberOfRounds;
+    }
+
+    /**
+     * Sets the number of rounds in the game from the command-line interface.
+     *
+     */
+    public void setNumberOfRounds() {
+        input.displayMessage("Enter number of rounds: ");
+        while (true) {
+            try {
+                String userInput = input.getInput();
+                int numRounds = Integer.parseInt(userInput);
+                if (numRounds > 0 && numRounds < 50) {
+                    numberOfPlayers = numRounds;
+                } else {
+                    input.displayMessage("The maximum number of rounds is 50.");
+                }
+            } catch (NumberFormatException e) {
+                input.displayMessage("Invalid input. Please enter a valid integer.");
+            }
+        }
     }
 
     /**
@@ -66,8 +118,28 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      */
     @Override
     public int getCodeLength() {
-        System.out.println("Enter code length: ");
-        return scanner.nextInt();
+        return this.codeLength;
+    }
+
+    /**
+     * Sets the length of the code to be guessed from the command-line interface.
+     *
+     */
+    public void setCodeLength() {
+        input.displayMessage("Enter length of code: ");
+        while (true) {
+            try {
+                String userInput = input.getInput();
+                int length = Integer.parseInt(userInput);
+                if (length >= 2 && length <= 12) {
+                    codeLength = length;
+                } else {
+                    input.displayMessage("Please enter an integer between 2 and 12.");
+                }
+            } catch (NumberFormatException e) {
+                input.displayMessage("Invalid input. Please enter a valid integer.");
+            }
+        }
     }
 
     /**
