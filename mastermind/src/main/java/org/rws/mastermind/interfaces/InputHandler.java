@@ -11,7 +11,9 @@ public interface InputHandler {
      *
      * @return A string representing the user's input.
      */
-    String getInput();
+    String getInput() throws Exception;
+
+    String validateInput();
 
     /**
      * Displays a message to the user.

@@ -2,6 +2,7 @@ package org.rws.mastermind.input;
 
 import org.rws.mastermind.interfaces.InputHandler;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -25,8 +26,27 @@ public class CLIInputHandler implements InputHandler {
      * @return A string representing the user's input.
      */
     @Override
-    public String getInput() {
-        return scanner.nextLine();
+    public String getInput() throws IOException {
+        try {
+            return scanner.nextLine();
+        } catch (Exception e) {
+            throw new IOException("Error reading input");
+        }
+    }
+
+    @Override
+    public String validateInput() {
+        while (true) {
+            // Get user input
+            String userInput;
+            try {
+                userInput = getInput();
+                return userInput;
+            } catch (IOException e) {
+                displayMessage("Error reading input. Please try again.");
+                continue;
+            }
+        }
     }
 
     /**

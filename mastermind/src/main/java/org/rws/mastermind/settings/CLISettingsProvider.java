@@ -22,6 +22,7 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
         this.codeLength = 4;
     }
 
+
     /**
      * Gets the options flag.
      * The options flag is used to determine whether the user can adjust the game settings.
@@ -65,10 +66,12 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      */
     public void setNumberOfPlayers() {
         input.displayMessage("Enter number of players (max 4): ");
+        String userInput = input.validateInput();
+
         while (true) {
+            // Validate input
+            int numPlayers = Integer.parseInt(userInput);
             try {
-                String userInput = input.getInput();
-                int numPlayers = Integer.parseInt(userInput);
                 if (numPlayers > 0 && numPlayers < 5) {
                     numberOfPlayers = numPlayers;
                 } else {
@@ -96,10 +99,12 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      */
     public void setNumberOfRounds() {
         input.displayMessage("Enter number of rounds: ");
+        String userInput = input.validateInput();
+
         while (true) {
+            // Validate input
+            int numRounds = Integer.parseInt(userInput);
             try {
-                String userInput = input.getInput();
-                int numRounds = Integer.parseInt(userInput);
                 if (numRounds > 0 && numRounds < 50) {
                     numberOfPlayers = numRounds;
                 } else {
@@ -127,9 +132,10 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      */
     public void setCodeLength() {
         input.displayMessage("Enter length of code: ");
+        String userInput = input.validateInput();
+
         while (true) {
             try {
-                String userInput = input.getInput();
                 int length = Integer.parseInt(userInput);
                 if (length >= 2 && length <= 12) {
                     codeLength = length;

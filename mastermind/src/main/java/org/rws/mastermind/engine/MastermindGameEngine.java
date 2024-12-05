@@ -48,7 +48,7 @@ public class MastermindGameEngine implements GameEngine {
         // If options flag is set, display code options
         if (settings.getOptionsFlag()) {
             input.displayMessage("Would you like to see the options menu? (yes/no)");
-            if (input.getInput() == "yes\n") {
+            if (input.validateInput() == "yes\n") {
                 input.displayMessage("Options Menu:");
                 for (String message : settings.getOptionsMenu()) {
                     input.displayMessage(message);
@@ -93,7 +93,7 @@ public class MastermindGameEngine implements GameEngine {
                 input.displayMessage("\nROUND " + (11 - session.getAttemptsLeft()));
             }
             input.displayMessage("Make a guess: ");
-            processGuess(input.getInput());
+            processGuess(getGuess());
 
             if (session.isGameOver()) {
                 gameOver = true;
@@ -104,7 +104,7 @@ public class MastermindGameEngine implements GameEngine {
         for (String message : settings.getOuttro()) {
             input.displayMessage(message);
         }
-        if (input.getInput() == "yes\n") {
+        if (input.validateInput() == "yes\n") {
             resetSession();
             startGameSession();
         } else {
@@ -133,11 +133,29 @@ public class MastermindGameEngine implements GameEngine {
         input.displayMessage("Feedback: " + result);
     }
 
+    public String getGuess() {
+        while (true) {
+            try {
+                return input.validateInput();
+            } catch (Exception e) {
+                input.displayMessage("An unexpected error occurred: " + e.getMessage());
+                return null;
+            }
+        }
+    }
+
     public Player createPlayer() {
         input.displayMessage("\nWhat's your name?");
-        Player player = new Player(input.getInput());
-
-        return player;
+        while (true) {
+            try {
+                String playerName = input.validateInput();
+                Player player = new Player(playerName);
+                return player;
+            } catch (Exception e) {
+                input.displayMessage("An unexpected error occurred: " + e.getMessage());
+                return null;
+            }
+        }
     }
 
     public List<Player> compilePlayersList() {
