@@ -90,20 +90,21 @@ public class MastermindGameEngine implements GameEngine {
         // Game loop
         showCode(); // Debug mode
         while (!gameOver) {
-            if (session.getAttemptsLeft() == 0) {
-                input.displayMessage("\nGame over! The code was: " + secretCode.toString());
-                gameOver = true;
-                break;
+            if (session.isGameOver()) {
+                if (session.isGameWon()) {
+                    gameOver = true;
+                } else {
+                    input.displayMessage("\nGame over! The code was: " + secretCode.toString());
+                    gameOver = true;
+                }
+                goodbyeMessage();
+                return;
             } else {
                 input.displayMessage("\nROUND " + (settings.getNumberOfRounds() - session.getAttemptsLeft() + 1));
             }
             input.displayMessage("Make a guess: ");
             processGuess(input.validateInput());
 
-            if (session.isGameOver()) {
-                gameOver = true;
-                goodbyeMessage();
-            }
         }
     }
 
