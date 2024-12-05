@@ -29,7 +29,7 @@ public class Main {
         CLISettingsProvider settingsProvider = new CLISettingsProvider(inputHandler);
         DefaultCodeGenerator codeGenerator = new DefaultCodeGenerator(settingsProvider);
 
-        // Register the central shutdown hook
+        // Central shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Central shutdown hook triggered. Shutting down cleanly...");
             inputHandler.setRunning(false);       
