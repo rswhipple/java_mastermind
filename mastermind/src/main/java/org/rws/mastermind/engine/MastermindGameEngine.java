@@ -57,7 +57,7 @@ public class MastermindGameEngine implements GameEngine {
         // If options flag is set, display code options
         if (settings.getOptionsFlag()) {
             input.displayMessage("Would you like to see the options menu? (yes/no)");
-            if (input.validateInput() == "yes\n") {
+            if (input.validateInput().equals("yes")) {
                 input.displayMessage("Options Menu:");
                 for (String message : settings.getOptionsMenu()) {
                     input.displayMessage(message);
@@ -110,6 +110,7 @@ public class MastermindGameEngine implements GameEngine {
 
             if (session.isGameOver()) {
                 gameOver = true;
+                goodbyeMessage();
             }
         }
     }
@@ -157,7 +158,7 @@ public class MastermindGameEngine implements GameEngine {
 
     /**
      * Asks whether the player wants to play, reinitiates the session if yes.
-     * Displays the goodbye message if no.
+     * If no, exit to main shutdown.
      * 
      */
     @Override
@@ -166,12 +167,12 @@ public class MastermindGameEngine implements GameEngine {
         for (String message : settings.getOuttro()) {
             input.displayMessage(message);
         }
-        if (input.validateInput() == "yes\n") {
+
+        if (input.validateInput().equals("yes")) {
+            gameOver = false;
             resetSession();
             startGameSession();
-        } else {
-            input.displayMessage("Goodbye!");
-        }
+        } 
     }
 
     /**
