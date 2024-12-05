@@ -29,12 +29,9 @@ public interface GameSettingsProvider {
     String[] getGameInstructions();
 
     /**
-     * Gets the options menu.
-     * Return null if there isn't an options menu.
-     *
-     * @return An array of strings representing the options menu.
+     * Initiates the Options Menu integrated process.
      */
-    String[] getOptionsMenu();
+    void initOptionsMenu();
 
     /**
      * Gets the outro messages for the game.
