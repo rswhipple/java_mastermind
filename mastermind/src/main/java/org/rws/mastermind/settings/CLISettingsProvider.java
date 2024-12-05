@@ -15,13 +15,17 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     private int numberOfRounds;
     private int codeLength;
 
+    /**
+     * Constructs a CLISettingsProvider with the specified CLIInputHandler.
+     *
+     * @param input The CLIInputHandler object used to handle user input via the command-line interface.
+     */
     public CLISettingsProvider(CLIInputHandler input) {
         this.input = input;
         this.numberOfPlayers = 1;
         this.numberOfRounds = 10;
         this.codeLength = 4;
     }
-
 
     /**
      * Gets the options flag.

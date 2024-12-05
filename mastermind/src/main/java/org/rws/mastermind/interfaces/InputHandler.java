@@ -7,12 +7,17 @@ package org.rws.mastermind.interfaces;
 public interface InputHandler {
 
     /**
-     * Gets the input from the user.
+     * Retrieves the input from the user.
      *
      * @return A string representing the user's input.
      */
     String getInput() throws Exception;
 
+    /**
+     * Validates the input.
+     *
+     * @return A string representing the user's input.
+     */
     String validateInput();
 
     /**

@@ -71,6 +71,11 @@ public class Code {
         return Arrays.equals(code, guess.toCharArray());
     }
 
+    /**
+     * Returns a string representation of the code.
+     *
+     * @return A string representing the code.
+     */
     @Override
     public String toString() {
         return new String(code);

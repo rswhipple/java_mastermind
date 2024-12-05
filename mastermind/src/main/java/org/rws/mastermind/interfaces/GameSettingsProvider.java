@@ -14,12 +14,33 @@ public interface GameSettingsProvider {
      */
     boolean getOptionsFlag();
 
+    /**
+     * Gets the introduction messages for the game.
+     *
+     * @return An array of strings representing the introduction messages.
+     */
     String[] getIntro();
 
+    /**
+     * Gets the game instructions.
+     *
+     * @return An array of strings representing the game instructions.
+     */
     String[] getGameInstructions();
 
+    /**
+     * Gets the options menu.
+     * Return null if there isn't an options menu.
+     *
+     * @return An array of strings representing the options menu.
+     */
     String[] getOptionsMenu();
 
+    /**
+     * Gets the outro messages for the game.
+     *
+     * @return An array of strings representing the outro messages.
+     */
     String[] getOuttro();
 
     /**

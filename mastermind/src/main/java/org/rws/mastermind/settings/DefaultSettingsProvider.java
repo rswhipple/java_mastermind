@@ -9,11 +9,22 @@ import org.rws.mastermind.interfaces.GameSettingsProvider;
 public class DefaultSettingsProvider implements GameSettingsProvider {
     private final boolean optionsFlag = false;
 
+    /**
+     * Gets the options flag.
+     * The options flag is used to determine whether the user can adjust the game settings.
+     *
+     * @return The options flag.
+     */
     @Override
     public boolean getOptionsFlag() {
         return this.optionsFlag;
     }
 
+    /**
+     * Gets the introduction messages for the game.
+     *
+     * @return An array of strings representing the introduction messages.
+     */
     @Override
     public String[] getIntro() {
         return new String[]{
@@ -21,6 +32,12 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
                 ""
         };
     }
+
+    /**
+     * Gets the game instructions.
+     *
+     * @return An array of strings representing the game instructions.
+     */ 
     @Override
     public String[] getGameInstructions() {
         return new String[]{
@@ -37,11 +54,21 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
         };
     }
 
+    /**
+     * Gets the options menu.
+     *
+     * @return An array of strings representing the options menu.
+     */
     @Override
     public String[] getOptionsMenu() {
         return null;
     }
 
+    /**
+     * Gets the outro messages for the game.
+     *
+     * @return An array of strings representing the outro messages.
+     */
     @Override
     public String[] getOuttro() {
         return new String[]{

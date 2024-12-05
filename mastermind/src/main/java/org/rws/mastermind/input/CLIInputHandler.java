@@ -21,7 +21,7 @@ public class CLIInputHandler implements InputHandler {
     }
 
     /**
-     * Gets the input from the user via the command-line interface.
+     * Retrieves the input from the user via the command-line interface.
      *
      * @return A string representing the user's input.
      */
@@ -34,6 +34,11 @@ public class CLIInputHandler implements InputHandler {
         }
     }
 
+    /**
+     * Validates and retries the user input.
+     *
+     * @return A string representing the user's input.
+     */
     @Override
     public String validateInput() {
         while (true) {

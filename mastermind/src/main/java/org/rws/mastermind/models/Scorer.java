@@ -11,7 +11,6 @@ public class Scorer {
      *
      * @param code The Code object representing the secret code.
      */
-
     public Scorer(Code code) {
         Scorer.secretCode = code;
     }

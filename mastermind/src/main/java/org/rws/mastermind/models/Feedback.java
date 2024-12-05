@@ -32,6 +32,4 @@ public class Feedback {
                 score[1]
         );
     }
-
-
 }
