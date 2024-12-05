@@ -74,7 +74,7 @@ public class Scorer {
 
     public int[] createHash(char[] guess, int varLength) {
         // Initialize an array of size 'vars' with all elements as 0
-        int[] hash = new int[varLength];
+        int[] hash = new int[varLength + 1];
     
         // Iterate over the guess array
         for (char ch : guess) {
