@@ -3,9 +3,9 @@ package org.rws.mastermind.engine;
 import org.rws.mastermind.interfaces.GameSettingsProvider;
 import org.rws.mastermind.interfaces.GameEngine;
 import org.rws.mastermind.interfaces.InputHandler;
-import org.rws.mastermind.interfaces.FeedbackGenerator;
 import org.rws.mastermind.interfaces.CodeGenerator;
 import org.rws.mastermind.models.GameSession;
+import org.rws.mastermind.models.Feedback;
 import org.rws.mastermind.models.Code;
 import org.rws.mastermind.models.Player;
 import org.rws.mastermind.models.Validator;
@@ -17,11 +17,11 @@ import java.util.UUID;
 
 public class MastermindGameEngine implements GameEngine {
     private final InputHandler input;
-    private final FeedbackGenerator feedback;
     private final CodeGenerator codeGen;
     private final GameSettingsProvider settings;
 
     private GameSession session;
+    private Feedback feedback;
     private Code secretCode;
     private Validator validator;
     private boolean gameOver = false;
@@ -29,14 +29,13 @@ public class MastermindGameEngine implements GameEngine {
     public MastermindGameEngine(
             GameSettingsProvider gameSettingsProvider,
             InputHandler inputHandler, 
-            FeedbackGenerator feedbackGenerator, 
             CodeGenerator codeGenerator
         ) {
         this.settings = gameSettingsProvider;
         this.input = inputHandler;
-        this.feedback = feedbackGenerator;
         this.codeGen = codeGenerator;
         this.session = null;
+        this.feedback = null;
         this.secretCode = null;
         this.validator = null;
     }
@@ -77,6 +76,7 @@ public class MastermindGameEngine implements GameEngine {
     public void startGameSession() {
         // Generate secretCode and create Validator
         secretCode = codeGen.generateCode();
+        feedback = new Feedback(secretCode);
 
         // Debug mode
         showCode();
@@ -129,7 +129,7 @@ public class MastermindGameEngine implements GameEngine {
             return;
         }
 
-        String result = feedback.generateFeedback(secretCode, guess);
+        String result = feedback.generateFeedback(guess);
         input.displayMessage("Feedback: " + result);
     }
 
