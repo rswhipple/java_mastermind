@@ -53,13 +53,14 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      *
      */
     public void setNumberOfPlayers() {
-        input.displayMessage("Enter number of players (max 4): ");
-        String userInput = input.validateInput();
-
         while (true) {
-            // Validate input
-            int userNum = Integer.parseInt(userInput);
+            input.displayMessage("Enter number of players (max 4): ");
+            String userInput = input.validateInput();
+            
             try {
+                // Validate input
+                int userNum = Integer.parseInt(userInput);
+
                 if (userNum > 0 && userNum < 5) {
                     numberOfPlayers = userNum;
                     input.displayMessage("Number of players set to " + numberOfPlayers);
@@ -88,13 +89,14 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      *
      */
     public void setNumberOfRounds() {
-        input.displayMessage("Enter number of rounds: ");
-        String userInput = input.validateInput();
-
         while (true) {
-            // Validate input
-            int userNum = Integer.parseInt(userInput);
+            input.displayMessage("Enter number of rounds: ");
+            String userInput = input.validateInput();
+
             try {
+                // Validate input
+                int userNum = Integer.parseInt(userInput);
+
                 if (userNum > 0 && userNum < 50) {
                     numberOfRounds = userNum;
                     break;
@@ -122,12 +124,13 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      *
      */
     public void setCodeLength() {
-        input.displayMessage("Enter length of code: ");
-        String userInput = input.validateInput();
-
         while (true) {
+            input.displayMessage("Enter length of code: ");
+            String userInput = input.validateInput();
+
             try {
                 int userNum = Integer.parseInt(userInput);
+
                 if (userNum >= 2 && userNum <= 12) {
                     codeLength = userNum;
                     break;
@@ -183,15 +186,16 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      * @return The int representing a valid option menu selection.
      */
     public int getUserOptionSelection() {
-        input.displayMessage("Enter the menu number (example '1'): ");
-        int userInput;
-
         while (true) {
-            // Validate input
-            userInput = Integer.parseInt(input.validateInput());
+            input.displayMessage("Enter the menu number (example '1'): ");
+            int userInput;
+
             try {
+                // Validate input
+                userInput = Integer.parseInt(input.validateInput());
+
                 if (userInput > 0 && userInput < 6) {
-                    break;
+                    return userInput;
                 } else {
                     input.displayMessage("Please enter an integer between 1 and 5.");
                 }
@@ -199,8 +203,6 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
                 input.displayMessage("Invalid input. Please enter a valid integer.");
             }
         }
-
-        return userInput;
     }
 
     /**
