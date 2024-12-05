@@ -42,6 +42,12 @@ public class MastermindGameEngine implements GameEngine {
         this.feedback = null;
         this.secretCode = null;
         this.validator = null;
+
+        // Display welcome message and game instructions
+        welcomeMessage();
+
+        // If options flag is set, display code options
+        if (settings.getOptionsFlag()) { getOptions(); }
     }
 
     /**
@@ -51,20 +57,6 @@ public class MastermindGameEngine implements GameEngine {
      */
     @Override
     public GameSession createGameSession() {
-        // Display welcome message and game instructions
-        welcomeMessage();
-
-        // If options flag is set, display code options
-        if (settings.getOptionsFlag()) {
-            input.displayMessage("Would you like to see the options menu? (yes/no)");
-            if (input.validateInput().equals("yes")) {
-                input.displayMessage("Options Menu:");
-                for (String message : settings.getOptionsMenu()) {
-                    input.displayMessage(message);
-                }
-            }
-        }
-
         // Compile Player Names
         List<Player> players = compilePlayersList();
 
@@ -103,7 +95,7 @@ public class MastermindGameEngine implements GameEngine {
                 gameOver = true;
                 break;
             } else {
-                input.displayMessage("\nROUND " + (11 - session.getAttemptsLeft()));
+                input.displayMessage("\nROUND " + (settings.getNumberOfRounds() - session.getAttemptsLeft() + 1));
             }
             input.displayMessage("Make a guess: ");
             processGuess(input.validateInput());
@@ -170,9 +162,20 @@ public class MastermindGameEngine implements GameEngine {
 
         if (input.validateInput().equals("yes")) {
             gameOver = false;
+
+            // If options flag is set, display code options
+            if (settings.getOptionsFlag()) { getOptions(); }
+
             resetSession();
             startGameSession();
         } 
+    }
+
+    public void getOptions() {
+        input.displayMessage("Would you like to see the options menu? (yes/no)");
+        if (input.validateInput().equals("yes")) {
+            settings.initOptionsMenu();
+        }
     }
 
     /**
