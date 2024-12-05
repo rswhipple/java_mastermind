@@ -8,8 +8,8 @@ import org.rws.mastermind.codegen.DefaultCodeGenerator;
 
 public class Main {
     public static void main(String[] args) {
-        CLISettingsProvider settingsProvider = new CLISettingsProvider();
         CLIInputHandler inputHandler = new CLIInputHandler();
+        CLISettingsProvider settingsProvider = new CLISettingsProvider(inputHandler);
         DefaultFeedbackGenerator feedbackGenerator = new DefaultFeedbackGenerator(settingsProvider);
         DefaultCodeGenerator codeGenerator = new DefaultCodeGenerator(settingsProvider);
 
