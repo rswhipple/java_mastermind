@@ -14,7 +14,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
 
-
+/**
+ * The MastermindGameEngine class implements the GameEngine interface
+ * and provides methods to manage the game sessions and process guesses
+ * for the Mastermind game.
+ */
 public class MastermindGameEngine implements GameEngine {
     private final InputHandler input;
     private final CodeGenerator codeGen;
@@ -40,6 +44,11 @@ public class MastermindGameEngine implements GameEngine {
         this.validator = null;
     }
 
+    /**
+     * Creates a new game session with the given settings and player names.
+     *
+     * @return A new GameSession object.
+     */
     @Override
     public GameSession createGameSession() {
         // Display welcome message and game instructions
@@ -66,24 +75,28 @@ public class MastermindGameEngine implements GameEngine {
         return session;
     }
 
+    /**
+     * Resets the current game session.
+     */
     @Override
     public void resetSession() {
         String sessionID = UUID.randomUUID().toString();
         session = new GameSession(settings, sessionID, session.getPlayers());
     }
 
+    /**
+     * Starts the game session.
+     * This method must be called after the game session has been created.
+     */
     @Override
     public void startGameSession() {
         // Generate secretCode and create Validator
         secretCode = codeGen.generateCode();
         feedback = new Feedback(secretCode);
-
-        // Debug mode
-        showCode();
-
         validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
-    
+
         // Game loop
+        showCode(); // Debug mode
         while (!gameOver) {
             if (session.getAttemptsLeft() == 0) {
                 input.displayMessage("\nGame over! The code was: " + secretCode.toString());
@@ -93,26 +106,20 @@ public class MastermindGameEngine implements GameEngine {
                 input.displayMessage("\nROUND " + (11 - session.getAttemptsLeft()));
             }
             input.displayMessage("Make a guess: ");
-            processGuess(getGuess());
+            processGuess(input.validateInput());
 
             if (session.isGameOver()) {
                 gameOver = true;
             }
         }
-
-        // Display outtro message
-        for (String message : settings.getOuttro()) {
-            input.displayMessage(message);
-        }
-        if (input.validateInput() == "yes\n") {
-            resetSession();
-            startGameSession();
-        } else {
-            input.displayMessage("Goodbye!");
-        }
-
     }
 
+    /**
+     * Processes a user guess:
+     * Validates the guess.
+     * Decrements the session round count.
+     * Generates and displays the feedback.
+     */
     @Override
     public void processGuess(String guess) {
         if (!validator.isValidGuess(guess)) {
@@ -133,17 +140,45 @@ public class MastermindGameEngine implements GameEngine {
         input.displayMessage("Feedback: " + result);
     }
 
-    public String getGuess() {
-        while (true) {
-            try {
-                return input.validateInput();
-            } catch (Exception e) {
-                input.displayMessage("An unexpected error occurred: " + e.getMessage());
-                return null;
-            }
+    /**
+     * Displays the welcome message.
+     */
+    @Override
+    public void welcomeMessage() {
+        // Display welcome message and game instructions
+        for (String message : settings.getIntro()) {
+            input.displayMessage(message);
+        }
+        
+        for (String message : settings.getGameInstructions()) {
+            input.displayMessage(message);
         }
     }
 
+    /**
+     * Asks whether the player wants to play, reinitiates the session if yes.
+     * Displays the goodbye message if no.
+     * 
+     */
+    @Override
+    public void goodbyeMessage(){
+        // Display outtro message
+        for (String message : settings.getOuttro()) {
+            input.displayMessage(message);
+        }
+        if (input.validateInput() == "yes\n") {
+            resetSession();
+            startGameSession();
+        } else {
+            input.displayMessage("Goodbye!");
+        }
+    }
+
+    /**
+     * Creates a new player by prompting the user for their name via the command-line interface.
+     *
+     * @return A Player object representing the new player.
+     */
     public Player createPlayer() {
         input.displayMessage("\nWhat's your name?");
         while (true) {
@@ -158,6 +193,11 @@ public class MastermindGameEngine implements GameEngine {
         }
     }
 
+    /**
+     * Compiles a list of players by prompting the user for each player's name via the command-line interface.
+     *
+     * @return A list of Player objects representing the players in the game session.
+     */
     public List<Player> compilePlayersList() {
         List<Player> players = new ArrayList<>();
         int numPlayers = settings.getNumberOfPlayers();
@@ -168,17 +208,10 @@ public class MastermindGameEngine implements GameEngine {
         return players;
     }
 
-    public void welcomeMessage() {
-        // Display welcome message and game instructions
-        for (String message : settings.getIntro()) {
-            input.displayMessage(message);
-        }
-        
-        for (String message : settings.getGameInstructions()) {
-            input.displayMessage(message);
-        }
-    }
-
+    /**
+     * Displays the secret code.
+     * This method is used for debugging purposes.
+     */
     public void showCode() {
         input.displayMessage(secretCode.toString());
     }
