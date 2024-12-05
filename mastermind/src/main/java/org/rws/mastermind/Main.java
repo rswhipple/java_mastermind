@@ -32,6 +32,8 @@ public class Main {
         // Register the central shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Central shutdown hook triggered. Shutting down cleanly...");
+            inputHandler.setRunning(false);       
+
             for (Runnable task : shutdownTasks) {
                 try {
                     task.run();
