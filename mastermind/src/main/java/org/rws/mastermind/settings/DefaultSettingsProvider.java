@@ -18,21 +18,22 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
     public String[] getIntro() {
         return new String[]{
                 "Welcome to Mastermind!",
+                ""
         };
     }
     @Override
     public String[] getGameInstructions() {
         return new String[]{
-                "Welcome to Mastermind!",
                 "The goal of the game is to guess the secret code.",
                 "The code consists of a series of numbers.",
                 "Each number can be between 1 and 8.",
                 "You have a limited number of attempts to guess the code.",
                 "After each guess, you will receive feedback on your guess.",
-                "A '+' sign indicates that a number is correct and in the correct position.",
-                "A '-' sign indicates that a number is correct but in the wrong position.",
-                "A blank space indicates that a number is not in the code.",
-                "Good luck!"
+                "A black peg indicates that both the number and position are correct.",
+                "A white peg means you have a correct number in the wrong position.",
+                "You will have 10 attempts to guess the code.",
+                "Good luck!",
+                ""
         };
     }
 
@@ -44,7 +45,6 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
     @Override
     public String[] getOuttro() {
         return new String[]{
-                "Thanks for playing Mastermind!",
                 "Do you want to play again?",
                 "Enter 'yes' to play again or any other key to exit."
         };
