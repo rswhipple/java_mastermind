@@ -11,9 +11,10 @@ import java.util.Random;
  * and provides a method to generate a code for the Mastermind game.
  */
 public class DefaultCodeGenerator implements CodeGenerator {
-    private final int codeLength;
-    private final String validCharacters;
     private final Random random;
+
+    private int codeLength;
+    private String validCharacters;
 
     /**
      * Constructs a DefaultCodeGenerator with the specified GameSettingsProvider.
@@ -32,7 +33,8 @@ public class DefaultCodeGenerator implements CodeGenerator {
      * @return A Code object representing the generated code.
      */
     @Override
-    public Code generateCode() {
+    public Code generateCode(int lenght) {
+        codeLength = lenght;
         StringBuilder code = new StringBuilder();
         for (int i = 0; i < codeLength; i++) {
             code.append(validCharacters.charAt(random.nextInt(validCharacters.length())));
