@@ -27,6 +27,10 @@ public class Validator {
      * @return True if the guess is valid, false otherwise.
      */
     public boolean isValidGuess(String guess) {
+        if (guess == null) {
+            return false;
+        }
+        
         if (guess.length() != codeLength) {
             return false;
         }

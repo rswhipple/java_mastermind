@@ -26,4 +26,16 @@ public interface InputHandler {
      * @param message The message to be displayed.
      */
     void displayMessage(String message);
+
+    /**
+     * Displays an error message to the user.
+     *
+     * @param message The error message to be displayed.
+     */
+    void displayErrMessage(String message);
+
+    /**
+     * Sets the running flag to control the input loop.
+     */
+    void setRunning(boolean running);
 }

@@ -38,6 +38,7 @@ public class CLIInputHandler implements InputHandler {
     /**
      * Sets the running flag to control the input loop.
      */
+    @Override
     public void setRunning(boolean running) {
         this.running = running;
     }
@@ -60,11 +61,6 @@ public class CLIInputHandler implements InputHandler {
     public String getInput() throws IOException {
         try {
             String input = scanner.nextLine();
-
-            if (input.equals("#")) {
-                notifyMenuKeyListeners();
-            } 
-
             return input;
         } catch (Exception e) {
             throw new IOException("Error reading input", e);
@@ -82,8 +78,16 @@ public class CLIInputHandler implements InputHandler {
             try {
                 // Get user input using the getInput method
                 String userInput = getInput();
+
+                // Check if the user input is '#'
+                if (userInput.equals("#")) {
+                    notifyMenuKeyListeners();
+                    break;
+                } 
+                
+                // Return trimmed, non-blank input
                 if (userInput != null && !userInput.isBlank()) {
-                    return userInput.trim(); // Return trimmed, non-blank input
+                    return userInput.trim();
                 }
             } catch (IOException e) {
                 if (!running) {
@@ -106,6 +110,16 @@ public class CLIInputHandler implements InputHandler {
     @Override
     public void displayMessage(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Displays a message to the user via the command-line interface.
+     *
+     * @param message The message to be displayed.
+     */
+    @Override
+    public void displayErrMessage(String message) {
+        System.err.println(message);
     }
 
     /**
