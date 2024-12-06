@@ -73,12 +73,12 @@ public class Scorer {
 
     public int[] createHash(char[] guess, int varLength) {
         // Initialize an array of size 'vars' with all elements as 0
-        int[] hash = new int[varLength + 1];
+        int[] hash = new int[varLength];
     
         // Iterate over the guess array
         for (char ch : guess) {
             // Convert the character to an integer (e.g., '0' -> 0, '1' -> 1, etc.)
-            int index = ch - '0';
+            int index = ch - '0' - 1;
 
             // Increment the value at the index specified by guess[ch]
             hash[index]++;
