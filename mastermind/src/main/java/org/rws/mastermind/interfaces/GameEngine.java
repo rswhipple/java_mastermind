@@ -9,6 +9,11 @@ import org.rws.mastermind.models.GameSession;
 public interface GameEngine {
 
     /**
+     * Processes the menu key.
+     */
+    void onMenuKey();   // Triggered when '#' is pressed
+
+    /**
      * Choose settings if applicable and create a new game session.
      *
      * @return A new GameSession object.

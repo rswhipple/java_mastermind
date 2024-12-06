@@ -1,9 +1,12 @@
 package org.rws.mastermind.input;
 
 import org.rws.mastermind.interfaces.InputHandler;
+import org.rws.mastermind.interfaces.GameEngine;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The CLIInputHandler class implements the InputHandler interface
@@ -12,7 +15,8 @@ import java.util.Scanner;
  */
 public class CLIInputHandler implements InputHandler {
     private Scanner scanner;
-    private volatile boolean running = true; // Flag to control the input loop
+    private volatile boolean running = true; // Flag to control the input loopte
+    private List<GameEngine> listeners = new ArrayList<>();
 
 
     /**
@@ -22,8 +26,29 @@ public class CLIInputHandler implements InputHandler {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Adds a GameEngine object to the list of listeners.
+     *
+     * @param listener The GameEngine object to be added to the list of listeners.
+     */
+    public void addListener(GameEngine listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Sets the running flag to control the input loop.
+     */
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    /**
+     * Notifies all listeners that the menu key has been pressed.
+     */
+    private void notifyMenuKeyListeners() {
+        for (GameEngine listener : listeners) {
+            listener.onMenuKey();
+        }
     }
 
     /**
@@ -34,7 +59,13 @@ public class CLIInputHandler implements InputHandler {
     @Override
     public String getInput() throws IOException {
         try {
-            return scanner.nextLine();
+            String input = scanner.nextLine();
+
+            if (input.equals("#")) {
+                notifyMenuKeyListeners();
+            } 
+
+            return input;
         } catch (Exception e) {
             throw new IOException("Error reading input", e);
         }
@@ -81,6 +112,8 @@ public class CLIInputHandler implements InputHandler {
      * Closes the scanner.
      */
     public void cleanup() {
+        running = false;
+
         if (scanner != null) {
             scanner.close();
             scanner = null;

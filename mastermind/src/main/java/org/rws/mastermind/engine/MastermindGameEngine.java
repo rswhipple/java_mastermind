@@ -45,9 +45,14 @@ public class MastermindGameEngine implements GameEngine {
 
         // Display welcome message and game instructions
         welcomeMessage();
+    }
 
-        // If options flag is set, display code options
-        if (settings.getOptionsFlag()) { getOptions(); }
+    /**
+     * Processes the menu key.
+     */
+    @Override
+    public void onMenuKey() {
+        showMenu();
     }
 
     /**
@@ -88,8 +93,12 @@ public class MastermindGameEngine implements GameEngine {
         feedback = new Feedback(secretCode);
         validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
 
+        // Open hand mode
+        if (settings.getOpenHandFlag()) {
+            displayCode();
+        }
+
         // Game loop
-        showCode(); // Debug mode
         while (!gameOver) {
             if (session.isGameOver()) {
                 if (session.isGameWon()) {
@@ -98,14 +107,13 @@ public class MastermindGameEngine implements GameEngine {
                     input.displayMessage("\nGame over! The code was: " + secretCode.toString());
                     gameOver = true;
                 }
-                goodbyeMessage();
+                showMenu(); // Display global menu
                 return;
             } else {
                 input.displayMessage("\nROUND " + (settings.getNumberOfRounds() - session.getAttemptsLeft() + 1));
             }
             input.displayMessage("Make a guess: ");
             processGuess(input.validateInput());
-
         }
     }
 
@@ -132,6 +140,10 @@ public class MastermindGameEngine implements GameEngine {
 
         String result = feedback.generateFeedback(guess);
         input.displayMessage("Feedback: " + result);
+
+        // Test for hint
+        String hint = feedback.generateHint(guess);
+        input.displayMessage("Hint: " + hint);
     }
 
     /**
@@ -157,26 +169,42 @@ public class MastermindGameEngine implements GameEngine {
     @Override
     public void goodbyeMessage(){
         // Display outtro message
-        for (String message : settings.getOuttro()) {
-            input.displayMessage(message);
-        }
-
-        if (input.validateInput().equals("yes")) {
-            gameOver = false;
-
-            // If options flag is set, display code options
-            if (settings.getOptionsFlag()) { getOptions(); }
-
-            resetSession();
-            startGameSession();
-        } 
+        String message = "Thanks for playing...";
+        input.displayMessage(message);
     }
 
-    public void getOptions() {
-        input.displayMessage("Would you like to see the options menu? (yes/no)");
-        if (input.validateInput().equals("yes")) {
-            settings.initOptionsMenu();
+    private void showMenu() {
+        System.out.println("\nMenu:");
+        System.out.println("1. View Game Options Menu");
+        System.out.println("2. Reset Game");
+        System.out.println("3. Exit");
+        System.out.println("4. Continue");
+
+        System.out.print("Choose an option: ");
+        String choice = input.validateInput();
+
+        switch (choice) {
+            case "1":
+                displayOptionsMenu();
+                break;
+            case "2":
+                resetSession();
+                startGameSession();
+                break;
+            case "3":
+                goodbyeMessage();
+                break;
+            case "4":
+                System.out.println("Returning to the game...");
+                break;
+            default:
+                input.displayMessage("Invalid option. Returning to the menu...");
+                showMenu();
         }
+    }
+
+    public void displayOptionsMenu() {
+        settings.initOptionsMenu();
     }
 
     /**
@@ -217,7 +245,7 @@ public class MastermindGameEngine implements GameEngine {
      * Displays the secret code.
      * This method is used for debugging purposes.
      */
-    public void showCode() {
+    public void displayCode() {
         input.displayMessage(secretCode.toString());
     }
 }

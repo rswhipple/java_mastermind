@@ -53,6 +53,9 @@ public class Main {
                 inputHandler,
                 codeGenerator
             );
+
+        inputHandler.addListener(game);
+
         game.createGameSession();
         game.startGameSession();
 
