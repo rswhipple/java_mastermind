@@ -3,7 +3,8 @@ package org.rws.mastermind;
 import org.rws.mastermind.engine.MastermindGameEngine;
 import org.rws.mastermind.settings.CLISettingsProvider;
 import org.rws.mastermind.input.CLIInputHandler;
-import org.rws.mastermind.codegen.DefaultCodeGenerator;
+import org.rws.mastermind.codegen.BaseCodeGenerator;
+import org.rws.mastermind.http.HttpHandlerImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,11 @@ public class Main {
     public static void main(String[] args) {
         CLIInputHandler inputHandler = new CLIInputHandler();
         registerShutdownTask(inputHandler::cleanup);
+        HttpHandlerImp httpHandler = new HttpHandlerImp();
+        registerShutdownTask(httpHandler::cleanup);
 
         CLISettingsProvider settingsProvider = new CLISettingsProvider(inputHandler);
-        DefaultCodeGenerator codeGenerator = new DefaultCodeGenerator(settingsProvider);
+        BaseCodeGenerator codeGenerator = new BaseCodeGenerator(settingsProvider, httpHandler);
 
         // Central shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
