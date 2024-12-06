@@ -1,7 +1,7 @@
 package org.rws.mastermind.models;
 
 import java.util.List;
-import org.rws.mastermind.interfaces.GameSettingsProvider;
+import org.rws.mastermind.interfaces.GameSetter;
 
 /**
  * The GameSession class represents a game session in the Mastermind game.
@@ -20,7 +20,7 @@ public class GameSession {
      * @param sessionId The string representing the session ID.
      * @param players The list of players in the game session.
      */
-    public GameSession(GameSettingsProvider settings, String sessionId, List<Player> players) {
+    public GameSession(GameSetter settings, String sessionId, List<Player> players) {
         this.sessionId = sessionId;
         this.players = players;
         this.attemptsLeft = settings.getNumberOfRounds();

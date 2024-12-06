@@ -16,6 +16,7 @@ public class Feedback {
      */
     public Feedback(Code code) {
         this.scorer = new Scorer(code);
+        this.hintFlag = false;
     }
 
     /**
