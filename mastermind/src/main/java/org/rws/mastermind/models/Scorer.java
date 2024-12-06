@@ -86,5 +86,18 @@ public class Scorer {
     
         return hash; // Return the resulting hash array
     }
+
+    public String patternHint(String guess) {
+        String correctPattern = secretCode.toString();
+        StringBuilder hint = new StringBuilder();
+        for (int i = 0; i < guess.length(); i++) {
+            if (i < correctPattern.length() && guess.charAt(i) == correctPattern.charAt(i)) {
+                hint.append(guess.charAt(i)); // Correct character
+            } else {
+                hint.append("_"); // Placeholder for incorrect character
+            }
+        }
+        return "Hint: " + hint.toString();
+    }
     
 }
