@@ -1,6 +1,8 @@
 package org.rws.mastermind;
 
 import org.rws.mastermind.engine.MastermindGameEngine;
+import org.rws.mastermind.database.DatabaseSetup;
+import org.rws.mastermind.database.MastermindDB;
 import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.input.CLIInputHandler;
 import org.rws.mastermind.codegen.BaseCodeGenerator;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 public class Main {
     private static final List<Runnable> shutdownTasks = new ArrayList<>();
+    private static final String dbFile = "mastermind_db.sqlite3";
 
     /**
      * The main method is the entry point of the application.
@@ -24,8 +27,16 @@ public class Main {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
+        // Setup database, connect, and register shutdown task
+        DatabaseSetup.setupDatabase(dbFile);
+        MastermindDB db = new MastermindDB(dbFile);
+        registerShutdownTask(db::closeDB);
+
+        // Setup input handler and register shutdown task
         CLIInputHandler inputHandler = new CLIInputHandler();
         registerShutdownTask(inputHandler::cleanup);
+
+        // Setup HTTP handler and register shutdown task
         HttpHandlerImp httpHandler = new HttpHandlerImp();
         registerShutdownTask(httpHandler::cleanup);
 
@@ -49,6 +60,7 @@ public class Main {
 
         // Initialize the game engine and run game
         MastermindGameEngine game = new MastermindGameEngine(
+                db,
                 settingsProvider, 
                 inputHandler,
                 codeGenerator

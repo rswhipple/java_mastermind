@@ -1,5 +1,6 @@
 package org.rws.mastermind.engine;
 
+import org.rws.mastermind.database.MastermindDB;
 import org.rws.mastermind.interfaces.GameSetter;
 import org.rws.mastermind.interfaces.GameEngine;
 import org.rws.mastermind.interfaces.InputHandler;
@@ -20,6 +21,7 @@ import java.util.UUID;
  * for the Mastermind game.
  */
 public class MastermindGameEngine implements GameEngine {
+    private final MastermindDB db;
     private final InputHandler input;
     private final BaseCodeGenerator codeGen;
     private final GameSetter settings;
@@ -31,10 +33,12 @@ public class MastermindGameEngine implements GameEngine {
     private boolean gameOver = false;
 
     public MastermindGameEngine(
+            MastermindDB db,
             GameSetter gameSetter,
             InputHandler inputHandler, 
             BaseCodeGenerator codeGenerator
         ) {
+        this.db = db;
         this.settings = gameSetter;
         this.input = inputHandler;
         this.codeGen = codeGenerator;
