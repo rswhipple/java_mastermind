@@ -1,7 +1,7 @@
 package org.rws.mastermind;
 
 import org.rws.mastermind.engine.MastermindGameEngine;
-import org.rws.mastermind.settings.CLISettingsProvider;
+import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.input.CLIInputHandler;
 import org.rws.mastermind.codegen.BaseCodeGenerator;
 import org.rws.mastermind.http.HttpHandlerImp;
@@ -29,7 +29,7 @@ public class Main {
         HttpHandlerImp httpHandler = new HttpHandlerImp();
         registerShutdownTask(httpHandler::cleanup);
 
-        CLISettingsProvider settingsProvider = new CLISettingsProvider(inputHandler);
+        CLISetter settingsProvider = new CLISetter(inputHandler);
         BaseCodeGenerator codeGenerator = new BaseCodeGenerator(settingsProvider, httpHandler);
 
         // Central shutdown hook
