@@ -3,7 +3,7 @@ package org.rws.mastermind.engine;
 import org.rws.mastermind.interfaces.GameSettingsProvider;
 import org.rws.mastermind.interfaces.GameEngine;
 import org.rws.mastermind.interfaces.InputHandler;
-import org.rws.mastermind.interfaces.CodeGenerator;
+import org.rws.mastermind.codegen.BaseCodeGenerator;
 import org.rws.mastermind.models.GameSession;
 import org.rws.mastermind.models.Feedback;
 import org.rws.mastermind.models.Code;
@@ -21,7 +21,7 @@ import java.util.UUID;
  */
 public class MastermindGameEngine implements GameEngine {
     private final InputHandler input;
-    private final CodeGenerator codeGen;
+    private final BaseCodeGenerator codeGen;
     private final GameSettingsProvider settings;
 
     private GameSession session;
@@ -33,7 +33,7 @@ public class MastermindGameEngine implements GameEngine {
     public MastermindGameEngine(
             GameSettingsProvider gameSettingsProvider,
             InputHandler inputHandler, 
-            CodeGenerator codeGenerator
+            BaseCodeGenerator codeGenerator
         ) {
         this.settings = gameSettingsProvider;
         this.input = inputHandler;
@@ -83,7 +83,8 @@ public class MastermindGameEngine implements GameEngine {
     @Override
     public void startGameSession() {
         // Generate secretCode and create Validator
-        secretCode = codeGen.generateCode(settings.getCodeLength());
+        codeGen.resetCodeLength(settings.getCodeLength());
+        secretCode = codeGen.generateCode();
         feedback = new Feedback(secretCode);
         validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
 
