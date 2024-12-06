@@ -261,7 +261,7 @@ public class MastermindGameEngine implements GameEngine {
                 if (playerName == null || playerName.isEmpty()) {
                     return null;
                 }
-                Player player = new Player(playerName);
+                Player player = new Player(playerName, db);
                 return player;
             } catch (Exception e) {
                 input.displayMessage("An unexpected error occurred: " + e.getMessage());
@@ -270,7 +270,6 @@ public class MastermindGameEngine implements GameEngine {
         }
         return null;
     }
-
     /**
      * Compiles a list of players by prompting the user for each player's name via the command-line interface.
      *
