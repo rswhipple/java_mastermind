@@ -10,10 +10,11 @@ public class MastermindDB {
     public MastermindDB(String dbFile) {
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
-            Statement stmt = conn.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON;");
-            stmt.close();
-            System.out.println("Connected to SQLite database at " + dbFile);
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The driver name is " + meta.getDriverName());
+                System.out.println("Connected to the database.");
+            }
         } catch (SQLException e) {
             System.err.println("Error connecting to database: " + e.getMessage());
         }
@@ -28,7 +29,6 @@ public class MastermindDB {
                 System.err.println("Error closing database: " + e.getMessage());
             }
         }
-        closeDB();
     }
 
     public void createTable(String createTableSQL) {

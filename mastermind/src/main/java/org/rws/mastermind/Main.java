@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Main {
     private static final List<Runnable> shutdownTasks = new ArrayList<>();
-    private static final String dbFile = "mastermind_db.sqlite3";
+    private static final String dbFile = "resources/mastermind_db.sqlite3";
 
     /**
      * The main method is the entry point of the application.
