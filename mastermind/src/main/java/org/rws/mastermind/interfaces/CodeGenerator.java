@@ -12,5 +12,5 @@ public interface CodeGenerator {
      *
      * @return A Code object representing the generated code.
      */
-    Code generateCode(int lenght);
+    Code generateCode();
 }
