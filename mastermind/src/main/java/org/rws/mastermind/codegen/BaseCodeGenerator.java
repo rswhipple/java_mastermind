@@ -1,7 +1,7 @@
 package org.rws.mastermind.codegen;
 
 import org.rws.mastermind.interfaces.CodeGenerator;
-import org.rws.mastermind.interfaces.GameSettingsProvider;
+import org.rws.mastermind.interfaces.GameSetter;
 import org.rws.mastermind.interfaces.HttpHandler;
 import org.rws.mastermind.models.Code;
 
@@ -26,7 +26,7 @@ public class BaseCodeGenerator implements CodeGenerator {
      *
      * @param settingsProvider The GameSettingsProvider object containing the game settings.
      */
-    public BaseCodeGenerator(GameSettingsProvider settingsProvider, HttpHandler httpHandler) {
+    public BaseCodeGenerator(GameSetter settingsProvider, HttpHandler httpHandler) {
         this.httpHandler = httpHandler;
         this.baseUrl = "http://www.random.org/integers/";
         this.random = new Random();

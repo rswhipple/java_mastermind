@@ -1,6 +1,6 @@
 package org.rws.mastermind.engine;
 
-import org.rws.mastermind.interfaces.GameSettingsProvider;
+import org.rws.mastermind.interfaces.GameSetter;
 import org.rws.mastermind.interfaces.GameEngine;
 import org.rws.mastermind.interfaces.InputHandler;
 import org.rws.mastermind.codegen.BaseCodeGenerator;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class MastermindGameEngine implements GameEngine {
     private final InputHandler input;
     private final BaseCodeGenerator codeGen;
-    private final GameSettingsProvider settings;
+    private final GameSetter settings;
 
     private GameSession session;
     private Feedback feedback;
@@ -31,11 +31,11 @@ public class MastermindGameEngine implements GameEngine {
     private boolean gameOver = false;
 
     public MastermindGameEngine(
-            GameSettingsProvider gameSettingsProvider,
+            GameSetter gameSetter,
             InputHandler inputHandler, 
             BaseCodeGenerator codeGenerator
         ) {
-        this.settings = gameSettingsProvider;
+        this.settings = gameSetter;
         this.input = inputHandler;
         this.codeGen = codeGenerator;
         this.session = null;
@@ -113,7 +113,9 @@ public class MastermindGameEngine implements GameEngine {
                 input.displayMessage("\nROUND " + (settings.getNumberOfRounds() - session.getAttemptsLeft() + 1));
             }
             input.displayMessage("Make a guess: ");
-            processGuess(input.validateInput());
+            if (processGuess(input.validateInput()) == 1) {
+                return; // Exit program
+            }
         }
     }
 
@@ -124,10 +126,15 @@ public class MastermindGameEngine implements GameEngine {
      * Generates and displays the feedback.
      */
     @Override
-    public void processGuess(String guess) {
+    public int processGuess(String guess) {
+        // Check if guess is empty
+        if (guess == null || guess.isEmpty()) {
+            return 1;
+        }
+
         if (!validator.isValidGuess(guess)) {
             input.displayMessage("Invalid guess. Please try again.");
-            return;
+            return 0;
         }
 
         session.decrementAttempts();
@@ -135,7 +142,7 @@ public class MastermindGameEngine implements GameEngine {
         if (secretCode.matches(guess)) {
             input.displayMessage("Congratulations! You've cracked the code!\n");
             session.setGameWon(true);
-            return;
+            return 0;
         }
 
         String result = feedback.generateFeedback(guess);
@@ -144,6 +151,8 @@ public class MastermindGameEngine implements GameEngine {
         // Test for hint
         String hint = feedback.generateHint(guess);
         input.displayMessage("Hint: " + hint);
+
+        return 0;
     }
 
     /**
@@ -192,6 +201,7 @@ public class MastermindGameEngine implements GameEngine {
                 startGameSession();
                 break;
             case "3":
+                input.setRunning(false);
                 goodbyeMessage();
                 break;
             case "4":

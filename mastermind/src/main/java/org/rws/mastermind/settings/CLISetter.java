@@ -1,12 +1,13 @@
 package org.rws.mastermind.settings;
 
+import org.rws.mastermind.interfaces.GameSetter;
 import org.rws.mastermind.input.CLIInputHandler;
 
 /**
  * The CLISettingsProvider class implements the GameSettingsProvider interface
  * and provides methods to retrieve game settings via the command-line interface (CLI).
  */
-public class CLISettingsProvider extends DefaultSettingsProvider {
+public class CLISetter implements GameSetter {
     private final CLIInputHandler input;
     private final boolean optionsFlag = true;
     private boolean openHandFlag = false;
@@ -20,7 +21,7 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
      *
      * @param input The CLIInputHandler object used to handle user input via the command-line interface.
      */
-    public CLISettingsProvider(CLIInputHandler input) {
+    public CLISetter(CLIInputHandler input) {
         this.input = input;
         this.numberOfPlayers = 1;
         this.numberOfRounds = 10;
@@ -28,14 +29,37 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     }
 
     /**
-     * Gets the options flag.
-     * The options flag is used to determine whether the user can adjust the game settings.
+     * Gets the introduction messages for the game.
      *
-     * @return The options flag.
+     * @return An array of strings representing the introduction messages.
      */
     @Override
-    public boolean getOptionsFlag() {
-        return this.optionsFlag;
+    public String[] getIntro() {
+        return new String[]{
+                "Welcome to Mastermind!",
+                ""
+        };
+    }
+
+    /**
+     * Gets the game instructions.
+     *
+     * @return An array of strings representing the game instructions.
+     */ 
+    @Override
+    public String[] getGameInstructions() {
+        return new String[]{
+                "The goal of the game is to guess the secret code.",
+                "The code consists of a series of numbers.",
+                "Each number can be between 1 and 8.",
+                "You have a limited number of attempts to guess the code.",
+                "After each guess, you will receive feedback on your guess.",
+                "A black peg indicates that both the number and position are correct.",
+                "A white peg means you have a correct number in the wrong position.",
+                "You will have 10 attempts to guess the code.",
+                "Good luck!",
+                ""
+        };
     }
 
     /**
@@ -144,12 +168,13 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     }
 
     /**
-     * Sets the length of the code to be guessed from the command-line interface.
+     * Gets the options available for the code.
      *
+     * @return A string representing the code options.
      */
-    public void setOpenHandFlag() {
-        input.displayMessage("Open hand mode selected.");
-        openHandFlag = true;
+    @Override
+    public String getCodeCharsString() {
+        return "12345678"; // Default: 12345678
     }
 
     /**
@@ -162,15 +187,24 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     }
 
     /**
-     * Gets the options available for the code.
+     * Sets the length of the code to be guessed from the command-line interface.
      *
-     * @return A string representing the code options.
      */
-    @Override
-    public String getCodeCharsString() {
-        return "12345678"; // Default: 12345678
+    public void setOpenHandFlag() {
+        input.displayMessage("Open hand mode selected.");
+        openHandFlag = true;
     }
 
+    /**
+     * Gets the options flag.
+     * The options flag is used to determine whether the user can adjust the game settings.
+     *
+     * @return The options flag.
+     */
+    @Override
+    public boolean getOptionsFlag() {
+        return this.optionsFlag;
+    }
 
     /**
      * Initiates the Options Menu integrated process.

@@ -4,15 +4,7 @@ package org.rws.mastermind.interfaces;
  * The GameSettingsProvider interface provides methods to retrieve game settings
  * such as the number of players, number of rounds, code length, and code options.
  */
-public interface GameSettingsProvider {
-
-    /**
-     * Gets the options flag.
-     * The options flag is used to determine whether the user can adjust the game settings.
-     *
-     * @return The options flag.
-     */
-    boolean getOptionsFlag();
+public interface GameSetter {
 
     /**
      * Gets the introduction messages for the game.
@@ -60,6 +52,14 @@ public interface GameSettingsProvider {
      * @return A string representing the valid code characters.
      */
     String getCodeCharsString();
+
+    /**
+     * Gets the options flag.
+     * The options flag is used to determine whether the user can adjust the game settings.
+     *
+     * @return The options flag.
+     */
+    boolean getOptionsFlag();
 
     /**
      * See if open hand mode is selected.
