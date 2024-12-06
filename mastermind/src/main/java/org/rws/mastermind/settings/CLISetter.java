@@ -10,6 +10,7 @@ import org.rws.mastermind.input.CLIInputHandler;
 public class CLISetter implements GameSetter {
     private final CLIInputHandler input;
     private final boolean optionsFlag = true;
+    private boolean chooseCodeFlag = false;
     private boolean openHandFlag = false;
 
     private int numberOfPlayers;
@@ -50,7 +51,7 @@ public class CLISetter implements GameSetter {
     public String[] getGameInstructions() {
         return new String[]{
                 "The goal of the game is to guess the secret code.",
-                "The code consists of a series of numbers.",
+                "The code consists of a series of 4 numbers.",
                 "Each number can be between 1 and 8.",
                 "You have a limited number of attempts to guess the code.",
                 "After each guess, you will receive feedback on your guess.",
@@ -77,7 +78,7 @@ public class CLISetter implements GameSetter {
      *
      */
     public void setNumberOfPlayers() {
-        while (true) {
+        while (input.isRunning()) {
             input.displayMessage("Enter number of players (max 4): ");
             String userInput = input.validateInput();
             
@@ -113,7 +114,7 @@ public class CLISetter implements GameSetter {
      *
      */
     public void setNumberOfRounds() {
-        while (true) {
+        while (input.isRunning()) {
             input.displayMessage("Enter number of rounds: ");
             String userInput = input.validateInput();
 
@@ -148,7 +149,7 @@ public class CLISetter implements GameSetter {
      *
      */
     public void setCodeLength() {
-        while (true) {
+        while (input.isRunning()) {
             input.displayMessage("Enter length of code: ");
             String userInput = input.validateInput();
 
@@ -191,8 +192,65 @@ public class CLISetter implements GameSetter {
      *
      */
     public void setOpenHandFlag() {
-        input.displayMessage("Open hand mode selected.");
-        openHandFlag = true;
+        while (input.isRunning()) {
+            input.displayMessage("Do you want to play with an Open Hand? (y/n): ");
+            String userInput = input.validateInput().toLowerCase();
+            
+            try {
+                // Validate input
+                if (userInput.equals("y") || userInput.equals("yes") || userInput.equals("ye")) {
+                    openHandFlag = true;
+                    input.displayMessage("Open hand mode selected.");
+                    break;
+                } else if (userInput.equals("n") || userInput.equals("no")) {
+                    chooseCodeFlag = false;
+                    input.displayMessage("Open hand mode DE-selected.");
+                    break;
+                } else {
+                    input.displayMessage("Invalid input. Please enter 'y' or 'n'.");
+                }
+            } catch (Exception e) {
+                input.displayMessage("Invalid input.");
+            }
+        }
+    }
+
+    /**
+     * Gets the number of players in the game from the command-line interface.
+     *
+     * @return The number of players.
+     */
+    public boolean getChooseCodeFlag() {
+        return this.chooseCodeFlag;
+    }
+
+    /**
+     * Sets the number of players in the game from the command-line interface.
+     *
+     */
+    public void setChooseCodeFlag() {
+        while (input.isRunning()) {
+            input.displayMessage("Do you want to choose your own code? (y/n): ");
+            String userInput = input.validateInput().toLowerCase();
+            input.displayMessage(userInput);
+            
+            try {
+                // Validate input
+                if (userInput.equals("y") || userInput.equals("yes") || userInput.equals("ye"))  {
+                    chooseCodeFlag = true;
+                    input.displayMessage("You can now choose your own code.");
+                    break;
+                } else if (userInput.equals("n") || userInput.equals("no"))  {
+                    chooseCodeFlag = false;
+                    input.displayMessage("A random code will be generated.");
+                    break;
+                } else {
+                    input.displayMessage("Invalid input. Please enter 'y' or 'n'.");
+                }
+            } catch (Exception e) {
+                input.displayMessage("Invalid input.");
+            }
+        }
     }
 
     /**
@@ -211,26 +269,31 @@ public class CLISetter implements GameSetter {
      * 
     */
     @Override
-    public void initOptionsMenu() {
+    public int initOptionsMenu() {
         String[] menu = {
             "",
-            "Options Menu:",
+            "========================================",
+            "*****||||  Game Settings Menu  ||||*****",
+            "========================================",
             "",
             "1. Select number of players",
             "2. Select number of rounds",
             "3. Select length of code",
             "4. Select feedback type",
-            "5. Open-hand mode",
+            "5. Choose your own code",
+            "6. Open-hand mode",
+            "7. Return to game",
             ""
         };
-
+    
         for (String message : menu) {
             input.displayMessage(message);
         }
-
+    
         int option = getUserOptionSelection();
-        execOptionsMenu(option);
+        return execOptionsMenu(option);
     }
+    
 
     /**
      * Gets the user's Options Menu seleciton.
@@ -239,17 +302,17 @@ public class CLISetter implements GameSetter {
      */
     public int getUserOptionSelection() {
         while (true) {
-            input.displayMessage("Enter the menu number (example '1'): ");
+            input.displayMessage("Choose an option: ");
             int userInput;
 
             try {
                 // Validate input
                 userInput = Integer.parseInt(input.validateInput());
 
-                if (userInput > 0 && userInput < 6) {
+                if (userInput > 0 && userInput <= 7) {
                     return userInput;
                 } else {
-                    input.displayMessage("Please enter an integer between 1 and 5.");
+                    input.displayMessage("Please enter an integer between 1 and 7.");
                 }
             } catch (NumberFormatException e) {
                 input.displayMessage("Invalid input. Please enter a valid integer.");
@@ -262,25 +325,29 @@ public class CLISetter implements GameSetter {
      *
      * @param option An integer representing the user's selection.
      */
-    public void execOptionsMenu(int option) {
+    public int execOptionsMenu(int option) {
         switch(option) {
             case 1:
                 input.displayMessage("Multiplayer is not functional yet. Sorry!");
-                break;
+                return 0;
             case 2:
                 setNumberOfRounds();
-                break;
+                return 1;
             case 3:
                 setCodeLength();
-                break;
+                return 1;
             case 4:
                 input.displayMessage("Feedback type is not functional yet. Sorry!");
-                break;
+                return 0;
             case 5:
+                setChooseCodeFlag();
+                return 1;
+            case 6:
                 setOpenHandFlag();
-                break;
+                return 1;
             default:
-                break;
+                input.displayMessage("Returning to the game...");
+                return 0;
         }
     }
 }

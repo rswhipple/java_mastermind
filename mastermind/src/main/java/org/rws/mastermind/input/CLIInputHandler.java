@@ -39,6 +39,13 @@ public class CLIInputHandler implements InputHandler {
      * Sets the running flag to control the input loop.
      */
     @Override
+    public boolean isRunning() {
+        return running;
+    }
+    /**
+     * Sets the running flag to control the input loop.
+     */
+    @Override
     public void setRunning(boolean running) {
         this.running = running;
     }
@@ -82,9 +89,8 @@ public class CLIInputHandler implements InputHandler {
                 // Check if the user input is '#'
                 if (userInput.equals("#")) {
                     notifyMenuKeyListeners();
-                    break;
                 } 
-                
+
                 // Return trimmed, non-blank input
                 if (userInput != null && !userInput.isBlank()) {
                     return userInput.trim();
@@ -99,6 +105,7 @@ public class CLIInputHandler implements InputHandler {
                 continue;
             }
         }
+        
         return null;    // Return null if input is not valid (or loop is stopped with 'ctr + c')
     }         
 

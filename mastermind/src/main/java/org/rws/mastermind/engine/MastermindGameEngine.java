@@ -61,15 +61,23 @@ public class MastermindGameEngine implements GameEngine {
      * @return A new GameSession object.
      */
     @Override
-    public GameSession createGameSession() {
+    public boolean createGameSession() {
         // Compile Player Names
-        List<Player> players = compilePlayersList();
+        List<Player> players = null;
+        while (input.isRunning()) {
+            players = compilePlayersList();
+            if (players != null) {
+                break;
+            }
+        }
 
         // Create the session
         String sessionID = UUID.randomUUID().toString();
         session = new GameSession(settings, sessionID, players);
 
-        return session;
+        if (session.equals(null)) { return false; } // Error creating session, or early exit
+
+        return true;
     }
 
     /**
@@ -77,6 +85,7 @@ public class MastermindGameEngine implements GameEngine {
      */
     @Override
     public void resetSession() {
+        gameOver = false;
         String sessionID = UUID.randomUUID().toString();
         session = new GameSession(settings, sessionID, session.getPlayers());
     }
@@ -99,14 +108,14 @@ public class MastermindGameEngine implements GameEngine {
         }
 
         // Game loop
-        while (!gameOver) {
+        while (input.isRunning() && !gameOver) {
             if (session.isGameOver()) {
-                if (session.isGameWon()) {
-                    gameOver = true;
-                } else {
+                if (!session.isGameWon()) {
                     input.displayMessage("\nGame over! The code was: " + secretCode.toString());
-                    gameOver = true;
                 }
+
+                gameOver = true;
+
                 showMenu(); // Display global menu
                 return;
             } else {
@@ -114,7 +123,11 @@ public class MastermindGameEngine implements GameEngine {
             }
             input.displayMessage("Make a guess: ");
             if (processGuess(input.validateInput()) == 1) {
-                return; // Exit program
+                input.displayMessage("Do you want to exit the entire program? (y/n)");
+                String choice = input.validateInput();
+                if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("yes")) {
+                    input.setRunning(false);
+                } 
             }
         }
     }
@@ -183,39 +196,53 @@ public class MastermindGameEngine implements GameEngine {
     }
 
     private void showMenu() {
-        System.out.println("\nMenu:");
-        System.out.println("1. View Game Options Menu");
-        System.out.println("2. Reset Game");
-        System.out.println("3. Exit");
-        System.out.println("4. Continue");
+        input.displayMessage("\n==========================");
+        input.displayMessage("*****||||  Menu  ||||*****");
+        input.displayMessage("==========================\n");
+        input.displayMessage("1. Game Settings Menu");
+        input.displayMessage("2. Reset Game");
+        input.displayMessage("3. Exit");
+        input.displayMessage("4. Return to Game\n");
 
-        System.out.print("Choose an option: ");
+        input.displayMessage("Choose an option: ");
         String choice = input.validateInput();
 
         switch (choice) {
             case "1":
-                displayOptionsMenu();
+                displaySettingsMenu();
                 break;
             case "2":
+                input.displayMessage("New game session initiated...");
                 resetSession();
                 startGameSession();
-                break;
+                return;
             case "3":
                 input.setRunning(false);
                 goodbyeMessage();
-                break;
+                return;
             case "4":
-                System.out.println("Returning to the game...");
-                break;
+                input.displayMessage("Returning to the game...");
+                return;
             default:
                 input.displayMessage("Invalid option. Returning to the menu...");
                 showMenu();
         }
     }
 
-    public void displayOptionsMenu() {
-        settings.initOptionsMenu();
+    /**
+     * Displays the game settings menu.
+     */
+    public void displaySettingsMenu() {
+        int endCurrentGame = settings.initOptionsMenu();
+    
+        // Only end the current game if explicitly requested
+        if (endCurrentGame == 1) {
+            input.displayMessage("Ending the current game...");
+            resetSession();
+            startGameSession();
+        }
     }
+    
 
     /**
      * Creates a new player by prompting the user for their name via the command-line interface.
@@ -224,9 +251,12 @@ public class MastermindGameEngine implements GameEngine {
      */
     public Player createPlayer() {
         input.displayMessage("\nWhat's your name?");
-        while (true) {
+        while (input.isRunning()) {
             try {
                 String playerName = input.validateInput();
+                if (playerName == null || playerName.isEmpty()) {
+                    return null;
+                }
                 Player player = new Player(playerName);
                 return player;
             } catch (Exception e) {
@@ -234,6 +264,7 @@ public class MastermindGameEngine implements GameEngine {
                 return null;
             }
         }
+        return null;
     }
 
     /**
@@ -245,7 +276,10 @@ public class MastermindGameEngine implements GameEngine {
         List<Player> players = new ArrayList<>();
         int numPlayers = settings.getNumberOfPlayers();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(createPlayer());
+            Player player = createPlayer();
+            if (player == null) {
+                return null;
+            }
         }
 
         return players;

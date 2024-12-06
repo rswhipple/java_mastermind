@@ -56,9 +56,10 @@ public class Main {
 
         inputHandler.addListener(game);
 
-        game.createGameSession();
-        game.startGameSession();
-
+        if (game.createGameSession()) {
+            inputHandler.displayMessage("Game session created successfully.");
+            game.startGameSession();
+        } 
     }
 
     /**

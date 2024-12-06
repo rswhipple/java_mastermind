@@ -35,6 +35,12 @@ public interface InputHandler {
     void displayErrMessage(String message);
 
     /**
+     * Gets the running flag to control the input loop.
+     * 
+     * @return The running flag.
+     */
+    boolean isRunning();
+    /**
      * Sets the running flag to control the input loop.
      */
     void setRunning(boolean running);

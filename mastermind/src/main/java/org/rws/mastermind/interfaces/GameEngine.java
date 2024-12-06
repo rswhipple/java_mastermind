@@ -1,8 +1,5 @@
 package org.rws.mastermind.interfaces;
 
-import org.rws.mastermind.models.GameSession;
-
-
 /**
  * The GameEngine interface provides methods for creating game sessions and processing guesses.
  */
@@ -18,7 +15,7 @@ public interface GameEngine {
      *
      * @return A new GameSession object.
      */
-    GameSession createGameSession();
+    boolean createGameSession();
 
     /**
      * Starts the game.
