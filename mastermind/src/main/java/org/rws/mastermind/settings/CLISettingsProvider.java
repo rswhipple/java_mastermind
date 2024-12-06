@@ -7,9 +7,9 @@ import org.rws.mastermind.input.CLIInputHandler;
  * and provides methods to retrieve game settings via the command-line interface (CLI).
  */
 public class CLISettingsProvider extends DefaultSettingsProvider {
-
     private final CLIInputHandler input;
     private final boolean optionsFlag = true;
+    private boolean openHandFlag = false;
 
     private int numberOfPlayers;
     private int numberOfRounds;
@@ -144,6 +144,24 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
     }
 
     /**
+     * Sets the length of the code to be guessed from the command-line interface.
+     *
+     */
+    public void setOpenHandFlag() {
+        input.displayMessage("Open hand mode selected.");
+        openHandFlag = true;
+    }
+
+    /**
+     * Gets the open hand flag.
+     *
+     * @return The open hand flag.
+     */
+    public boolean getOpenHandFlag() {
+        return this.openHandFlag;
+    }
+
+    /**
      * Gets the options available for the code.
      *
      * @return A string representing the code options.
@@ -225,7 +243,7 @@ public class CLISettingsProvider extends DefaultSettingsProvider {
                 input.displayMessage("Feedback type is not functional yet. Sorry!");
                 break;
             case 5:
-                input.displayMessage("This option is not functional yet. Sorry!");
+                setOpenHandFlag();
                 break;
             default:
                 break;

@@ -8,6 +8,7 @@ import org.rws.mastermind.interfaces.GameSettingsProvider;
  */
 public class DefaultSettingsProvider implements GameSettingsProvider {
     private final boolean optionsFlag = false;
+    private boolean openHandFlag = false;
 
     /**
      * Gets the options flag.
@@ -62,18 +63,6 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
     }
 
     /**
-     * Gets the outro messages for the game.
-     *
-     * @return An array of strings representing the outro messages.
-     */
-    @Override
-    public String[] getOuttro() {
-        return new String[]{
-                "Do you want to play again?",
-                "Enter 'yes' to play again or any other key to exit."
-        };
-    }
-    /**
      * Gets the number of players in the game.
      *
      * @return The number of players.
@@ -111,6 +100,16 @@ public class DefaultSettingsProvider implements GameSettingsProvider {
     @Override
     public String getCodeCharsString() {
         return "12345678"; // Default: 12345678
+    }
+
+    /**
+     * Gets the length of the code to be guessed from the command-line interface.
+     *
+     * @return The length of the code.
+     */
+    @Override
+    public boolean getOpenHandFlag() {
+        return this.openHandFlag;
     }
 }
 

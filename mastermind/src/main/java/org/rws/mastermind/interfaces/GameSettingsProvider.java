@@ -34,13 +34,6 @@ public interface GameSettingsProvider {
     void initOptionsMenu();
 
     /**
-     * Gets the outro messages for the game.
-     *
-     * @return An array of strings representing the outro messages.
-     */
-    String[] getOuttro();
-
-    /**
      * Gets the number of players in the game.
      *
      * @return The number of players.
@@ -67,4 +60,11 @@ public interface GameSettingsProvider {
      * @return A string representing the valid code characters.
      */
     String getCodeCharsString();
+
+    /**
+     * See if open hand mode is selected.
+     *
+     * @return A boolean representing the open hand mode flag.
+     */
+    boolean getOpenHandFlag();
 }
