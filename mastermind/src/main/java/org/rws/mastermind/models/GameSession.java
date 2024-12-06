@@ -27,6 +27,13 @@ public class GameSession {
         this.isGameWon = false;
     }
 
+    public static GameSession create(GameSetter settings, String sessionId, List<Player> players) {
+        if (players == null || players.isEmpty()) {
+            System.out.println("GameSession not created.");
+            return null;
+        }
+        return new GameSession(settings, sessionId, players);
+    }
     /**
      * Gets the session ID.
      *
