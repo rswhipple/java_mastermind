@@ -85,6 +85,9 @@ public class MMGameEngine implements GameEngine {
         session.resetSession();
     }
 
+    /**
+     * Ends the current game session.
+     */
     @Override
     public void endGameSession() {
         session.endSession();
@@ -216,7 +219,6 @@ public class MMGameEngine implements GameEngine {
         }
     }
 
-
     /**
      * Creates a new player by prompting the user for their name via the command-line interface.
      *
@@ -256,6 +258,4 @@ public class MMGameEngine implements GameEngine {
             players.add(player);
         }
     }
-
-
 }

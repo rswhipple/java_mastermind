@@ -15,8 +15,14 @@ public class GameSession {
     private GameState gameState;
     private final int numRounds;
 
-
-
+    /**
+     * Constructs a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
+     *
+     * @param codeGenerator The CodeGenerator object used to generate the secret code.
+     * @param sessionId The string representing the session ID.
+     * @param players The list of players in the game session.
+     * @param numRounds The number of rounds in the game session.
+     */
     public GameSession(CodeGenerator codeGenerator, String sessionId, List<Player> players, int numRounds) {
         this.codeGen = codeGenerator;
         this.sessionId = sessionId;
@@ -28,7 +34,7 @@ public class GameSession {
     }
 
     /**
-     * Constructs a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
+     * Factory method to create a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
      *
      * @param codeGenerator The CodeGenerator object used to generate the secret code.
      * @param sessionId The string representing the session ID.
