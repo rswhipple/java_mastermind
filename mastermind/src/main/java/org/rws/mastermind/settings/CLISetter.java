@@ -29,16 +29,103 @@ public class CLISetter implements GameSetter {
         this.codeLength = 4;
     }
 
-    /**
-     * Gets the number of players in the game from the command-line interface.
-     *
-     * @return The number of players.
-     */
+        /**
+     * Initiates the Options Menu integrated process.
+     * 
+    */
     @Override
-    public int getNumberOfPlayers() {
-        return this.numberOfPlayers;
+    public void initOptionsMenu() {
+        String[] menu = {
+            "",
+            "========================================",
+            "*****||||  Game Settings Menu  ||||*****",
+            "========================================",
+            "",
+            "1. Select number of players",
+            "2. Select number of rounds",
+            "3. Select length of code",
+            "4. Select feedback type",
+            "5. Choose your own code",
+            "6. Open-hand mode",
+            "7. Return to game",
+            ""
+        };
+    
+        for (String message : menu) {
+            input.displayMessage(message);
+        }
+    
+        int option = getSelection();
+        execSelection(option);
+    }
+    
+
+    /**
+     * Gets the user's Options Menu seleciton.
+     *
+     * @return The int representing a valid option menu selection.
+     */
+    public int getSelection() {
+        while (true) {
+            input.displayMessage("Choose an option: ");
+            int userInput;
+
+            try {
+                // Validate input
+                userInput = Integer.parseInt(input.validateInput());
+
+                if (userInput > 0 && userInput <= 7) {
+                    return userInput;
+                } else {
+                    input.displayMessage("Please enter an integer between 1 and 7.");
+                }
+            } catch (NumberFormatException e) {
+                input.displayMessage("Invalid input. Please enter a valid integer.");
+            }
+        }
     }
 
+    /**
+     * Executes the options menu using a switch/case.
+     *
+     * @param option An integer representing the user's selection.
+     */
+    public void execSelection(int option) {
+        switch(option) {
+            case 1:
+                input.displayMessage("Multiplayer is not functional yet. Sorry!");
+                return;
+            case 2:
+                setNumberOfRounds();
+                return;
+            case 3:
+                setCodeLength();
+                return;
+            case 4:
+                input.displayMessage("Feedback type is not functional yet. Sorry!");
+                return;
+            case 5:
+                setChooseCodeFlag();
+                return;
+            case 6:
+                setOpenHandFlag();
+                return;
+            default:
+                input.displayMessage("Returning to the game...");
+                return;
+        }
+    }
+
+    // Getters
+    @Override public int getNumberOfPlayers() { return this.numberOfPlayers; }
+    @Override public int getNumberOfRounds() { return this.numberOfRounds; }
+    @Override public int getCodeLength() { return this.codeLength; }
+    @Override public String getCodeCharsString() { return "12345678"; }
+    @Override public boolean getOptionsFlag() { return this.optionsFlag; }
+    @Override public boolean getOpenHandFlag() { return this.openHandFlag; }
+    public boolean getChooseCodeFlag() { return this.chooseCodeFlag; }
+
+    //Setters
     /**
      * Sets the number of players in the game from the command-line interface.
      *
@@ -63,16 +150,6 @@ public class CLISetter implements GameSetter {
                 input.displayMessage("Invalid input. Please enter a valid integer.");
             }
         }
-    }
-
-    /**
-     * Gets the number of rounds in the game from the command-line interface.
-     *
-     * @return The number of rounds.
-     */
-    @Override
-    public int getNumberOfRounds() {
-        return this.numberOfRounds;
     }
 
     /**
@@ -101,16 +178,6 @@ public class CLISetter implements GameSetter {
     }
 
     /**
-     * Gets the length of the code to be guessed from the command-line interface.
-     *
-     * @return The length of the code.
-     */
-    @Override
-    public int getCodeLength() {
-        return this.codeLength;
-    }
-
-    /**
      * Sets the length of the code to be guessed from the command-line interface.
      *
      */
@@ -132,25 +199,6 @@ public class CLISetter implements GameSetter {
                 input.displayMessage("Invalid input. Please enter a valid integer.");
             }
         }
-    }
-
-    /**
-     * Gets the options available for the code.
-     *
-     * @return A string representing the code options.
-     */
-    @Override
-    public String getCodeCharsString() {
-        return "12345678"; // Default: 12345678
-    }
-
-    /**
-     * Gets the open hand flag.
-     *
-     * @return The open hand flag.
-     */
-    public boolean getOpenHandFlag() {
-        return this.openHandFlag;
     }
 
     /**
@@ -182,15 +230,6 @@ public class CLISetter implements GameSetter {
     }
 
     /**
-     * Gets the number of players in the game from the command-line interface.
-     *
-     * @return The number of players.
-     */
-    public boolean getChooseCodeFlag() {
-        return this.chooseCodeFlag;
-    }
-
-    /**
      * Sets the number of players in the game from the command-line interface.
      *
      */
@@ -216,104 +255,6 @@ public class CLISetter implements GameSetter {
             } catch (Exception e) {
                 input.displayMessage("Invalid input.");
             }
-        }
-    }
-
-    /**
-     * Gets the options flag.
-     * The options flag is used to determine whether the user can adjust the game settings.
-     *
-     * @return The options flag.
-     */
-    @Override
-    public boolean getOptionsFlag() {
-        return this.optionsFlag;
-    }
-
-    /**
-     * Initiates the Options Menu integrated process.
-     * 
-    */
-    @Override
-    public void initOptionsMenu() {
-        String[] menu = {
-            "",
-            "========================================",
-            "*****||||  Game Settings Menu  ||||*****",
-            "========================================",
-            "",
-            "1. Select number of players",
-            "2. Select number of rounds",
-            "3. Select length of code",
-            "4. Select feedback type",
-            "5. Choose your own code",
-            "6. Open-hand mode",
-            "7. Return to game",
-            ""
-        };
-    
-        for (String message : menu) {
-            input.displayMessage(message);
-        }
-    
-        int option = getUserOptionSelection();
-        execOptionsMenu(option);
-    }
-    
-
-    /**
-     * Gets the user's Options Menu seleciton.
-     *
-     * @return The int representing a valid option menu selection.
-     */
-    public int getUserOptionSelection() {
-        while (true) {
-            input.displayMessage("Choose an option: ");
-            int userInput;
-
-            try {
-                // Validate input
-                userInput = Integer.parseInt(input.validateInput());
-
-                if (userInput > 0 && userInput <= 7) {
-                    return userInput;
-                } else {
-                    input.displayMessage("Please enter an integer between 1 and 7.");
-                }
-            } catch (NumberFormatException e) {
-                input.displayMessage("Invalid input. Please enter a valid integer.");
-            }
-        }
-    }
-
-    /**
-     * Executes the options menu using a switch/case.
-     *
-     * @param option An integer representing the user's selection.
-     */
-    public void execOptionsMenu(int option) {
-        switch(option) {
-            case 1:
-                input.displayMessage("Multiplayer is not functional yet. Sorry!");
-                return;
-            case 2:
-                setNumberOfRounds();
-                return;
-            case 3:
-                setCodeLength();
-                return;
-            case 4:
-                input.displayMessage("Feedback type is not functional yet. Sorry!");
-                return;
-            case 5:
-                setChooseCodeFlag();
-                return;
-            case 6:
-                setOpenHandFlag();
-                return;
-            default:
-                input.displayMessage("Returning to the game...");
-                return;
         }
     }
 }
