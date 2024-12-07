@@ -1,5 +1,7 @@
 package org.rws.mastermind.models;
 
+import org.rws.mastermind.code.Code;
+
 /**
  * The GameState class represents the state of a game in the Mastermind game.
  * It contains the secret code, the number of attempts left, and the game status.

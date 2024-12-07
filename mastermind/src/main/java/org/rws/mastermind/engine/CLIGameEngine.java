@@ -1,12 +1,12 @@
 package org.rws.mastermind.engine;
 
+import org.rws.mastermind.code.RandomCodeGenerator;
 import org.rws.mastermind.database.MastermindDB;
-import org.rws.mastermind.interfaces.GameSetter;
-import org.rws.mastermind.interfaces.InputHandler;
-import org.rws.mastermind.codegen.BaseCodeGenerator;
+import org.rws.mastermind.input.InputHandler;
+import org.rws.mastermind.settings.GameSetter;
 
 public class CLIGameEngine extends MMGameEngine {
-    public CLIGameEngine(MastermindDB db, GameSetter gameSetter, InputHandler inputHandler, BaseCodeGenerator codeGenerator) {
+    public CLIGameEngine(MastermindDB db, GameSetter gameSetter, InputHandler inputHandler, RandomCodeGenerator codeGenerator) {
         super(db, gameSetter, inputHandler, codeGenerator);
     }
 

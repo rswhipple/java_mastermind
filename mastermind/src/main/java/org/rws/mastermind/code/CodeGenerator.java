@@ -1,6 +1,4 @@
-package org.rws.mastermind.interfaces;
-
-import org.rws.mastermind.models.Code;
+package org.rws.mastermind.code;
 
 /**
  * The CodeGenerator interface provides a method to generate a code for the Mastermind game.

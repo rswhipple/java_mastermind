@@ -1,4 +1,4 @@
-package org.rws.mastermind.interfaces;
+package org.rws.mastermind.engine;
 
 /**
  * The GameEngine interface provides methods for managing game sessions and processing guesses

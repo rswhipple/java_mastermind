@@ -1,5 +1,7 @@
 package org.rws.mastermind.models;
 
+import org.rws.mastermind.code.Code;
+
 /**
  * The Scorer class provides methods to score guesses in the Mastermind game.
  */

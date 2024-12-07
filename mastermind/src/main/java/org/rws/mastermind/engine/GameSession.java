@@ -2,7 +2,8 @@ package org.rws.mastermind.engine;
 
 import java.util.List;
 import org.rws.mastermind.models.*;
-import org.rws.mastermind.interfaces.*;
+import org.rws.mastermind.code.Code;
+import org.rws.mastermind.code.CodeGenerator;
 
 /**
  * The GameSession class represents a game session in the Mastermind game.

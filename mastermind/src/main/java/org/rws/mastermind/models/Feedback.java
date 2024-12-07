@@ -1,5 +1,6 @@
 package org.rws.mastermind.models;
 
+import org.rws.mastermind.code.Code;
 
 /**
  * The DefaultFeedbackGenerator class implements the FeedbackGenerator interface

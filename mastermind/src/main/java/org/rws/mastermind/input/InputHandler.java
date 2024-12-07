@@ -1,4 +1,4 @@
-package org.rws.mastermind.interfaces;
+package org.rws.mastermind.input;
 
 /**
  * The InputHandler interface provides methods for handling user input and displaying messages.

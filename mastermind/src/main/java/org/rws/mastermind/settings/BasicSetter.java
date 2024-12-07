@@ -1,7 +1,5 @@
 package org.rws.mastermind.settings;
 
-import org.rws.mastermind.interfaces.GameSetter;
-
 /**
  * The BasicSetter class implements the GameSettingsProvider interface
  * and provides basic game settings for the Mastermind game.

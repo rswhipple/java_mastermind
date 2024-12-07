@@ -1,7 +1,7 @@
 package org.rws.mastermind.models;
 
 import org.rws.mastermind.database.MastermindDB;
-import org.rws.mastermind.interfaces.InputHandler;
+import org.rws.mastermind.input.InputHandler;
 
 import java.util.List;
 

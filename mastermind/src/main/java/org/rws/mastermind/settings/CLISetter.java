@@ -1,6 +1,5 @@
 package org.rws.mastermind.settings;
 
-import org.rws.mastermind.interfaces.GameSetter;
 import org.rws.mastermind.input.CLIInputHandler;
 
 /**

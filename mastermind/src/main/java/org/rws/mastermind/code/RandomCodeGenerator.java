@@ -1,9 +1,7 @@
-package org.rws.mastermind.codegen;
+package org.rws.mastermind.code;
 
-import org.rws.mastermind.interfaces.CodeGenerator;
-import org.rws.mastermind.interfaces.GameSetter;
-import org.rws.mastermind.interfaces.HttpHandler;
-import org.rws.mastermind.models.Code;
+import org.rws.mastermind.http.HttpHandler;
+import org.rws.mastermind.settings.GameSetter;
 
 import java.util.Random;
 
@@ -11,7 +9,7 @@ import java.util.Random;
  * The DefaultCodeGenerator class implements the CodeGenerator interface
  * and provides a method to generate a code for the Mastermind game.
  */
-public class BaseCodeGenerator implements CodeGenerator {
+public class RandomCodeGenerator implements CodeGenerator {
     private final Random random;
 
     private int codeLength;
@@ -26,7 +24,7 @@ public class BaseCodeGenerator implements CodeGenerator {
      *
      * @param settingsProvider The GameSettingsProvider object containing the game settings.
      */
-    public BaseCodeGenerator(GameSetter settingsProvider, HttpHandler httpHandler) {
+    public RandomCodeGenerator(GameSetter settingsProvider, HttpHandler httpHandler) {
         this.httpHandler = httpHandler;
         this.baseUrl = "http://www.random.org/integers/";
         this.random = new Random();

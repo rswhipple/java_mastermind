@@ -1,12 +1,11 @@
 package org.rws.mastermind.engine;
 
+import org.rws.mastermind.code.RandomCodeGenerator;
 import org.rws.mastermind.database.MastermindDB;
-import org.rws.mastermind.interfaces.GameSetter;
-import org.rws.mastermind.interfaces.GameEngine;
-import org.rws.mastermind.interfaces.InputHandler;
-import org.rws.mastermind.codegen.BaseCodeGenerator;
+import org.rws.mastermind.input.InputHandler;
 import org.rws.mastermind.models.Player;
 import org.rws.mastermind.models.Validator;
+import org.rws.mastermind.settings.GameSetter;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.UUID;
 public class MMGameEngine implements GameEngine {
     protected final MastermindDB db;
     protected final InputHandler input;
-    protected final BaseCodeGenerator codeGen;
+    protected final RandomCodeGenerator codeGen;
     protected final GameSetter settings;
 
     private GameSession session;
@@ -31,7 +30,7 @@ public class MMGameEngine implements GameEngine {
             MastermindDB db,
             GameSetter gameSetter,
             InputHandler inputHandler, 
-            BaseCodeGenerator codeGenerator
+            RandomCodeGenerator codeGenerator
         ) {
         this.db = db;
         this.settings = gameSetter;

@@ -1,4 +1,4 @@
-package org.rws.mastermind.interfaces;
+package org.rws.mastermind.settings;
 
 /**
  * The GameSettingsProvider interface provides methods to retrieve game settings

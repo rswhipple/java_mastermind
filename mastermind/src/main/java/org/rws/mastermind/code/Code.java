@@ -1,4 +1,4 @@
-package org.rws.mastermind.models;
+package org.rws.mastermind.code;
 
 import java.util.Arrays;
 

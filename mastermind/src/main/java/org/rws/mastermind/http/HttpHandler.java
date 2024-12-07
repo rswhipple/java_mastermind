@@ -1,4 +1,4 @@
-package org.rws.mastermind.interfaces;
+package org.rws.mastermind.http;
 
 /**
  * The HttpHandler interface provides a method to perform HTTP GET requests.

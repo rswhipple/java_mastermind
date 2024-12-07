@@ -1,11 +1,11 @@
 package org.rws.mastermind;
 
 import org.rws.mastermind.engine.CLIGameEngine;
+import org.rws.mastermind.code.RandomCodeGenerator;
 import org.rws.mastermind.database.DatabaseSetup;
 import org.rws.mastermind.database.MastermindDB;
 import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.input.CLIInputHandler;
-import org.rws.mastermind.codegen.BaseCodeGenerator;
 import org.rws.mastermind.http.HttpHandlerImp;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Main {
         registerShutdownTask(httpHandler::cleanup);
 
         CLISetter settingsProvider = new CLISetter(inputHandler);
-        BaseCodeGenerator codeGenerator = new BaseCodeGenerator(settingsProvider, httpHandler);
+        RandomCodeGenerator codeGenerator = new RandomCodeGenerator(settingsProvider, httpHandler);
 
         // Central shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
