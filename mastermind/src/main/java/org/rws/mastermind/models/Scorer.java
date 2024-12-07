@@ -53,24 +53,13 @@ public class Scorer {
     }
 
     /**
-     * Scores a guess compared to the secret code with more detailed feedback.
-     * The result array contains four elements:
-     * - result[0]: The number of correct characters in the correct position (black pegs).
-     * - result[1]: The number of correct characters in the wrong position (white pegs).
-     * - result[2]: The total difference between the number of occurrences of each character in the guess and the code.
+     * Creates a hash array from the given guess.
+     * The hash array represents the frequency of each character in the guess.
      *
-     * @param guess The string representing the player's guess.
-     * @param code The string representing the secret code.
-     * @return An array of four integers representing the detailed score.
+     * @param guess The character array representing the player's guess.
+     * @param varLength The length of the hash array.
+     * @return An int array representing the frequency of each character in the guess.
      */
-    public static int[] detailedScore(String guess, String code) {
-        int[] result = new int[3];
-
-        // add logic here
-        
-        return result;
-    }
-
     public int[] createHash(char[] guess, int varLength) {
         // Initialize an array of size 'vars' with all elements as 0
         int[] hash = new int[varLength];
@@ -87,6 +76,13 @@ public class Scorer {
         return hash; // Return the resulting hash array
     }
 
+    /**
+     * Generates a hint based on the player's guess compared to the secret code.
+     * The hint shows correct characters in their correct positions and underscores for incorrect characters.
+     *
+     * @param guess The string representing the player's guess.
+     * @return A string representing the hint.
+     */
     public String patternHint(String guess) {
         String correctPattern = secretCode.toString();
         StringBuilder hint = new StringBuilder();
@@ -98,6 +94,11 @@ public class Scorer {
             }
         }
         return "Hint: " + hint.toString();
+    }
+
+    public String highLowHint(String guess) {
+        // TODO Implement high-low hint
+        return "Hint: ";
     }
     
 }

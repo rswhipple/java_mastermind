@@ -74,7 +74,7 @@ public class CLIGameEngine extends MMGameEngine {
      * Displays the game settings menu.
      */
     public void displaySettingsMenu() {
-        settings.initOptionsMenu();
+        settings.initSettingsMenu();
 
         String[] warning = {
             "",

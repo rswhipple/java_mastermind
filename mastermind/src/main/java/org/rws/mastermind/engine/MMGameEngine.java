@@ -46,47 +46,6 @@ public class MMGameEngine implements GameEngine {
     }
 
     /**
-     * Creates a new player by prompting the user for their name via the command-line interface.
-     *
-     * @return A Player object representing the new player.
-     */
-    @Override
-    public Player createPlayer() {
-        input.displayMessage("\nWhat's your name?");
-        while (input.isRunning()) {
-            try {
-                String playerName = input.validateInput();
-                if (playerName == null || playerName.isEmpty()) {
-                    return null;
-                }
-                Player player = new Player(playerName, db, input);
-                input.displayMessage("Welcome, " + player.getName() + "!");
-                return player;
-            } catch (Exception e) {
-                input.displayMessage("An unexpected error occurred: " + e.getMessage());
-                return null;
-            }
-        }
-        return null;
-    }
-    /**
-     * Compiles a list of players by prompting the user for each player's name via the command-line interface.
-     *
-     * @return A list of Player objects representing the players in the game session.
-     */
-    @Override
-    public void compilePlayersList() {
-        int numPlayers = settings.getNumberOfPlayers();
-        for (int i = 0; i < numPlayers; i++) {
-            Player player = createPlayer();
-            if (player == null) {
-                return;
-            }
-            players.add(player);
-        }
-    }
-
-    /**
      * Creates a new game session with the given settings and player names.
      *
      * @return A new GameSession object.
@@ -256,5 +215,47 @@ public class MMGameEngine implements GameEngine {
             input.displayMessage(message);
         }
     }
+
+
+    /**
+     * Creates a new player by prompting the user for their name via the command-line interface.
+     *
+     * @return A Player object representing the new player.
+     */
+    private Player createPlayer() {
+        input.displayMessage("\nWhat's your name?");
+        while (input.isRunning()) {
+            try {
+                String playerName = input.validateInput();
+                if (playerName == null || playerName.isEmpty()) {
+                    return null;
+                }
+                Player player = new Player(playerName, db, input);
+                input.displayMessage("Welcome, " + player.getName() + "!");
+                return player;
+            } catch (Exception e) {
+                input.displayMessage("An unexpected error occurred: " + e.getMessage());
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Compiles a list of players by prompting the user for each player's name via the command-line interface.
+     *
+     * @return A list of Player objects representing the players in the game session.
+     */
+    private void compilePlayersList() {
+        int numPlayers = settings.getNumberOfPlayers();
+        for (int i = 0; i < numPlayers; i++) {
+            Player player = createPlayer();
+            if (player == null) {
+                return;
+            }
+            players.add(player);
+        }
+    }
+
 
 }

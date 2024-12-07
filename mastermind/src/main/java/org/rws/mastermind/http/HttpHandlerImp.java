@@ -7,9 +7,20 @@ import java.net.URL;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
+/**
+ * The HttpHandlerImp class implements the HttpHandler interface
+ * and provides a method to perform HTTP GET requests.
+ */
 public class HttpHandlerImp implements HttpHandler {
     private HttpURLConnection connection;
 
+    /**
+     * Performs an HTTP GET request to the specified URL.
+     *
+     * @param url The URL to send the GET request to.
+     * @return The response from the GET request as a string.
+     * @throws Exception If an error occurs during the HTTP request.
+     */
     @Override
     public String get(String url) throws Exception {
         try {
@@ -38,6 +49,9 @@ public class HttpHandlerImp implements HttpHandler {
         }
     }   
 
+    /**
+     * Closes the connection to the server.
+     */
     public void cleanup(){
         if (connection != null) {
             connection.disconnect();

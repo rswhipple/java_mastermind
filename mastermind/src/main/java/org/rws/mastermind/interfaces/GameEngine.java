@@ -1,18 +1,13 @@
 package org.rws.mastermind.interfaces;
 
-import org.rws.mastermind.models.Player;
-
 /**
- * The GameEngine interface provides methods for creating game sessions and processing guesses.
+ * The GameEngine interface provides methods for managing game sessions and processing guesses
+ * in the Mastermind game.
  */
 public interface GameEngine {
 
-    Player createPlayer();
-
-    void compilePlayersList();
-
     /**
-     * Choose settings if applicable and create a new game session.
+     * Create a new game session.
      *
      * @return A new GameSession object.
      */
@@ -29,6 +24,9 @@ public interface GameEngine {
      */
     void resetSession();
 
+    /**
+     * Ends the current game session.
+     */
     void endGameSession();
 
     /**
@@ -38,8 +36,14 @@ public interface GameEngine {
      */
     int processGuess(String guess);
 
+    /**
+     * Executes additional behavior after the game session has ended.
+     */
     void additionalBehavior();
 
+    /**
+     * Displays the secret code.
+     */
     void displayCode();
 
     /**
@@ -52,5 +56,8 @@ public interface GameEngine {
      */
     void goodbyeMessage();
 
+    /**
+     * Displays the game instructions.
+     */
     void instructions();
 }

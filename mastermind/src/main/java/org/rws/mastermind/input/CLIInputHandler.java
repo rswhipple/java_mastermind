@@ -17,8 +17,7 @@ public class CLIInputHandler implements InputHandler {
     private Scanner scanner;
     private volatile boolean running = true; // Flag to control the input loopte
     private List<CLIGameEngine> listeners = new ArrayList<>();
-
-
+    
     /**
      * Constructs a CLIInputHandler with a new Scanner object for reading input from the standard input stream.
      */

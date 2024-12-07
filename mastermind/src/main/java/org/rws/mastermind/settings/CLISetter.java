@@ -4,7 +4,7 @@ import org.rws.mastermind.interfaces.GameSetter;
 import org.rws.mastermind.input.CLIInputHandler;
 
 /**
- * The CLISettingsProvider class implements the GameSettingsProvider interface
+ * The CLISetter class implements the GameSetter interface
  * and provides methods to retrieve game settings via the command-line interface (CLI).
  */
 public class CLISetter implements GameSetter {
@@ -18,7 +18,7 @@ public class CLISetter implements GameSetter {
     private int codeLength;
 
     /**
-     * Constructs a CLISettingsProvider with the specified CLIInputHandler.
+     * Constructs a CLISetter with the specified CLIInputHandler.
      *
      * @param input The CLIInputHandler object used to handle user input via the command-line interface.
      */
@@ -29,12 +29,12 @@ public class CLISetter implements GameSetter {
         this.codeLength = 4;
     }
 
-        /**
-     * Initiates the Options Menu integrated process.
+    /**
+     * Initiates the 'Settings Menu' integrated process.
      * 
     */
     @Override
-    public void initOptionsMenu() {
+    public void initSettingsMenu() {
         String[] menu = {
             "",
             "========================================",
@@ -61,7 +61,7 @@ public class CLISetter implements GameSetter {
     
 
     /**
-     * Gets the user's Options Menu seleciton.
+     * Gets the user's 'Settings Menu' seleciton.
      *
      * @return The int representing a valid option menu selection.
      */
@@ -86,7 +86,7 @@ public class CLISetter implements GameSetter {
     }
 
     /**
-     * Executes the options menu using a switch/case.
+     * Executes the 'Settings Menu' using a switch/case.
      *
      * @param option An integer representing the user's selection.
      */

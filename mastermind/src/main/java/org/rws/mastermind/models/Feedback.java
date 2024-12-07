@@ -7,7 +7,6 @@ package org.rws.mastermind.models;
  */
 public class Feedback {
     private Scorer scorer;
-    private boolean hintFlag;
     private int option;
 
     /**
@@ -17,7 +16,6 @@ public class Feedback {
      */
     public Feedback(Code code) {
         this.scorer = new Scorer(code);
-        this.hintFlag = false;
         this.option = 0;
     }
 
@@ -27,33 +25,61 @@ public class Feedback {
      * @param guess The player's guess.
      * @return A string representing the feedback for the guess.
      */
-    public String generateFeedback(String guess) {
+    public String[] generateFeedback(String guess) {
         int[] score = scorer.score(guess);
 
-        return String.format(
+        String basicFB = String.format(
                 "%d black peg(s), %d white peg(s)",
                 score[0],
                 score[1]
         );
+
+        String[] fb = {basicFB, ""};
+
+        if (this.option == 1) {
+            fb[1] += generatePatternHint(guess);
+        } else if (this.option == 2) {
+            fb[1] += generateHighLowHint(guess);
+        }
+
+        return fb;
     }
 
+    /**
+     * Generates a pattern hint for a given guess compared to the secret code.
+     *
+     * @param guess The player's guess.
+     * @return A string representing the pattern hint for the guess.
+     */
+    public String generatePatternHint(String guess) {
+        return scorer.patternHint(guess);
+    }
+
+    /**
+     * Generates a high-low hint for a given guess compared to the secret code.
+     *
+     * @param guess The player's guess.
+     * @return A string representing the high-low hint for the guess.
+     */
+    public String generateHighLowHint(String guess) {
+        return scorer.highLowHint(guess);
+    }
+
+    /**
+     * Gets the feedback option.
+     *
+     * @return The feedback option.
+     */
     public int getFeedbackOption() {
         return this.option;
     }
     
+    /**
+     * Sets the feedback option.
+     *
+     * @param option The feedback option.
+     */
     public void setFeedbackOption(int option) {
         this.option = option;
-    }
-
-    public String generateHint(String guess) {
-        return scorer.patternHint(guess);
-    }
-    
-    public void setHintFlag(boolean hintFlag) {
-        this.hintFlag = hintFlag;
-    }
-
-    public boolean getHintFlag() {
-        return this.hintFlag;
     }
 }

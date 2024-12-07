@@ -15,9 +15,12 @@ public class Player {
     private int uniqueID;
 
     /**
-     * Constructs a Player object with the specified name.
+     * Constructs a Player object with the specified name, database, and input handler.
+     * The constructor validates the player's name and adds the player to the database.
      *
      * @param name The name of the player.
+     * @param db The MastermindDB object for database operations.
+     * @param input The InputHandler object for handling user input.
      */
     public Player(String name, MastermindDB db, InputHandler input) {
         this.db = db;
@@ -48,22 +51,55 @@ public class Player {
         }
     }
 
-    public int addPlayerDB() {
-        return db.addPlayer(name);
-    }
 
+    /**
+     * Increments the win count for the player.
+     */
     public void incrementWins() {
         db.incrementWins(uniqueID);
     }
 
+    /**
+     * Increments the loss count for the player.
+     */
     public void incrementLosses() {
         db.incrementLosses(uniqueID);
     }
 
-    // Getters 
-    public String getName() { return name;}
-    public int getUniqueID() { return uniqueID; }
-    public int getWins() { return db.getWinCount(uniqueID); }
-    public int getLosses() { return db.getLossCount(uniqueID); }
+    /**
+     * Gets the name of the player.
+     *
+     * @return The name of the player.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the unique ID of the player.
+     *
+     * @return The unique ID of the player.
+     */
+    public int getUniqueID() {
+        return uniqueID;
+    }
+
+    /**
+     * Gets the win count for the player.
+     *
+     * @return The win count for the player.
+     */
+    public int getWins() {
+        return db.getWinCount(uniqueID);
+    }
+
+    /**
+     * Gets the loss count for the player.
+     *
+     * @return The loss count for the player.
+     */
+    public int getLosses() {
+        return db.getLossCount(uniqueID);
+    }
 
 }

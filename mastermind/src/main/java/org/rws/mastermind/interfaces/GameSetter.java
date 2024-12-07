@@ -9,7 +9,7 @@ public interface GameSetter {
     /**
      * Initiates the Options Menu integrated process.
      */
-    void initOptionsMenu();
+    void initSettingsMenu();
 
     /**
      * Gets the number of players in the game.
