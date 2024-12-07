@@ -52,7 +52,7 @@ public class CLIGameEngine extends MMGameEngine {
             case "3":
                 // Add functin to end current game
                 input.displayMessage("Starting a new game...");
-                // TODO: add a method to end the current game
+                endGameSession();
                 createGameSession();
                 return;
             case "4":

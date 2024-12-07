@@ -126,6 +126,11 @@ public class MMGameEngine implements GameEngine {
         session.resetSession();
     }
 
+    @Override
+    public void endGameSession() {
+        session.endSession();
+    }
+
     /**
      * Starts the game session.
      * This method must be called after the game session has been created.
@@ -146,7 +151,8 @@ public class MMGameEngine implements GameEngine {
                 }
                 return;
             } else {
-                input.displayMessage("\nROUND " + (settings.getNumberOfRounds() - session.getAttemptsLeft() + 1));
+                int round = session.getNumRounds() - session.getAttemptsLeft() + 1;
+                input.displayMessage("\nROUND " + round + " of " + session.getNumRounds());
             }
             input.displayMessage("Make a guess: ");
             if (processGuess(input.validateInput()) == 1) {

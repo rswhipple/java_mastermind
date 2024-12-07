@@ -29,6 +29,8 @@ public interface GameEngine {
      */
     void resetSession();
 
+    void endGameSession();
+
     /**
      * Processes a guess for a given game session.
      *

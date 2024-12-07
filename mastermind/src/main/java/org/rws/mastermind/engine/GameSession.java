@@ -49,9 +49,18 @@ public class GameSession {
         return gameState.processGuess(guess);
     }
 
+    /**
+     * End the current game session.
+     */
+    public void endSession() {
+        gameState.endGame();
+        System.out.println("Current game ended.");
+    }
+
     // Getters and setters
     public String getSessionId() { return sessionId; }
     public List<Player> getPlayers() { return players; }
+    public int getNumRounds() { return numRounds; }
     public int getAttemptsLeft() { return gameState.getAttemptsLeft(); }
     public boolean isGameWon() { return gameState.isGameWon(); }
     public boolean isGameOver() { return gameState.isGameOver(); }

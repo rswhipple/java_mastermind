@@ -4,13 +4,12 @@ package org.rws.mastermind.models;
 public class GameState {
     private Code secretCode;
     private int attemptsLeft;
-    private boolean isGameWon;
+    private boolean isGameWon = false;
     private final Feedback feedback;
     
     public GameState(Code secretCode, int attemptsLeft) {
         this.secretCode = secretCode;
         this.attemptsLeft = attemptsLeft;
-        this.isGameWon = false;
         this.feedback = new Feedback(secretCode);
     }
 
@@ -40,6 +39,10 @@ public class GameState {
 
     public void setFeedbackOptions(int option) {
         feedback.setFeedbackOption(option);
+    }
+
+    public void endGame() {
+        attemptsLeft = 0;
     }
 
     // Getters and setters

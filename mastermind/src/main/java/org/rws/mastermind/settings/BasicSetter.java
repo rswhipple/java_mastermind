@@ -19,7 +19,7 @@ public class BasicSetter implements GameSetter {
 
     @Override
     public void initOptionsMenu() {
-        System.out.println("Options menu not available in basic mode.");
+        System.out.println("Settings menu not available in basic mode.");
     };
     
     // Getters and setters
