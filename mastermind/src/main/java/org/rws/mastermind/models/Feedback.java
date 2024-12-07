@@ -8,6 +8,7 @@ package org.rws.mastermind.models;
 public class Feedback {
     private Scorer scorer;
     private boolean hintFlag;
+    private int option;
 
     /**
      * Constructs a DefaultFeedbackGenerator with the specified GameSettingsProvider.
@@ -17,6 +18,7 @@ public class Feedback {
     public Feedback(Code code) {
         this.scorer = new Scorer(code);
         this.hintFlag = false;
+        this.option = 0;
     }
 
     /**
@@ -33,6 +35,14 @@ public class Feedback {
                 score[0],
                 score[1]
         );
+    }
+
+    public int getFeedbackOption() {
+        return this.option;
+    }
+    
+    public void setFeedbackOption(int option) {
+        this.option = option;
     }
 
     public String generateHint(String guess) {

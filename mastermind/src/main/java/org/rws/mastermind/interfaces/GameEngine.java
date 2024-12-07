@@ -1,14 +1,14 @@
 package org.rws.mastermind.interfaces;
 
+import org.rws.mastermind.models.Player;
+
 /**
  * The GameEngine interface provides methods for creating game sessions and processing guesses.
  */
 public interface GameEngine {
 
-    /**
-     * Processes the menu key.
-     */
-    void onMenuKey();   // Triggered when '#' is pressed
+    Player createPlayer();
+    void compilePlayersList();
 
     /**
      * Choose settings if applicable and create a new game session.
@@ -21,7 +21,7 @@ public interface GameEngine {
      * Starts the game.
      * This method must be called after the game session has been created.
      */
-    void startGameSession();
+    void runGame();
 
     /**
      * Resets the current game session.
@@ -34,6 +34,13 @@ public interface GameEngine {
      * @param guess The String representing the player's guess.
      */
     int processGuess(String guess);
+
+    void displayCode();
+
+    /**
+     * Processes the menu key press (optional feature).
+     */
+    void onMenuKey();   // Triggered when '#' is pressed
 
     /**
      * Displays the welcome message.

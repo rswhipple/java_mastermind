@@ -1,6 +1,6 @@
 package org.rws.mastermind;
 
-import org.rws.mastermind.engine.MastermindGameEngine;
+import org.rws.mastermind.engine.MMGameEngine;
 import org.rws.mastermind.database.DatabaseSetup;
 import org.rws.mastermind.database.MastermindDB;
 import org.rws.mastermind.settings.CLISetter;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Main {
     private static final List<Runnable> shutdownTasks = new ArrayList<>();
-    private static final String dbFile = "resources/mastermind_db.sqlite3";
+    private static final String dbFile = "java_mastermind/mastermind/src/main/resources/mastermind_db.sqlite3";
 
     /**
      * The main method is the entry point of the application.
@@ -58,8 +58,8 @@ public class Main {
             System.out.println("Goodbye!");
         }));
 
-        // Initialize the game engine and run game
-        MastermindGameEngine game = new MastermindGameEngine(
+        // Initialize the game engine
+        MMGameEngine game = new MMGameEngine(
                 db,
                 settingsProvider, 
                 inputHandler,
@@ -70,7 +70,6 @@ public class Main {
 
         if (game.createGameSession()) {
             inputHandler.displayMessage("Game session created successfully.");
-            game.startGameSession();
         } 
     }
 
