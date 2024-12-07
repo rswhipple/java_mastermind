@@ -30,40 +30,6 @@ public class CLISetter implements GameSetter {
     }
 
     /**
-     * Gets the introduction messages for the game.
-     *
-     * @return An array of strings representing the introduction messages.
-     */
-    @Override
-    public String[] getIntro() {
-        return new String[]{
-                "Welcome to Mastermind!",
-                ""
-        };
-    }
-
-    /**
-     * Gets the game instructions.
-     *
-     * @return An array of strings representing the game instructions.
-     */ 
-    @Override
-    public String[] getGameInstructions() {
-        return new String[]{
-                "The goal of the game is to guess the secret code.",
-                "The code consists of a series of 4 numbers.",
-                "Each number can be between 1 and 8.",
-                "You have a limited number of attempts to guess the code.",
-                "After each guess, you will receive feedback on your guess.",
-                "A black peg indicates that both the number and position are correct.",
-                "A white peg means you have a correct number in the wrong position.",
-                "You will have 10 attempts to guess the code.",
-                "Good luck!",
-                ""
-        };
-    }
-
-    /**
      * Gets the number of players in the game from the command-line interface.
      *
      * @return The number of players.
@@ -269,7 +235,7 @@ public class CLISetter implements GameSetter {
      * 
     */
     @Override
-    public int initOptionsMenu() {
+    public void initOptionsMenu() {
         String[] menu = {
             "",
             "========================================",
@@ -291,7 +257,7 @@ public class CLISetter implements GameSetter {
         }
     
         int option = getUserOptionSelection();
-        return execOptionsMenu(option);
+        execOptionsMenu(option);
     }
     
 
@@ -325,29 +291,29 @@ public class CLISetter implements GameSetter {
      *
      * @param option An integer representing the user's selection.
      */
-    public int execOptionsMenu(int option) {
+    public void execOptionsMenu(int option) {
         switch(option) {
             case 1:
                 input.displayMessage("Multiplayer is not functional yet. Sorry!");
-                return 0;
+                return;
             case 2:
                 setNumberOfRounds();
-                return 1;
+                return;
             case 3:
                 setCodeLength();
-                return 1;
+                return;
             case 4:
                 input.displayMessage("Feedback type is not functional yet. Sorry!");
-                return 0;
+                return;
             case 5:
                 setChooseCodeFlag();
-                return 1;
+                return;
             case 6:
                 setOpenHandFlag();
-                return 1;
+                return;
             default:
                 input.displayMessage("Returning to the game...");
-                return 0;
+                return;
         }
     }
 }

@@ -8,6 +8,7 @@ import org.rws.mastermind.models.Player;
 public interface GameEngine {
 
     Player createPlayer();
+
     void compilePlayersList();
 
     /**
@@ -35,12 +36,9 @@ public interface GameEngine {
      */
     int processGuess(String guess);
 
-    void displayCode();
+    void additionalBehavior();
 
-    /**
-     * Processes the menu key press (optional feature).
-     */
-    void onMenuKey();   // Triggered when '#' is pressed
+    void displayCode();
 
     /**
      * Displays the welcome message.
@@ -51,4 +49,6 @@ public interface GameEngine {
      * Displays the goodbye message.
      */
     void goodbyeMessage();
+
+    void instructions();
 }

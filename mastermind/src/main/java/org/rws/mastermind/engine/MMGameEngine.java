@@ -18,10 +18,10 @@ import java.util.UUID;
  * for the Mastermind game.
  */
 public class MMGameEngine implements GameEngine {
-    private final MastermindDB db;
-    private final InputHandler input;
-    private final BaseCodeGenerator codeGen;
-    private final GameSetter settings;
+    protected final MastermindDB db;
+    protected final InputHandler input;
+    protected final BaseCodeGenerator codeGen;
+    protected final GameSetter settings;
 
     private GameSession session;
     private List<Player> players;
@@ -111,7 +111,9 @@ public class MMGameEngine implements GameEngine {
 
         // Run game loop
         runGame();
-        mainMenu();
+
+        // Hook for additional behavior in subclasses
+        additionalBehavior();
 
         return true;
     }
@@ -181,6 +183,14 @@ public class MMGameEngine implements GameEngine {
     }
 
     /**
+     * Optional additional behavior to create a hook for subclasses.
+     */
+    @Override
+    public void additionalBehavior() {
+        // Placeholder for additional behavior
+    }
+
+    /**
      * Displays the secret code.
      * This method is used for debugging purposes.
      */
@@ -194,12 +204,13 @@ public class MMGameEngine implements GameEngine {
      */
     @Override
     public void welcomeMessage() {
-        // Display welcome message and game instructions
-        for (String message : settings.getIntro()) {
-            input.displayMessage(message);
-        }
-        
-        for (String message : settings.getGameInstructions()) {
+        // Display welcome message
+        String[] welcomeMessage = {
+            "Welcome to Mastermind!",
+            ""
+        };
+
+        for (String message : welcomeMessage) {
             input.displayMessage(message);
         }
     }
@@ -217,64 +228,27 @@ public class MMGameEngine implements GameEngine {
     }
 
     /**
-     * Processes the menu key.
+     * Displays the game instructions.
      */
     @Override
-    public void onMenuKey() {
-        mainMenu();
-    }
+    public void instructions() {
+        // Display instructions
+        String[] instructions = {
+            "The goal of the game is to guess the secret code.",
+            "The code consists of a series of 4 numbers.",
+            "Each number can be between 1 and 8.",
+            "You have a limited number of attempts to guess the code.",
+            "After each guess, you will receive feedback on your guess.",
+            "A black peg indicates that both the number and position are correct.",
+            "A white peg means you have a correct number in the wrong position.",
+            "You will have 10 attempts to guess the code.",
+            "Good luck!",
+            ""
+        };
 
-    private void mainMenu() {
-        input.displayMessage("\n==========================");
-        input.displayMessage("*****||||  Menu  ||||*****");
-        input.displayMessage("==========================\n");
-        input.displayMessage("1. Game Settings");
-        input.displayMessage("2. Leaderboard");
-        input.displayMessage("3. Start New Game");
-        input.displayMessage("4. Reset Game");
-        input.displayMessage("5. Return to Game");
-        input.displayMessage("6. Exit");
-
-        input.displayMessage("Choose an option: ");
-        String choice = input.validateInput();
-
-        switch (choice) {
-            case "1":
-                displaySettingsMenu();
-                break;
-            case "2":
-                input.displayMessage("LEADERBOARD");
-                break;
-            case "3":
-                // Add functin to end current game
-                input.displayMessage("Starting a new game...");
-                createGameSession();
-                return;
-            case "4":
-                resetSession();
-                return;
-            case "5":
-                return; // This may need some work
-            case "6":
-                input.setRunning(false);
-                goodbyeMessage();
-                return;
-            default:
-                input.displayMessage("Invalid option. Returning to the menu...");
-                mainMenu();
+        for (String message : instructions) {
+            input.displayMessage(message);
         }
     }
 
-    /**
-     * Displays the game settings menu.
-     */
-    public void displaySettingsMenu() {
-        int endCurrentGame = settings.initOptionsMenu();
-    
-        // Only end the current game if explicitly requested
-        if (endCurrentGame == 1) {
-            input.displayMessage("Ending the current game...");
-            resetSession();
-        }
-    }
 }

@@ -7,23 +7,9 @@ package org.rws.mastermind.interfaces;
 public interface GameSetter {
 
     /**
-     * Gets the introduction messages for the game.
-     *
-     * @return An array of strings representing the introduction messages.
-     */
-    String[] getIntro();
-
-    /**
-     * Gets the game instructions.
-     *
-     * @return An array of strings representing the game instructions.
-     */
-    String[] getGameInstructions();
-
-    /**
      * Initiates the Options Menu integrated process.
      */
-    int initOptionsMenu();
+    void initOptionsMenu();
 
     /**
      * Gets the number of players in the game.
