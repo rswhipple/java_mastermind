@@ -58,6 +58,10 @@ public class BaseCodeGenerator implements CodeGenerator {
         }
     }
 
+    /**
+     * Generates a code for the Mastermind game using a backup method.
+     * @return
+     */
     public Code backupGenerateCode() {
         StringBuilder code = new StringBuilder();
         for (int i = 0; i < codeLength; i++) {
@@ -66,6 +70,21 @@ public class BaseCodeGenerator implements CodeGenerator {
         return new Code(code.toString(), validCharacters);
     }
 
+    /**
+     * Generates a code for the Mastermind game using user-generated input.
+     *
+     * @param codeString The string representing the user's validated code.
+     * @return A Code object representing the generated code.
+     */
+    public Code userGeneratedCode(String codeString) {
+        return new Code(codeString, validCharacters);
+    }
+
+    /**
+     * Resets the code length to the specified length.
+     *
+     * @param length The new length of the code.
+     */
     public void resetCodeLength(int length) {
         codeLength = length;
     }
