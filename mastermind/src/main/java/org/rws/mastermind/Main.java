@@ -1,6 +1,6 @@
 package org.rws.mastermind;
 
-import org.rws.mastermind.engine.MMGameEngine;
+import org.rws.mastermind.engine.CLIGameEngine;
 import org.rws.mastermind.database.DatabaseSetup;
 import org.rws.mastermind.database.MastermindDB;
 import org.rws.mastermind.settings.CLISetter;
@@ -59,7 +59,7 @@ public class Main {
         }));
 
         // Initialize the game engine
-        MMGameEngine game = new MMGameEngine(
+        CLIGameEngine game = new CLIGameEngine(
                 db,
                 settingsProvider, 
                 inputHandler,
