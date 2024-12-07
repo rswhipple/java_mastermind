@@ -56,11 +56,11 @@ public class MMGameEngine implements GameEngine {
         while (input.isRunning()) {
             try {
                 String playerName = input.validateInput();
-                input.displayMessage("Welcome, " + playerName + "!");
                 if (playerName == null || playerName.isEmpty()) {
                     return null;
                 }
-                Player player = new Player(playerName, db);
+                Player player = new Player(playerName, db, input);
+                input.displayMessage("Welcome, " + player.getName() + "!");
                 return player;
             } catch (Exception e) {
                 input.displayMessage("An unexpected error occurred: " + e.getMessage());
