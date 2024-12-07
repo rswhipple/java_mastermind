@@ -3,16 +3,16 @@ package org.rws.mastermind.code;
 import org.rws.mastermind.settings.GameSetter;
 
 public class UserCodeGenerator implements CodeGenerator {
-    private int codeLength;
-    private int min;
-    private int max;
+    // private int codeLength;
+    // private int min;
+    // private int max;
     private String validCharacters;
 
     public UserCodeGenerator(GameSetter settings) {
-        this.codeLength = settings.getCodeLength();
-        this.validCharacters = settings.getCodeCharsString();
-        this.min = 0;
-        this.max = validCharacters.length() - 1;
+        // this.codeLength = settings.getCodeLength();
+        // this.validCharacters = settings.getCodeCharsString();
+        // this.min = 0;
+        // this.max = validCharacters.length() - 1;
     }
 
     /**
