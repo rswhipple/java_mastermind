@@ -26,24 +26,14 @@ public class Feedback {
      * @param guess The player's guess.
      * @return A string representing the feedback for the guess.
      */
-    public String[] generateFeedback(String guess) {
+    public String generateFeedback(String guess) {
         int[] score = scorer.score(guess);
 
-        String basicFB = String.format(
+        return String.format(
                 "%d black peg(s), %d white peg(s)",
                 score[0],
                 score[1]
         );
-
-        String[] fb = {basicFB, ""};
-
-        if (this.option == 1) {
-            fb[1] += generatePatternHint(guess);
-        } else if (this.option == 2) {
-            fb[1] += generateHighLowHint(guess);
-        }
-
-        return fb;
     }
 
     /**
