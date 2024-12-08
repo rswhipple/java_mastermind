@@ -52,7 +52,7 @@ public class MMGameEngine implements GameEngine {
     /**
      * Creates a new game session with the given settings and player names.
      *
-     * @return A new GameSession object.
+     * @return True if the GameSession was created successfully.
      */
     @Override
     public boolean createGameSession() {
@@ -68,9 +68,20 @@ public class MMGameEngine implements GameEngine {
 
         // Create the session
         String sessionID = UUID.randomUUID().toString();
-        // Add settings code type and feedback type
-        session = GameSession.create(settings, http, sessionID, players);
-        validator = new Validator(settings.getCodeLength(), settings.getCodeCharString());
+        try {
+            // Attempt to create the GameSession
+            session = GameSession.create(settings, http, sessionID, players);
+            if (session == null) {
+                System.err.println("Failed to create GameSession. Returning false.");
+                return false;
+            }
+
+            // Attempt to initialize the Validator
+            validator = new Validator(settings.getCodeLength(), settings.getCodeCharString());
+        } catch (Exception e) {
+            System.err.println("Error occurred during initialization: " + e.getMessage());
+            return false;
+        }
 
         // Run game loop
         runGame();
