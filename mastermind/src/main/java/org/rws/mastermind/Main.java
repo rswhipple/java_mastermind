@@ -1,10 +1,9 @@
 package org.rws.mastermind;
 
-import org.rws.mastermind.engine.CLIGameEngine;
-import org.rws.mastermind.code.RandomCodeGenerator;
+import org.rws.mastermind.engine.GameEngine;
+import org.rws.mastermind.engine.GameEngineFactory;
 import org.rws.mastermind.database.DatabaseSetup;
 import org.rws.mastermind.database.MastermindDB;
-import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.input.CLIInputHandler;
 import org.rws.mastermind.http.HttpHandlerImp;
 
@@ -27,50 +26,77 @@ public class Main {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
+        int gameMode = parseArgs(args);
+        if (args.length != 1 || gameMode < 0) {
+            displayUsage();
+            return;
+        }
+
         // Setup database, connect, and register shutdown task
         DatabaseSetup.setupDatabase(dbFile);
         MastermindDB db = new MastermindDB(dbFile);
         registerShutdownTask(db::closeDB);
 
-        // Setup input handler and register shutdown task
-        CLIInputHandler inputHandler = new CLIInputHandler();
-        registerShutdownTask(inputHandler::cleanup);
-
         // Setup HTTP handler and register shutdown task
         HttpHandlerImp httpHandler = new HttpHandlerImp();
         registerShutdownTask(httpHandler::cleanup);
 
-        CLISetter settingsProvider = new CLISetter(inputHandler);
-        RandomCodeGenerator codeGenerator = new RandomCodeGenerator(settingsProvider, httpHandler);
+        // Setup input handler and register shutdown task
+        CLIInputHandler inputHandler = new CLIInputHandler();
+        registerShutdownTask(inputHandler::cleanup);
 
         // Central shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Central shutdown hook triggered. Shutting down cleanly...");
+            inputHandler.displayMessage("Central shutdown hook triggered. Shutting down cleanly...");
             inputHandler.setRunning(false);       
 
             for (Runnable task : shutdownTasks) {
                 try {
                     task.run();
                 } catch (Exception e) {
-                    System.err.println("Error during shutdown" + e.getMessage());
+                    inputHandler.displayErrMessage("Error during shutdown" + e.getMessage());
                 }
             }
-            System.out.println("Goodbye!");
+            inputHandler.displayMessage("Goodbye!");
         }));
 
         // Initialize the game engine
-        CLIGameEngine game = new CLIGameEngine(
-                db,
-                settingsProvider, 
-                inputHandler,
-                codeGenerator
-            );
-
+        GameEngine game = GameEngineFactory.createEngine(gameMode, db, inputHandler, httpHandler);
         inputHandler.addListener(game);
 
         if (game.createGameSession()) {
             inputHandler.displayMessage("Game session created successfully.");
-        } 
+        }
+
+    }
+
+    private static int parseArgs(String[] args) {
+        return switch (args[0].toLowerCase()) {
+            case "cli_simple" -> {
+                // Initialize simple CLI mode
+                System.out.println("Starting game in Simple CLI mode...");
+                yield 1;
+            }
+            case "cli_robust" -> {
+                // Initialize robust CLI mode
+                System.out.println("Starting game in Robust CLI mode...");
+                yield 2;
+            }
+            default -> -1;
+        };
+    }
+
+    private static void displayUsage() {
+        String[] usage = {
+                "Invalid arguments.Please use one of the following commands to start the game:",
+                "",
+                "1. java java_mastermind cli_simple(Starts the game with a simple command - line interface)",
+                "2. java java_mastermind cli_robust(Starts the game with an advanced command - line interface)",
+        };
+
+        for (String line : usage) {
+            System.out.println(line);
+        }
     }
 
     /**
@@ -81,4 +107,5 @@ public class Main {
     private static void registerShutdownTask(Runnable task) {
         shutdownTasks.add(task);
     }
+
 }
