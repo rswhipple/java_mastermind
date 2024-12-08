@@ -38,7 +38,7 @@ public class Player {
                 String choice = input.validateInput().trim().toLowerCase();
                 if (choice.equals("y") || choice.equals("yes")) {
                     List<String> playerData = db.findPlayer(name);
-                    if (playerData.size() > 0) {
+                    if (!playerData.isEmpty()) {
                         this.name = playerData.get(1);
                         this.uniqueID = Integer.parseInt(playerData.get(0));
                         break;
@@ -50,7 +50,6 @@ public class Player {
             }
         }
     }
-
 
     /**
      * Increments the win count for the player.

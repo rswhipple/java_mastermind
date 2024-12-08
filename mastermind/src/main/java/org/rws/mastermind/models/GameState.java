@@ -47,12 +47,6 @@ public class GameState {
     }
 
     /**
-     * Gets the secret code.
-     * @return The secret code as a Code object.
-     */
-    public Code getSecretCode() { return secretCode; }
-
-    /**
      * Gets the secret code as a string.
      * @return The secret code as a string.
      */
