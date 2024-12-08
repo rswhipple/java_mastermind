@@ -99,7 +99,6 @@ public class CLIInputHandler implements InputHandler {
                 }
                 // Handle interrupted input or other IO issues
                 displayMessage("Error reading input. Please try again.");
-                continue;
             }
         }
         
@@ -124,6 +123,13 @@ public class CLIInputHandler implements InputHandler {
     @Override
     public void displayErrMessage(String message) {
         System.err.println(message);
+    }
+
+
+    public void displayMultiMessage(String[] message) {
+        for (String line : message) {
+            displayMessage(line);
+        }
     }
 
     /**
