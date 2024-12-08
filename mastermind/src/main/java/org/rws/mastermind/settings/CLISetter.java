@@ -8,7 +8,7 @@ import org.rws.mastermind.input.CLIInputHandler;
  */
 public class CLISetter extends BasicSetter {
     private final CLIInputHandler input;
-    private int numberOfPlayers;
+    private final int numberOfPlayers;
     private int numberOfRounds;
     private int codeLength;
     private final String codeChars;
@@ -51,10 +51,7 @@ public class CLISetter extends BasicSetter {
             ""
         };
     
-        for (String message : menu) {
-            input.displayMessage(message);
-        }
-
+        input.displayMultiMessage(menu);
 
         String message = "Choose an option: ";
         int min = 1;
@@ -139,7 +136,7 @@ public class CLISetter extends BasicSetter {
      *
      */
     public void setCodeType() {
-        String[] feedbackMenu = {
+        String[] codeMenu = {
                 "",
                 "Choose Code Type",
                 "",
@@ -148,9 +145,7 @@ public class CLISetter extends BasicSetter {
                 ""
         };
 
-        for (String message : feedbackMenu) {
-            input.displayMessage(message);
-        }
+        input.displayMultiMessage(codeMenu);
 
         String message = "Choose an option: ";
         int min = 1;
@@ -175,10 +170,7 @@ public class CLISetter extends BasicSetter {
                 ""
         };
 
-        for (String message : feedbackMenu) {
-            input.displayMessage(message);
-        }
-
+        input.displayMultiMessage(feedbackMenu);
 
         String message = "Choose an option: ";
         int min = 1;
