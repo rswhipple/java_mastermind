@@ -28,6 +28,8 @@ public class CLIGameEngine extends MMGameEngine {
 
         this.input = inputHandler;
         this.settings = new CLISetter(inputHandler);
+
+        instructions();
     }
 
     /**

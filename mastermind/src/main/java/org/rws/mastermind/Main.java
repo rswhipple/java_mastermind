@@ -11,19 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Main class is the entry point for the Mastermind game application.
- * It initializes the necessary components and starts the game session.
+ * The {@code Main} class serves as the entry point for the Mastermind game application.
+ * It is responsible for initializing required components, setting up resources, and
+ * starting the game session.
  */
 public class Main {
     private static final List<Runnable> shutdownTasks = new ArrayList<>();
     private static final String dbFile = "mastermind/src/main/resources/mastermind_db.sqlite3";
 
     /**
-     * The main method is the entry point of the application.
-     * It initializes the input handler, settings provider, code generator, and game engine,
-     * then creates and starts a new game session.
+     * The main method initializes the application and starts the game session.
      *
-     * @param args Command-line arguments (not used).
+     * <p>
+     * The following tasks are performed:
+     * <ul>
+     *     <li>Parse command-line arguments to determine the game mode.</li>
+     *     <li>Setup the database, input handler, and HTTP handler.</li>
+     *     <li>Register shutdown tasks to ensure clean resource management.</li>
+     *     <li>Create and initialize the game engine.</li>
+     *     <li>Start a new game session.</li>
+     * </ul>
+     * </p>
+     *
+     * @param args Command-line arguments.
      */
     public static void main(String[] args) {
         int gameMode = parseArgs(args);
@@ -70,6 +80,17 @@ public class Main {
 
     }
 
+    /**
+     * Parses the command-line arguments to determine the game mode.
+     *
+     * @param args Command-line arguments.
+     * @return The game mode as an integer:
+     *         <ul>
+     *             <li>1 for simple CLI mode</li>
+     *             <li>2 for robust CLI mode</li>
+     *             <li>-1 for invalid arguments</li>
+     *         </ul>
+     */
     private static int parseArgs(String[] args) {
         return switch (args[0].toLowerCase()) {
             case "cli_simple" -> {
@@ -86,6 +107,9 @@ public class Main {
         };
     }
 
+    /**
+     * Displays usage instructions for starting the application with valid arguments.
+     */
     private static void displayUsage() {
         String[] usage = {
                 "Invalid arguments.Please use one of the following commands to start the game:",
