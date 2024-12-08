@@ -3,8 +3,10 @@ package org.rws.mastermind.code;
 import java.util.Arrays;
 
 /**
- * The Code class represents a code in the Mastermind game.
- * It contains the code characters, the length of the code, and the valid characters for the code.
+ * The {@code Code} class represents a code in the Mastermind game.
+ * It encapsulates the code characters, the length of the code,
+ * the valid characters for the code, and provides utility methods
+ * to interact with and validate the code.
  */
 public class Code {
     private final char[] code;
@@ -13,10 +15,11 @@ public class Code {
     private final int numVariables;
 
     /**
-     * Constructs a Code object with the specified code and valid characters.
+     * Constructs a {@code Code} object with the specified code and valid characters.
      *
-     * @param code The string representing the code.
+     * @param code           The string representing the code.
      * @param validCharacters The string representing the valid characters for the code.
+     *                        These characters define the permissible values for each code slot.
      */
     public Code(String code, String validCharacters) {
         this.code = code.toCharArray();

@@ -6,23 +6,27 @@ import org.rws.mastermind.settings.GameSetter;
 import java.util.Random;
 
 /**
- * The DefaultCodeGenerator class implements the CodeGenerator interface
- * and provides a method to generate a code for the Mastermind game.
+ * The {@code RandomCodeGenerator} class implements the {@link CodeGenerator} interface
+ * and provides methods to generate a code for the Mastermind game.
+ * It uses either an online random number generator service or a local fallback
+ * mechanism to create the code.
  */
 public class RandomCodeGenerator implements CodeGenerator {
     private final Random random;
 
     private int codeLength;
-    private int min;
-    private int max;
-    private String validCharacters;
-    private String baseUrl;
-    private HttpHandler httpHandler;
+    private final int min;
+    private final int max;
+    private final String validCharacters;
+    private final String baseUrl;
+    private final HttpHandler httpHandler;
 
     /**
-     * Constructs a DefaultCodeGenerator with the specified GameSettingsProvider.
+     * Constructs a {@code RandomCodeGenerator} with the specified game settings and HTTP handler.
      *
-     * @param settingsProvider The GameSettingsProvider object containing the game settings.
+     * @param settingsProvider The {@link GameSetter} object containing the game settings,
+     *                         such as code length and valid characters.
+     * @param httpHandler       The {@link HttpHandler} used for making HTTP requests to external services.
      */
     public RandomCodeGenerator(GameSetter settingsProvider, HttpHandler httpHandler) {
         this.httpHandler = httpHandler;
@@ -36,9 +40,10 @@ public class RandomCodeGenerator implements CodeGenerator {
     }
 
     /**
-     * Generates a code for the Mastermind game.
+     * Generates a code for the Mastermind game using an external random number generator service.
+     * Falls back to a local generation method in case of errors.
      *
-     * @return A Code object representing the generated code.
+     * @return A {@link Code} object representing the generated code.
      */
     @Override
     public Code generateCode(){
@@ -57,8 +62,9 @@ public class RandomCodeGenerator implements CodeGenerator {
     }
 
     /**
-     * Generates a code for the Mastermind game using a backup method.
-     * @return
+     * Generates a code locally using random numbers as a fallback mechanism.
+     *
+     * @return A {@link Code} object representing the generated code.
      */
     public Code backupGenerateCode() {
         StringBuilder code = new StringBuilder();
@@ -66,16 +72,6 @@ public class RandomCodeGenerator implements CodeGenerator {
             code.append(validCharacters.charAt(random.nextInt(validCharacters.length())));
         }
         return new Code(code.toString(), validCharacters);
-    }
-
-    /**
-     * Generates a code for the Mastermind game using user-generated input.
-     *
-     * @param codeString The string representing the user's validated code.
-     * @return A Code object representing the generated code.
-     */
-    public Code userGeneratedCode(String codeString) {
-        return new Code(codeString, validCharacters);
     }
 
     /**
