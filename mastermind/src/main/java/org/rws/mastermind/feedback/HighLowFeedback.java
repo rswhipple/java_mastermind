@@ -1,7 +1,8 @@
 package org.rws.mastermind.feedback;
 
 import org.rws.mastermind.code.Code;
-import org.rws.mastermind.models.Scorer;
+import org.rws.mastermind.score.HighLowStrategy;
+import org.rws.mastermind.score.Scorer;
 
 /**
  * Provides feedback in the form of high/low hints for a guess in the Mastermind game.
@@ -15,7 +16,7 @@ public class HighLowFeedback implements Feedback {
      * @param code The {@link Code} object representing the secret code.
      */
     public HighLowFeedback(Code code) {
-        this.scorer = new Scorer(code);
+        this.scorer = new Scorer(new HighLowStrategy(), code);
     }
 
     /**
@@ -26,7 +27,7 @@ public class HighLowFeedback implements Feedback {
      */
     @Override
     public String generateFeedback(String guess) {
-        return scorer.highLowHint(guess);
+        return scorer.score(guess);
     }
 }
 

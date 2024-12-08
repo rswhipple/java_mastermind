@@ -1,7 +1,8 @@
 package org.rws.mastermind.feedback;
 
 import org.rws.mastermind.code.Code;
-import org.rws.mastermind.models.Scorer;
+import org.rws.mastermind.score.PatternStrategy;
+import org.rws.mastermind.score.Scorer;
 
 /**
  * The DefaultFeedbackGenerator class implements the FeedbackGenerator interface
@@ -16,7 +17,7 @@ public class PatternFeedback implements Feedback {
      * @param code The {@link Code} object representing the secret code.
      */
     public PatternFeedback(Code code) {
-        this.scorer = new Scorer(code);
+        this.scorer = new Scorer(new PatternStrategy(), code);
     }
 
     /**
@@ -25,7 +26,8 @@ public class PatternFeedback implements Feedback {
      * @param guess The player's guess.
      * @return A string representing the pattern hint for the guess.
      */
+    @Override
     public String generateFeedback(String guess) {
-        return scorer.patternHint(guess);
+        return scorer.score(guess);
     }
 }
