@@ -1,10 +1,11 @@
 package org.rws.mastermind.engine;
 
-import org.rws.mastermind.code.RandomCodeGenerator;
 import org.rws.mastermind.database.MastermindDB;
+import org.rws.mastermind.http.HttpHandler;
 import org.rws.mastermind.input.InputHandler;
 import org.rws.mastermind.models.Player;
 import org.rws.mastermind.models.Validator;
+import org.rws.mastermind.settings.BasicSetter;
 import org.rws.mastermind.settings.GameSetter;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class MMGameEngine implements GameEngine {
     protected final MastermindDB db;
     protected final InputHandler input;
-    protected final RandomCodeGenerator codeGen;
+    private final HttpHandler http;
     protected final GameSetter settings;
 
     private GameSession session;
@@ -28,14 +29,13 @@ public class MMGameEngine implements GameEngine {
 
     public MMGameEngine(
             MastermindDB db,
-            GameSetter gameSetter,
-            InputHandler inputHandler, 
-            RandomCodeGenerator codeGenerator
+            InputHandler inputHandler,
+            HttpHandler httpHandler
         ) {
         this.db = db;
-        this.settings = gameSetter;
         this.input = inputHandler;
-        this.codeGen = codeGenerator;
+        this.http = httpHandler;
+        this.settings = new BasicSetter();
         this.session = null;
         this.players = new ArrayList<>();
         this.validator = null;
@@ -43,6 +43,10 @@ public class MMGameEngine implements GameEngine {
         // Display welcome message and game instructions
         welcomeMessage();
     }
+
+    @Override
+    public
+    void onMenuKey() {};
 
     /**
      * Creates a new game session with the given settings and player names.
@@ -63,9 +67,9 @@ public class MMGameEngine implements GameEngine {
 
         // Create the session
         String sessionID = UUID.randomUUID().toString();
-        session = GameSession.create(codeGen, sessionID, players, settings.getNumberOfRounds());
-        if (session.equals(null)) { return false; } // Error creating session, or early exit
-        validator = new Validator(settings.getCodeLength(), settings.getCodeCharsString());
+        // Add settings code type and feedback type
+        session = GameSession.create(settings, http, sessionID, players);
+        validator = new Validator(settings.getCodeLength(), settings.getCodeCharString());
 
         // Run game loop
         runGame();
@@ -98,11 +102,6 @@ public class MMGameEngine implements GameEngine {
      */
     @Override
     public void runGame() {
-        // Open hand mode
-        if (settings.getOpenHandFlag()) {
-            displayCode();
-        }
-
         // Game loop
         while (input.isRunning() && !session.isGameOver()) {
             if (session.isGameOver()) {

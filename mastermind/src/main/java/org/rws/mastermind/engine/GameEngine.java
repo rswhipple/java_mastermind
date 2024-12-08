@@ -6,6 +6,7 @@ package org.rws.mastermind.engine;
  */
 public interface GameEngine {
 
+    
     /**
      * Create a new game session.
      *
@@ -60,4 +61,6 @@ public interface GameEngine {
      * Displays the game instructions.
      */
     void instructions();
+
+    void onMenuKey();
 }

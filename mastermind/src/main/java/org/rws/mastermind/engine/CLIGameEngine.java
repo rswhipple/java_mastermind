@@ -1,13 +1,21 @@
 package org.rws.mastermind.engine;
 
-import org.rws.mastermind.code.RandomCodeGenerator;
 import org.rws.mastermind.database.MastermindDB;
-import org.rws.mastermind.input.InputHandler;
+import org.rws.mastermind.http.HttpHandler;
+import org.rws.mastermind.input.CLIInputHandler;
+import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.settings.GameSetter;
 
 public class CLIGameEngine extends MMGameEngine {
-    public CLIGameEngine(MastermindDB db, GameSetter gameSetter, InputHandler inputHandler, RandomCodeGenerator codeGenerator) {
-        super(db, gameSetter, inputHandler, codeGenerator);
+    protected final GameSetter settings;
+    protected final CLIInputHandler input;
+
+
+    public CLIGameEngine(MastermindDB db, CLIInputHandler inputHandler, HttpHandler http) {
+        super(db, inputHandler, http);
+
+        this.input = inputHandler;
+        this.settings = new CLISetter(inputHandler);
     }
 
     /**
@@ -21,6 +29,7 @@ public class CLIGameEngine extends MMGameEngine {
     /**
      * Processes the menu key.
      */
+    @Override
     public void onMenuKey() {
         mainMenu();
     }
@@ -50,7 +59,7 @@ public class CLIGameEngine extends MMGameEngine {
                 input.displayMessage("LEADERBOARD");
                 break;
             case "3":
-                // Add functin to end current game
+                // Add function to end current game
                 input.displayMessage("Starting a new game...");
                 endGameSession();
                 createGameSession();
