@@ -17,6 +17,9 @@ public class GameSession {
     private final HttpHandler http;
     private final String sessionId;
     private final List<Player> players;
+
+    private Player currentPlayer;
+    private int currentPlayerIndex;
     private GameState gameState;
 
     /**
@@ -32,6 +35,8 @@ public class GameSession {
         this.http = http;
         this.sessionId = sessionId;
         this.players = players;
+        this.currentPlayerIndex = 0;
+        this.currentPlayer = players.get(currentPlayerIndex);
 
         Code secretCode = CodeFactory.createCode(settings, http);
         gameState = new GameState(secretCode, settings.getFeedbackType(), settings.getNumberOfRounds());
@@ -95,6 +100,21 @@ public class GameSession {
     public List<Player> getPlayers() { return players; }
 
     /**
+     * Gets the current player.
+     *
+     * @return The Player object representing the current player
+     */
+    public Player getCurrentPlayer() { return currentPlayer; }
+
+    /**
+     * Sets the current player.
+     */
+    public void incrementCurrentPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentPlayer = players.get(currentPlayerIndex);
+    }
+
+    /**
      * Gets the number of rounds in the game session.
      *
      * @return The number of rounds.
@@ -121,13 +141,6 @@ public class GameSession {
      * @return True if the game is over.
      */
     public boolean isGameOver() { return gameState.isGameOver(); }
-
-    /**
-     * Gets the GameState object.
-     *
-     * @return The GameState object.
-     */
-    public GameState getGameState() { return gameState; }
 
     /**
      * Gets the secret code as a string.

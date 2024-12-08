@@ -114,26 +114,33 @@ public class MMGameEngine implements GameEngine {
      */
     @Override
     public void runGame() {
+        Player winner = null;
         // Game loop
         while (input.isRunning() && !session.isGameOver()) {
+            int round = session.getNumRounds() - session.getAttemptsLeft() + 1;
+
+            input.displayMessage("ROUND " + round + " of " + session.getNumRounds());
+            input.displayMessage("Make a guess: ");
+
+            processGuess(input.validateInput());
+
             if (session.isGameOver()) {
                 if (!session.isGameWon()) {
                     input.displayMessage("\nGame over! The code was: ");
                     displayCode();
+                } else {
+                    winner = session.getCurrentPlayer();
+                    winner.incrementWins();
+                    input.displayMessage("Congratulations " + winner.getName() + "!");
+                }
+                for (Player player : players) {
+                    if (!player.equals(winner)) {
+                        player.incrementLosses();
+                    }
                 }
                 return;
-            } else {
-                int round = session.getNumRounds() - session.getAttemptsLeft() + 1;
-                input.displayMessage("\nROUND " + round + " of " + session.getNumRounds());
             }
-            input.displayMessage("Make a guess: ");
-            if (processGuess(input.validateInput()) == 1) {
-                input.displayMessage("Did you want to exit the entire program? (y/n)");
-                String choice = input.validateInput();
-                if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("yes")) {
-                    input.setRunning(false);
-                } 
-            }
+            session.incrementCurrentPlayer();
         }
     }
 
@@ -200,7 +207,7 @@ public class MMGameEngine implements GameEngine {
      */
     @Override
     public void goodbyeMessage(){
-        // Display outtro message
+        // Display outro message
         String message = "Thanks for playing...";
         input.displayMessage(message);
     }
