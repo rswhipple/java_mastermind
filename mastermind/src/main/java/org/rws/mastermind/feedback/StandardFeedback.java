@@ -11,7 +11,7 @@ public class StandardFeedback implements Feedback {
     private final Scorer scorer;
 
     /**
-     * Constructs a DefaultFeedbackGenerator with the specified GameSettingsProvider.
+     * Constructs a {@code StandardFeedback} object with the specified secret code.
      *
      * @param code The Code object representing the secret code.
      */
@@ -20,7 +20,8 @@ public class StandardFeedback implements Feedback {
     }
 
     /**
-     * Generates feedback for a given guess compared to the secret code.
+     * Compares the player's guess to the secret code and generates feedback.
+     * Feedback is provided in the form of "black pegs" and "white pegs":
      *
      * @param guess The player's guess.
      * @return A string representing the feedback for the guess.

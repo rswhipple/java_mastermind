@@ -11,9 +11,9 @@ public class PatternFeedback implements Feedback {
     private final Scorer scorer;
 
     /**
-     * Constructs a
+     * Constructs a {@code PatternFeedback} object with the specified secret code.
      *
-     * @param code The Code object representing the secret code.
+     * @param code The {@link Code} object representing the secret code.
      */
     public PatternFeedback(Code code) {
         this.scorer = new Scorer(code);
