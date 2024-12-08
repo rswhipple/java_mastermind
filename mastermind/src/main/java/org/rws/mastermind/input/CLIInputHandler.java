@@ -40,6 +40,7 @@ public class CLIInputHandler implements InputHandler {
     public boolean isRunning() {
         return running;
     }
+
     /**
      * Sets the running flag to control the input loop.
      */
@@ -125,7 +126,11 @@ public class CLIInputHandler implements InputHandler {
         System.err.println(message);
     }
 
-
+    /**
+     * Displays a multi-line message to the user via the command-line interface.
+     *
+     * @param message The message to be displayed.
+     */
     public void displayMultiMessage(String[] message) {
         for (String line : message) {
             displayMessage(line);
