@@ -6,6 +6,8 @@ import org.rws.mastermind.input.CLIInputHandler;
 import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.settings.GameSetter;
 
+import java.util.List;
+
 /**
  * The CLIGameEngine class implements the GameEngine interface and provides
  * methods to manage the game sessions and process guesses including a robust
@@ -71,7 +73,7 @@ public class CLIGameEngine extends MMGameEngine {
                 displaySettingsMenu();
                 break;
             case "2":
-                input.displayMessage("LEADERBOARD");
+                displayLeaderboard();
                 break;
             case "3":
                 // Add function to end current game
@@ -109,5 +111,19 @@ public class CLIGameEngine extends MMGameEngine {
 
         input.displayMultiMessage(warning);
     }
-    
+
+    public void displayLeaderboard() {
+        List<String> leaders = db.getLeaderboard(5);
+        String[] leaderIntro = {
+                "",
+                "LEADERBOARD",
+                ""
+        };
+
+        input.displayMultiMessage(leaderIntro);
+
+        for (String leader : leaders) {
+            input.displayMessage(leader);
+        }
+    }
 }
