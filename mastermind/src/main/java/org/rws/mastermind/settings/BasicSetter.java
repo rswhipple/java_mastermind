@@ -5,12 +5,13 @@ package org.rws.mastermind.settings;
  * and provides basic game settings for the Mastermind game.
  */
 public class BasicSetter implements GameSetter {
-    private int numberOfPlayers;
-    private int numberOfRounds;
-    private int codeLength;
-    private String codeChars;
-    private boolean optionsFlag;
-    private boolean openHandFlag;
+    private final int numberOfPlayers;
+    private final int numberOfRounds;
+    private final int codeLength;
+    private final String codeChars;
+    private final String codeType;
+    private final String feedbackType;
+
 
     /**
      * Constructs a BasicSetter with default game settings.
@@ -20,12 +21,13 @@ public class BasicSetter implements GameSetter {
         this.numberOfRounds = 10;
         this.codeLength = 4;
         this.codeChars = "12345678";
-        this.optionsFlag = false;
-        this.openHandFlag = false;
+        this.codeType = "random";
+        this.feedbackType = "standard";
+
     }
 
     /**
-     * Initializes the options menu.
+     * Initializes the settings menu.
      * This method is not available in basic mode.
      */
     @Override
@@ -69,7 +71,7 @@ public class BasicSetter implements GameSetter {
      * @return A string representing the valid characters for the code.
      */
     @Override
-    public String getCodeCharsString() {
+    public String getCodeCharString() {
         return codeChars;
     }
 
@@ -80,18 +82,14 @@ public class BasicSetter implements GameSetter {
      * @return The options flag.
      */
     @Override
-    public boolean getOptionsFlag() {
-        return this.optionsFlag;
+    public String getCodeType() {
+        return this.codeType;
     }
 
-    /**
-     * Gets the open hand flag.
-     * The open hand flag is used to determine whether the player's hand is open.
-     *
-     * @return The open hand flag.
-     */
     @Override
-    public boolean getOpenHandFlag() {
-        return this.openHandFlag;
+    public String getFeedbackType() {
+        return this.feedbackType;
     }
+
+
 }

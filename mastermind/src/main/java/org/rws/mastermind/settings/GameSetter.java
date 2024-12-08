@@ -37,20 +37,12 @@ public interface GameSetter {
      *
      * @return A string representing the valid code characters.
      */
-    String getCodeCharsString();
+    String getCodeCharString();
 
-    /**
-     * Gets the options flag.
-     * The options flag is used to determine whether the user can adjust the game settings.
-     *
-     * @return The options flag.
-     */
-    boolean getOptionsFlag();
 
-    /**
-     * See if open hand mode is selected.
-     *
-     * @return A boolean representing the open hand mode flag.
-     */
-    boolean getOpenHandFlag();
+    String getCodeType();
+
+
+    String getFeedbackType();
+
 }
