@@ -24,8 +24,9 @@ public class MMGameEngine implements GameEngine {
     protected final GameSetter settings;
 
     private GameSession session;
-    private List<Player> players;
+    private final List<Player> players;
     private Validator validator;
+
 
     public MMGameEngine(
             MastermindDB db,
@@ -46,7 +47,7 @@ public class MMGameEngine implements GameEngine {
 
     @Override
     public
-    void onMenuKey() {};
+    void onMenuKey() {}
 
     /**
      * Creates a new game session with the given settings and player names.
@@ -182,7 +183,7 @@ public class MMGameEngine implements GameEngine {
     }
 
     /**
-     * Asks whether the player wants to play, reinitiates the session if yes.
+     * Asks whether the player wants to play, initiates the session if yes.
      * If no, exit to main shutdown.
      * 
      */
@@ -228,7 +229,7 @@ public class MMGameEngine implements GameEngine {
             try {
                 String playerName = input.validateInput();
                 if (playerName == null || playerName.isEmpty()) {
-                    return null;
+                    continue;
                 }
                 Player player = new Player(playerName, db, input);
                 input.displayMessage("Welcome, " + player.getName() + "!");
@@ -243,8 +244,6 @@ public class MMGameEngine implements GameEngine {
 
     /**
      * Compiles a list of players by prompting the user for each player's name via the command-line interface.
-     *
-     * @return A list of Player objects representing the players in the game session.
      */
     private void compilePlayersList() {
         int numPlayers = settings.getNumberOfPlayers();

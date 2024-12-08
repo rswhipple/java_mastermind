@@ -1,11 +1,11 @@
 package org.rws.mastermind.engine;
 
 /**
- * The GameEngine interface provides methods for managing game sessions and processing guesses
- * in the Mastermind game.
+ * The {@code GameEngine} interface defines the contract for managing and interacting
+ * with the game logic of the Mastermind game. It provides methods for managing game sessions,
+ * processing player guesses, and displaying information to the player.
  */
 public interface GameEngine {
-
     
     /**
      * Create a new game session.
