@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class CLIInputHandler implements InputHandler {
     private Scanner scanner;
-    private volatile boolean running = true; // Flag to control the input loopte
-    private List<CLIGameEngine> listeners = new ArrayList<>();
+    private volatile boolean running = true; // Flag to control the input loop
+    private final List<CLIGameEngine> listeners = new ArrayList<>();
 
     /**
      * Constructs a CLIInputHandler with a new Scanner object for reading input from the standard input stream.
@@ -65,8 +65,7 @@ public class CLIInputHandler implements InputHandler {
     @Override
     public String getInput() throws IOException {
         try {
-            String input = scanner.nextLine();
-            return input;
+            return scanner.nextLine();
         } catch (Exception e) {
             throw new IOException("Error reading input", e);
         }
@@ -90,7 +89,7 @@ public class CLIInputHandler implements InputHandler {
                 } 
 
                 // Return trimmed, non-blank input
-                if (userInput != null && !userInput.isBlank()) {
+                if (!userInput.isBlank()) {
                     return userInput.trim();
                 }
             } catch (IOException e) {
