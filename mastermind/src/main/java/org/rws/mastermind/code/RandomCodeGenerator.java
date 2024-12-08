@@ -30,7 +30,7 @@ public class RandomCodeGenerator implements CodeGenerator {
         this.random = new Random();
 
         this.codeLength = settingsProvider.getCodeLength();
-        this.validCharacters = settingsProvider.getCodeCharsString();
+        this.validCharacters = settingsProvider.getCodeCharString();
         this.min = 0;
         this.max = validCharacters.length() - 1;
     }
