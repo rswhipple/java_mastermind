@@ -1,6 +1,8 @@
 package org.rws.mastermind.engine;
 
 import java.util.List;
+
+import org.rws.mastermind.feedback.FeedbackCreator;
 import org.rws.mastermind.models.*;
 import org.rws.mastermind.code.Code;
 import org.rws.mastermind.code.CodeGenerator;
@@ -15,6 +17,7 @@ public class GameSession {
     private final List<Player> players;
     private GameState gameState;
     private final int numRounds;
+    private final FeedbackCreator fbCreator;
 
     /**
      * Constructs a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
@@ -24,30 +27,31 @@ public class GameSession {
      * @param players The list of players in the game session.
      * @param numRounds The number of rounds in the game session.
      */
-    public GameSession(CodeGenerator codeGenerator, String sessionId, List<Player> players, int numRounds) {
+    public GameSession(CodeGenerator codeGenerator, FeedbackCreator fbCreator, String sessionId, List<Player> players, int numRounds) {
         this.codeGen = codeGenerator;
         this.sessionId = sessionId;
         this.players = players;
         this.numRounds = numRounds;
-        
+        this.fbCreator = fbCreator;
+
         Code secretCode = codeGen.generateCode();
-        gameState = new GameState(secretCode, numRounds);
+        gameState = new GameState(secretCode, fbCreator, numRounds);
     }
 
     /**
      * Factory method to create a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
      *
-     * @param codeGenerator The CodeGenerator object used to generate the secret code.
+     * @param codeGen The CodeGenerator object used to generate the secret code.
      * @param sessionId The string representing the session ID.
      * @param players The list of players in the game session.
      * @param numRounds The number of rounds in the game session.
      */
-    public static GameSession create(CodeGenerator codeGen, String sessionId, List<Player> players, int numRounds) {
+    public static GameSession create(CodeGenerator codeGen, FeedbackCreator fbCreator, String sessionId, List<Player> players, int numRounds) {
         if (players == null || players.isEmpty()) {
             System.out.println("GameSession not created.");
             return null;
         }
-        return new GameSession(codeGen, sessionId, players, numRounds);
+        return new GameSession(codeGen, fbCreator, sessionId, players, numRounds);
     }
 
     /**
@@ -55,7 +59,7 @@ public class GameSession {
      */
     public void resetSession() {
         Code newSecretCode = codeGen.generateCode();
-        gameState = new GameState(newSecretCode, numRounds);
+        gameState = new GameState(newSecretCode, fbCreator, numRounds);
     }
 
     /**
