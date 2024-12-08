@@ -1,6 +1,6 @@
 package org.rws.mastermind.input;
 
-import org.rws.mastermind.engine.CLIGameEngine;
+import org.rws.mastermind.engine.GameEngine;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CLIInputHandler implements InputHandler {
     private Scanner scanner;
     private volatile boolean running = true; // Flag to control the input loop
-    private final List<CLIGameEngine> listeners = new ArrayList<>();
+    private final List<GameEngine> listeners = new ArrayList<>();
 
     /**
      * Constructs a CLIInputHandler with a new Scanner object for reading input from the standard input stream.
@@ -29,7 +29,7 @@ public class CLIInputHandler implements InputHandler {
      *
      * @param listener The GameEngine object to be added to the list of listeners.
      */
-    public void addListener(CLIGameEngine listener) {
+    public void addListener(GameEngine listener) {
         listeners.add(listener);
     }
 
@@ -52,7 +52,7 @@ public class CLIInputHandler implements InputHandler {
      * Notifies all listeners that the menu key has been pressed.
      */
     private void notifyMenuKeyListeners() {
-        for (CLIGameEngine listener : listeners) {
+        for (GameEngine listener : listeners) {
             listener.onMenuKey();
         }
     }
