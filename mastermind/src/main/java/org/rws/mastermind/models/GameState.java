@@ -17,7 +17,7 @@ public class GameState {
      * The GameState class represents the state of a game in the Mastermind game.
      * It contains the secret code, the number of attempts left, and the game status.
      */
-    public GameState(Code secretCode, FeedbackCreator fb, int attemptsLeft,) {
+    public GameState(Code secretCode, FeedbackCreator fb, int attemptsLeft) {
         this.secretCode = secretCode;
         this.attemptsLeft = attemptsLeft;
         this.feedback = fb;
