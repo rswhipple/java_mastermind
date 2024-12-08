@@ -52,6 +52,7 @@ public class UserCodeGenerator implements CodeGenerator {
             }
         }
 
+        scanner.close();
         return new Code(code, validCharacters);
     }
 
