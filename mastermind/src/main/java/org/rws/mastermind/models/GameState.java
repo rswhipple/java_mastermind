@@ -1,25 +1,26 @@
 package org.rws.mastermind.models;
 
 import org.rws.mastermind.code.Code;
+import org.rws.mastermind.feedback.FeedbackCreator;
 
 /**
  * The GameState class represents the state of a game in the Mastermind game.
  * It contains the secret code, the number of attempts left, and the game status.
  */
 public class GameState {
-    private Code secretCode;
+    private final Code secretCode;
     private int attemptsLeft;
     private boolean isGameWon = false;
-    private final Feedback feedback;
+    private final FeedbackCreator feedback;
     
     /**
      * The GameState class represents the state of a game in the Mastermind game.
      * It contains the secret code, the number of attempts left, and the game status.
      */
-    public GameState(Code secretCode, int attemptsLeft) {
+    public GameState(Code secretCode, FeedbackCreator fb, int attemptsLeft,) {
         this.secretCode = secretCode;
         this.attemptsLeft = attemptsLeft;
-        this.feedback = new Feedback(secretCode);
+        this.feedback = fb;
     }
 
     /**
@@ -41,15 +42,6 @@ public class GameState {
         }
 
         return "Feedback: " + feedback.generateFeedback(guess);
-    }
-
-    /**
-     * Sets the feedback options.
-     *
-     * @param option The int representing the feedback option.
-     */
-    public void setFeedbackOptions(int option) {
-        feedback.setFeedbackOption(option);
     }
 
     /**

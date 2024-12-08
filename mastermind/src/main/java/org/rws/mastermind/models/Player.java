@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class Player {
     private final MastermindDB db;
-    private String name;
-    private int uniqueID;
+    private final String name;
+    private final int uniqueID;
 
     /**
      * Constructs a Player object with the specified name, database, and input handler.
@@ -26,7 +26,7 @@ public class Player {
         this.db = db;
 
         // Validate player name
-        while (true) {  // Check if I can use isRUnning instead of true
+        while (true) {  // Check if I can use isRunning instead of true
             int id = db.addPlayer(name);
 
             if (id > 0) {
