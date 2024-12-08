@@ -3,7 +3,7 @@ package org.rws.mastermind.feedback;
 /**
  *
  */
-public interface FeedbackCreator {
+public interface Feedback {
 
     /**
      * Generates feedback about the accuracy of a Mastermind guess.

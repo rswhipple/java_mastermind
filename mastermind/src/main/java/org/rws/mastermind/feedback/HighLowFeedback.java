@@ -7,7 +7,7 @@ import org.rws.mastermind.models.Scorer;
  * The DefaultFeedbackGenerator class implements the FeedbackGenerator interface
  * and provides a method to generate feedback for a guess in the Mastermind game.
  */
-public class HighLowFeedback implements FeedbackCreator {
+public class HighLowFeedback implements Feedback {
     private final Scorer scorer;
 
     /**
