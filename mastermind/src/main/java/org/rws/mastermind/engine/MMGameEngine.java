@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * The MastermindGameEngine class implements the GameEngine interface
- * and provides methods to manage the game sessions and process guesses
+ * The MMGameEngine class implements the GameEngine interface and provides
+ * simple methods to manage the game sessions and process guesses
  * for the Mastermind game.
  */
 public class MMGameEngine implements GameEngine {

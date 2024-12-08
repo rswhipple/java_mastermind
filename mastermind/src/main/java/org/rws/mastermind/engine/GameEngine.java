@@ -62,5 +62,8 @@ public interface GameEngine {
      */
     void instructions();
 
+    /**
+     * Menu key hook handler.
+     */
     void onMenuKey();
 }

@@ -6,11 +6,21 @@ import org.rws.mastermind.input.CLIInputHandler;
 import org.rws.mastermind.settings.CLISetter;
 import org.rws.mastermind.settings.GameSetter;
 
+/**
+ * The CLIGameEngine class implements the GameEngine interface and provides
+ * methods to manage the game sessions and process guesses including a robust
+ * menu interface for the Mastermind game.
+ */
 public class CLIGameEngine extends MMGameEngine {
     protected final GameSetter settings;
     protected final CLIInputHandler input;
 
-
+    /**
+     *
+     * @param db Class handling all queries to the SQLite game database
+     * @param inputHandler The command-line interface input/output handler
+     * @param http A class that handles a safe http GET connection
+     */
     public CLIGameEngine(MastermindDB db, CLIInputHandler inputHandler, HttpHandler http) {
         super(db, inputHandler, http);
 
@@ -38,15 +48,20 @@ public class CLIGameEngine extends MMGameEngine {
      * Displays and implements the main menu.
      */
     private void mainMenu() {
-        input.displayMessage("\n==========================");
-        input.displayMessage("*****||||  Menu  ||||*****");
-        input.displayMessage("==========================\n");
-        input.displayMessage("1. Game Settings");
-        input.displayMessage("2. Leaderboard");
-        input.displayMessage("3. Start New Game");
-        input.displayMessage("4. Reset Game");
-        input.displayMessage("5. Return to Game");
-        input.displayMessage("6. Exit");
+        String[] menuMessages = {
+                "",
+                "==========================",
+                "*****||||  Menu  ||||*****",
+                "==========================",
+                "",
+                "1. Game Settings",
+                "2. Leaderboard",
+                "3. Start New Game",
+                "4. Reset Game",
+                "5. Return to Game",
+                "6. Exit"
+        };
+        input.displayMultiMessage(menuMessages);
 
         input.displayMessage("Choose an option: ");
         String choice = input.validateInput();
@@ -92,9 +107,7 @@ public class CLIGameEngine extends MMGameEngine {
             ""
         };
 
-        for (String message : warning) {
-            input.displayMessage(message);
-        }
+        input.displayMultiMessage(warning);
     }
     
 }

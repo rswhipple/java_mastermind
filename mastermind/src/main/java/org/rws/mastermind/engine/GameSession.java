@@ -10,7 +10,8 @@ import org.rws.mastermind.settings.GameSetter;
 
 /**
  * The GameSession class represents a game session in the Mastermind game.
- * It contains the session ID, the list of players, the number of attempts left, and the game status.
+ * It contains the session ID, list of players, number of attempts left,
+ * game status, http connection adn settings.
  */
 public class GameSession {
     private final GameSetter settings;
@@ -20,7 +21,8 @@ public class GameSession {
     private GameState gameState;
 
     /**
-     * Constructs a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
+     * Constructs a GameSession object with the specified settings,
+     * http handler, session ID, and list of players.
      *
      * @param settings The ...
      * @param http The ...
@@ -38,7 +40,7 @@ public class GameSession {
     }
 
     /**
-     * Factory method to create a GameSession object with the specified code generator, session ID, list of players, and number of rounds.
+     * Factory method to create a GameSession object.
      *
      * @param settings The ...
      * @param http The ...
