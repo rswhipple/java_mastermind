@@ -48,19 +48,26 @@ public class CLIGameEngine implements GameEngine {
         // Display welcome message and game instructions
         welcomeMessage();
         instructions();
+        mainMenu();
     }
+
+
+    /**
+     * Processes the menu key.
+     */
+    @Override
+    public void onMenuKey() {
+        mainMenu();
+    }
+
+
     @Override
     public boolean createGameSession() {
+        // Create a clone of the current settings
         CLISetter currentSettings = new CLISetter(settings);
-        // Compile Player Names
-        if (players == null || players.isEmpty()) {
-            while (input.isRunning()) {
-                compilePlayersList();
-                if (players != null) {
-                    break;
-                }
-            }
-        }
+
+        // Compile the list of players
+        compilePlayersList();
 
         // Create the session
         String sessionID = UUID.randomUUID().toString();
@@ -82,36 +89,7 @@ public class CLIGameEngine implements GameEngine {
         // Run game loop
         runGame();
 
-        // Go to Menu
-        mainMenu();
-
         return true;
-    }
-
-
-    /**
-     * Processes the menu key.
-     */
-    @Override
-    public void onMenuKey() {
-        mainMenu();
-    }
-
-
-    /**
-     * Resets the current game session.
-     */
-    @Override
-    public void resetSession() {
-        session.resetSession();
-    }
-
-    /**
-     * Ends the current game session.
-     */
-    @Override
-    public void endGameSession() {
-        session.endSession();
     }
 
     /**
@@ -128,7 +106,9 @@ public class CLIGameEngine implements GameEngine {
             input.displayMessage("ROUND " + round + " of " + session.getNumRounds());
             input.displayMessage("Make a guess: ");
 
-            processGuess(input.validateInput());
+            if (processGuess(input.validateInput()) == 1 || !input.isRunning()) {
+                return;
+            }
 
             if (session.isGameOver()) {
                 if (!session.isGameWon()) {
@@ -157,26 +137,47 @@ public class CLIGameEngine implements GameEngine {
      * Generates and displays the feedback.
      */
     @Override
-    public void processGuess(String guess) {
+    public int processGuess(String guess) {
         // Check if guess is empty
         if (guess == null || guess.isEmpty()) {
-            return;
+            input.displayMessage("Guess cannot be empty. Please try again.");
+            return 0;
+        }
+
+        // Check for menu key
+        if (guess.equals("#")) {
+            input.displayMessage("Menu key detected. Returning to menu...");
+            // notifyMenuKeyListeners();
+            return 0;
         }
 
         if (!validator.isValidGuess(guess)) {
+            if (!input.isRunning()) {
+                return 1;
+            }
             input.displayMessage("Invalid guess. Please try again.");
-            return;
+            return 0;
         }
 
         input.displayMessage(session.processGuess(guess));
+
+        return 0;
     }
 
     /**
-     * Optional additional behavior to create a hook for subclasses.
+     * Resets the current game session.
      */
     @Override
-    public void additionalBehavior() {
-        // Placeholder for additional behavior
+    public void resetSession() {
+        session.resetSession();
+    }
+
+    /**
+     * Ends the current game session.
+     */
+    @Override
+    public void endGameSession() {
+        session.endSession();
     }
 
     /**
@@ -234,8 +235,7 @@ public class CLIGameEngine implements GameEngine {
                 "A black peg indicates that both the number and position are correct.",
                 "A white peg means you have a correct number in the wrong position.",
                 "",
-                "Press '# + enter' at any point to bring up the Main Menu",
-                "You can change settings, see the Leaderboard or restart your game.",
+                "Press '# + enter' at any point to return to the Main Menu.",
                 "",
                 "Good luck!",
         };
@@ -272,8 +272,11 @@ public class CLIGameEngine implements GameEngine {
     /**
      * Compiles a list of players by prompting the user for each player's name via the command-line interface.
      */
-    protected void compilePlayersList() {
+    public void compilePlayersList() {
+        // Get the number of players from the settings
         int numPlayers = settings.getNumberOfPlayers();
+
+        // Create a player for each player
         for (int i = 0; i < numPlayers; i++) {
             Player player = createPlayer();
             if (player == null) {
@@ -298,7 +301,8 @@ public class CLIGameEngine implements GameEngine {
                 "3. Start New Game",
                 "4. Reset Game",
                 "5. Return to Game",
-                "6. Exit"
+                "6. Exit",
+                ""
         };
         input.displayMultiMessage(menuMessages);
 
@@ -316,7 +320,7 @@ public class CLIGameEngine implements GameEngine {
             case "3":
                 // Add function to end current game
                 input.displayMessage("Starting a new game...");
-                endGameSession();
+                if (session != null) { endGameSession(); }
                 createGameSession();
                 return;
             case "4":

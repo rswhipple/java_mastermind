@@ -35,12 +35,7 @@ public interface GameEngine {
      *
      * @param guess The String representing the player's guess.
      */
-    void processGuess(String guess);
-
-    /**
-     * Executes additional behavior after the game session has ended.
-     */
-    void additionalBehavior();
+    int processGuess(String guess);
 
     /**
      * Displays the secret code.

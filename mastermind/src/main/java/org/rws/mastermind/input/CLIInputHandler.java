@@ -34,6 +34,15 @@ public class CLIInputHandler implements InputHandler {
     }
 
     /**
+     * Notifies all listeners that the menu key has been pressed.
+     */
+    private void notifyMenuKeyListeners() {
+        for (GameEngine listener : listeners) {
+            listener.onMenuKey();
+        }
+    }
+
+    /**
      * Sets the running flag to control the input loop.
      */
     @Override
@@ -47,15 +56,6 @@ public class CLIInputHandler implements InputHandler {
     @Override
     public void setRunning(boolean running) {
         this.running = running;
-    }
-
-    /**
-     * Notifies all listeners that the menu key has been pressed.
-     */
-    private void notifyMenuKeyListeners() {
-        for (GameEngine listener : listeners) {
-            listener.onMenuKey();
-        }
     }
 
     /**

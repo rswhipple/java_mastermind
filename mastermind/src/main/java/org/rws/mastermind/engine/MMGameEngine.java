@@ -92,9 +92,6 @@ public class MMGameEngine implements GameEngine {
         // Run game loop
         runGame();
 
-        // Hook for additional behavior in subclasses
-        additionalBehavior();
-
         return true;
     }
 
@@ -157,26 +154,23 @@ public class MMGameEngine implements GameEngine {
      * Generates and displays the feedback.
      */
     @Override
-    public void processGuess(String guess) {
+    public int processGuess(String guess) {
         // Check if guess is empty
         if (guess == null || guess.isEmpty()) {
-            return;
+            return 0;
         }
 
         if (!validator.isValidGuess(guess)) {
+            if (!input.isRunning()) {
+                return 1;
+            }
             input.displayMessage("Invalid guess. Please try again.");
-            return;
+            return 0;
         }
 
         input.displayMessage(session.processGuess(guess));
-    }
 
-    /**
-     * Optional additional behavior to create a hook for subclasses.
-     */
-    @Override
-    public void additionalBehavior() {
-        // Placeholder for additional behavior
+        return 1;
     }
 
     /**
