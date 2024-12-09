@@ -13,7 +13,7 @@ Ensure the following are installed on your system:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/<your-username>/java_mastermind.git
+   git clone https://github.com/rswhipple/java_mastermind.git
    cd java_mastermind
    ```
 
