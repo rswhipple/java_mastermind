@@ -68,6 +68,10 @@ public class CLIInputHandler implements InputHandler {
         try {
             return scanner.nextLine();
         } catch (Exception e) {
+            if (Thread.currentThread().isInterrupted()) {
+                // Handle Ctrl+C scenario (interruption)
+                throw new IOException("Input interrupted (Ctrl+C detected)", e);
+            }
             throw new IOException("Error reading input", e);
         }
     }
@@ -94,6 +98,11 @@ public class CLIInputHandler implements InputHandler {
                     return userInput.trim();
                 }
             } catch (IOException e) {
+                if (e.getMessage().contains("Ctrl+C")) {
+                    displayMessage("Ctrl+C detected. Shutting down...");
+                    running = false; // Set running to false to stop the loop
+                    break;
+                }
                 if (!running) {
                     // If running is false, exit the loop gracefully
                     break;
