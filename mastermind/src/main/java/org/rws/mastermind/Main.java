@@ -18,7 +18,7 @@ import java.io.File;
  */
 public class Main {
     private static final List<Runnable> shutdownTasks = new ArrayList<>();
-    private static final String dbFile = "mastermind/src/main/resources/mastermind_db.sqlite3";
+    private static final String dbFile = "src/main/resources/mastermind_db.sqlite3";
 
     /**
      * The main method initializes the application and starts the game session.
