@@ -30,6 +30,17 @@ public class CLISetter extends BasicSetter {
         this.feedbackType = "standard";
     }
 
+    // Copy Constructor
+    public CLISetter(CLISetter original) {
+        this.input = original.input;
+        this.numberOfPlayers = original.numberOfPlayers;
+        this.numberOfRounds = original.numberOfRounds;
+        this.codeLength = original.codeLength;
+        this.codeChars = original.codeChars;
+        this.codeType = original.codeType;
+        this.feedbackType = original.feedbackType;
+    }
+
     /**
      * Initiates the 'Settings Menu' integrated process.
      * 
@@ -117,6 +128,8 @@ public class CLISetter extends BasicSetter {
         int min = 1;
         int max = 50;
         numberOfRounds = getSelection(message, min, max);
+
+        input.displayMessage("\nThe number of rounds has been set to: " + numberOfRounds);
     }
 
     /**
