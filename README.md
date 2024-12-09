@@ -58,20 +58,25 @@ java -jar target/mastermind-1.0-SNAPSHOT.jar cli_robust
 
 
 ## Design
+- Used Factory, Strategy and Listener design patterns
+- 
 
 ## Extensions
-
-- **Multiple Game Modes**:
-To showcase the modular design
-  - Simple CLI mode (`cli_simple`)
-  - Robust CLI mode (`cli_robust`)
-- **Dynamic Settings Menu**:  
-- **Database Integration and Leaderboard**: Game data is stored and managed using SQLite.
-- **Clean Shutdown**: Centralized shutdown handling for smooth resource management.
+- **Play against the computer**: 
+- **Finish Multiplayer Capacity**:
+- **Refine Feedback and Scoring**:  
+- **Refine Statistics**: 
+- **API version**: 
 
 ## Challenges
+- Figuring out where to separate modules
+- 
 
-
+## Future Extensions
+- **Complete Multiplayer**:  
+- **Database Integration and Leaderboard**: Game data is stored and managed using SQLite.
+- **Logging**: 
+- **Clean Shutdown**: Centralized shutdown handling for smooth resource management.
 
 ## Folder Structure
 

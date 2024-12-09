@@ -20,7 +20,7 @@ public class GameSession {
 
     private Player currentPlayer;
     private int currentPlayerIndex;
-    private GameState gameState;
+    protected GameState gameState;
 
     /**
      * Constructs a new {@code GameSession}.

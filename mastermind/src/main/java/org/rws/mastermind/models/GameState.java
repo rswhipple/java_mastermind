@@ -10,10 +10,13 @@ import org.rws.mastermind.feedback.FeedbackFactory;
  * It contains the secret code, the number of attempts left, and the game status.
  */
 public class GameState {
+    public enum GameStateEnum { PLAYING, MENU }
+
     private final Code secretCode;
     private int attemptsLeft;
     private boolean isGameWon = false;
     private final Feedback feedback;
+    private GameStateEnum currentState;
     
     /**
      * The GameState class represents the state of a game in the Mastermind game.
@@ -23,6 +26,7 @@ public class GameState {
         this.secretCode = secretCode;
         this.attemptsLeft = numRounds;
         this.feedback = FeedbackFactory.createFeedback(secretCode, fbType);
+        this.currentState = GameStateEnum.PLAYING;
     }
 
     /**
@@ -32,19 +36,39 @@ public class GameState {
      * @return A string representing the feedback for the guess.
      */
     public String processGuess(String guess) {
-        if (isGameOver()) {
-            return "";
+        if (currentState == GameStateEnum.MENU) {
+            return "#";
         }
-        
-        decrementAttempts();
-
-        if (secretCode.matches(guess)) {
-            setGameWon(true);
-            return "Congratulations! You've cracked the code!";
+        if (currentState == GameStateEnum.PLAYING) {
+            if (isGameOver()) {
+                return "Game is over.";
+            }
+            
+            decrementAttempts();
+    
+            if (secretCode.matches(guess)) {
+                setGameWon(true);
+                return "Congratulations! You've cracked the code!";
+            }
+    
+            return "Feedback: " + feedback.generateFeedback(guess);
         }
-
-        return "Feedback: " + feedback.generateFeedback(guess);
+        return "Invalid game state.";
     }
+
+    /**
+     * Gets the game state.
+     */
+    public GameStateEnum getGameState() {
+        return currentState;
+    }
+    /**
+     * Sets the game state.
+     */
+    public void setGameState(GameStateEnum state) {
+        currentState = state;
+    }
+
 
     /**
      * Gets the secret code as a string.

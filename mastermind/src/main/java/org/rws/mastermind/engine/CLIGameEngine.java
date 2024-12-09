@@ -3,6 +3,8 @@ package org.rws.mastermind.engine;
 import org.rws.mastermind.database.MastermindDB;
 import org.rws.mastermind.http.HttpHandler;
 import org.rws.mastermind.input.CLIInputHandler;
+import org.rws.mastermind.models.GameState;
+import org.rws.mastermind.models.GameState.GameStateEnum;
 import org.rws.mastermind.models.Player;
 import org.rws.mastermind.models.Validator;
 import org.rws.mastermind.settings.CLISetter;
@@ -94,6 +96,9 @@ public class CLIGameEngine implements GameEngine {
         // Run game loop
         runGame();
 
+        // Return to the main menu
+        mainMenu();
+
         return true;
     }
 
@@ -103,12 +108,13 @@ public class CLIGameEngine implements GameEngine {
      */
     @Override
     public void runGame() {
+        input.displayMessage("Starting a new game...");
         Player winner = null;
         // Game loop
         while (input.isRunning() && !session.isGameOver()) {
             int round = session.getNumRounds() - session.getAttemptsLeft() + 1;
 
-            input.displayMessage("ROUND " + round + " of " + session.getNumRounds());
+            input.displayMessage("\nROUND " + round + " of " + session.getNumRounds());
             input.displayMessage("Make a guess: ");
 
             if (processGuess(input.validateInput()) == 1 || !input.isRunning()) {
@@ -143,30 +149,42 @@ public class CLIGameEngine implements GameEngine {
      */
     @Override
     public int processGuess(String guess) {
-        // Check if guess is empty
-        if (guess == null || guess.isEmpty()) {
-            input.displayMessage("");
-            return 0;
-        }
+        // Get game state
+        GameState.GameStateEnum currentState = session.gameState.getGameState();
 
-        // Check for menu key
-        if (guess.equals("#")) {
-            input.displayMessage("");
-            input.notifyMenuKeyListeners();
-            return 0;
-        }
+        switch (currentState) {
+            case MENU:
+                input.displayMessage("Game is in the menu.");
+                return 0;
+            case PLAYING:
+                // Check if guess is empty
+                if (guess == null || guess.isEmpty()) {
+                    input.displayMessage("");
+                    return 0;
+                }
 
-        if (!validator.isValidGuess(guess)) {
-            if (!input.isRunning()) {
+                // Check for menu key
+                if (guess.equals("#")) {
+                    input.displayMessage("");
+                    input.notifyMenuKeyListeners();
+                    session.gameState.setGameState(GameStateEnum.MENU);
+                    return 0;
+                }
+
+                if (!validator.isValidGuess(guess)) {
+                    if (!input.isRunning()) {
+                        return 1;
+                    }
+                    input.displayMessage("Invalid guess. Please try again.");
+                    return 0;
+                } else {
+                    input.displayMessage(session.processGuess(guess));
+                    return 0;
+                }
+            default:
+                input.displayMessage("Unknown game state.");
                 return 1;
-            }
-            input.displayMessage("Invalid guess. Please try again.");
-            return 0;
         }
-
-        input.displayMessage(session.processGuess(guess));
-
-        return 0;
     }
 
     /**
@@ -235,7 +253,7 @@ public class CLIGameEngine implements GameEngine {
                 "Each number can be between 1 and 8.",
                 "Duplicate numbers may appear.",
                 "",
-                "You will have a limited number of attempts to guess the code.",
+                "You will have a limited number of rounds to guess the code.",
                 "After each guess, you will receive feedback on your guess.",
                 "A black peg indicates that both the number and position are correct.",
                 "A white peg means you have a correct number in the wrong position.",
@@ -264,7 +282,7 @@ public class CLIGameEngine implements GameEngine {
                     continue;
                 }
                 Player player = new Player(playerName, db, input);
-                input.displayMessage("Welcome, " + player.getName() + "!");
+                input.displayMessage("\nWelcome, " + player.getName() + "!\n");
                 return player;
             } catch (Exception e) {
                 input.logError("An unexpected error occurred: ", e);
@@ -320,30 +338,31 @@ public class CLIGameEngine implements GameEngine {
                 break;
             case "2":
                 displayLeaderboard();
-                mainMenu();
                 break;
             case "3":
                 // Add function to end current game
-                input.displayMessage("Starting a new game...");
                 if (session != null) { endGameSession(); }
                 createGameSession();
                 return;
             case "4":
+                session.gameState.setGameState(GameStateEnum.PLAYING);
                 resetSession();
                 return;
             case "5":
                 if (session.isGameOver()) {
                     createGameSession();
                 }
-                return; // This may need some work
+                session.gameState.setGameState(GameStateEnum.PLAYING);
+                return;
             case "6":
                 input.setRunning(false);
                 goodbyeMessage();
                 return;
             default:
                 input.displayMessage("Invalid option. Returning to the menu...");
-                mainMenu();
         }
+
+        mainMenu();
     }
 
     /**
@@ -362,6 +381,9 @@ public class CLIGameEngine implements GameEngine {
         input.displayMultiMessage(warning);
     }
 
+    /**
+     * Displays the leaderboard.
+     */
     public void displayLeaderboard() {
         List<String> leaders = db.getLeaderboard(5);
         String[] leaderIntro = {
