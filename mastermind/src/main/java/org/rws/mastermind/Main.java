@@ -44,9 +44,18 @@ public class Main {
         }
 
         // Setup database, connect, and register shutdown task
-        if (!checkFileExists(dbFile)) { DatabaseSetup.setupDatabase(dbFile); }
-        MastermindDB db = new MastermindDB(dbFile);
-        registerShutdownTask(db::closeDB);
+        MastermindDB db;
+        if (gameMode == 2) {
+            DatabaseSetup.setupDatabase(dbFile);
+            if (!checkFileExists(dbFile)) { 
+                DatabaseSetup.setupDatabase(dbFile); 
+            }
+            db = new MastermindDB(dbFile);
+            registerShutdownTask(db::closeDB);
+        } else {
+            db = null;
+        }
+        
 
         // Setup HTTP handler and register shutdown task
         HttpHandlerImp httpHandler = new HttpHandlerImp();

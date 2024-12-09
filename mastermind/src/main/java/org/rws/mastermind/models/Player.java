@@ -25,6 +25,12 @@ public class Player {
     public Player(String name, MastermindDB db, InputHandler input) {
         this.db = db;
 
+        // Construct player object without database
+        if (db == null) {
+            simplePlayer(name);
+            return;
+        }
+
         // Validate player name
         while (true) {  // Check if I can use isRunning instead of true
             int id = db.addPlayer(name);
@@ -47,6 +53,15 @@ public class Player {
                 }
             }
         }
+    }
+
+    /**
+     * Constructs a simple Player object without database
+     * @param name
+     */
+    public void simplePlayer(String name) {
+        this.name = name;
+        this.uniqueID = -1;
     }
 
     /**

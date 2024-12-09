@@ -39,7 +39,7 @@ public class MMGameEngine implements GameEngine {
             InputHandler inputHandler,
             HttpHandler httpHandler
         ) {
-        this.db = db;
+        this.db = db;   // Null placeholder for simple mode
         this.input = inputHandler;
         this.http = httpHandler;
         this.settings = new BasicSetter();
@@ -55,14 +55,16 @@ public class MMGameEngine implements GameEngine {
         instructions();
     }
 
+    /**
+     * Starts the game engine by creating a new game session.
+     */
     @Override
     public void startEngine() {
-        createGameSession();
+        while(input.isRunning()) {
+            createGameSession();
+            endGameSession();
+        }
     }
-
-    @Override
-    public
-    void onMenuKey() {}
 
     /**
      * Creates a new game session with the given settings and player names.
@@ -89,6 +91,7 @@ public class MMGameEngine implements GameEngine {
         }
 
         // Run game loop
+        input.displayMessage("\nStarting a new game...\n");
         runGame();
 
         return true;
@@ -105,25 +108,22 @@ public class MMGameEngine implements GameEngine {
         while (input.isRunning() && !session.isGameOver()) {
             int round = session.getNumRounds() - session.getAttemptsLeft() + 1;
 
-            input.displayMessage("ROUND " + round + " of " + session.getNumRounds());
+            input.displayMessage("\nROUND " + round + " of " + session.getNumRounds());
             input.displayMessage("Make a guess: ");
 
             processGuess(input.validateInput());
 
             if (session.isGameOver()) {
                 if (!session.isGameWon()) {
-                    player.incrementLosses();
                     input.displayMessage("\nGame over! The code was: ");
                     displayCode();
                 } 
 
                 winner = session.getCurrentPlayer();
-                winner.incrementWins();
                 input.displayMessage("Congratulations " + winner.getName() + "!");
                 
                 return;
             }
-            session.incrementCurrentPlayer();
         }
     }
 
@@ -164,19 +164,41 @@ public class MMGameEngine implements GameEngine {
             return 0;
         }
 
+        input.displayMessage("");
         input.displayMessage(session.processGuess(guess));
 
         return 1;
     }
 
+        /**
+     * Creates a new player by prompting the user for their name via the command-line interface.
+     *
+     * @return A Player object representing the new player.
+     */
+    private Player createPlayer() {
+        input.displayMessage("\nWhat's your name?");
+        while (input.isRunning()) {
+            try {
+                String playerName = input.validateInput();
+                if (playerName == null || playerName.isEmpty()) {
+                    continue;
+                }
+                Player player = new Player(playerName, db, input);
+                return player;
+            } catch (Exception e) {
+                input.displayMessage("An unexpected error occurred: " + e.getMessage());
+                return null;
+            }
+        }
+        return null;
+    }
+
     /**
-     * Displays the secret code.
-     * This method is used for debugging purposes.
+     * No onMenuKey functionality for this engine.
      */
     @Override
-    public void displayCode() {
-        input.displayMessage(session.getSecretCodeString());
-    }
+    public
+    void onMenuKey() {}
 
     /**
      * Displays the welcome message.
@@ -184,15 +206,7 @@ public class MMGameEngine implements GameEngine {
     @Override
     public void welcomeMessage() {
         // Display welcome message
-        String[] welcomeMessage = {
-                "",
-                "Welcome to Mastermind!",
-                ""
-        };
-
-        for (String message : welcomeMessage) {
-            input.displayMessage(message);
-        }
+        input.displayMessage("\nWelcome to Mastermind " + player.getName() + "!\n");
     }
 
     /**
@@ -216,14 +230,17 @@ public class MMGameEngine implements GameEngine {
         String[] instructions = {
                 "The goal of the game is to guess the secret code.",
                 "The code consists of a series of 4 numbers.",
-                "Each number can be between 1 and 8.",
+                "Each number is between 1 and 8.",
                 "Duplicate numbers may appear.",
-                "",
-                "You will have a limited number of attempts to guess the code.",
+                "You have 10 attempts to guess the code.",
                 "After each guess, you will receive feedback on your guess.",
                 "A black peg indicates that both the number and position are correct.",
                 "A white peg means you have a correct number in the wrong position.",
                 "",
+                "Enter 'ctrl + c' to exit the game at any time.",
+                "",
+                "Good luck!",
+                ""
         };
 
         for (String message : instructions) {
@@ -232,26 +249,12 @@ public class MMGameEngine implements GameEngine {
     }
 
     /**
-     * Creates a new player by prompting the user for their name via the command-line interface.
-     *
-     * @return A Player object representing the new player.
+     * Displays the secret code.
+     * This method is used for debugging purposes.
      */
-    private Player createPlayer() {
-        input.displayMessage("\nWhat's your name?");
-        while (input.isRunning()) {
-            try {
-                String playerName = input.validateInput();
-                if (playerName == null || playerName.isEmpty()) {
-                    continue;
-                }
-                Player player = new Player(playerName, db, input);
-                input.displayMessage("Welcome, " + player.getName() + "!");
-                return player;
-            } catch (Exception e) {
-                input.displayMessage("An unexpected error occurred: " + e.getMessage());
-                return null;
-            }
-        }
-        return null;
+    @Override
+    public void displayCode() {
+        input.displayMessage(session.getSecretCodeString());
     }
+
 }

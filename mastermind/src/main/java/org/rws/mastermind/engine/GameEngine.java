@@ -7,7 +7,9 @@ package org.rws.mastermind.engine;
  */
 public interface GameEngine {
     
-
+    /**
+     * Starts the game engine.
+     */
     void startEngine();
     
     /**
@@ -24,6 +26,13 @@ public interface GameEngine {
     void runGame();
 
     /**
+     * Processes a guess for a given game session.
+     *
+     * @param guess The String representing the player's guess.
+     */
+    int processGuess(String guess);
+
+    /**
      * Resets the current game session.
      */
     void resetSession();
@@ -34,16 +43,9 @@ public interface GameEngine {
     void endGameSession();
 
     /**
-     * Processes a guess for a given game session.
-     *
-     * @param guess The String representing the player's guess.
+     * Menu key hook handler.
      */
-    int processGuess(String guess);
-
-    /**
-     * Displays the secret code.
-     */
-    void displayCode();
+    void onMenuKey();
 
     /**
      * Displays the welcome message.
@@ -61,7 +63,8 @@ public interface GameEngine {
     void instructions();
 
     /**
-     * Menu key hook handler.
+     * Displays the secret code.
      */
-    void onMenuKey();
+    void displayCode();
+
 }
