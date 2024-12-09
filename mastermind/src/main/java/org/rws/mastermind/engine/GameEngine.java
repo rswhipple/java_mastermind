@@ -7,6 +7,9 @@ package org.rws.mastermind.engine;
  */
 public interface GameEngine {
     
+
+    void startEngine();
+    
     /**
      * Create a new game session.
      *

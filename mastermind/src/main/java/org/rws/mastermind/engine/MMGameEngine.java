@@ -25,6 +25,7 @@ public class MMGameEngine implements GameEngine {
 
     protected GameSession session;
     protected final List<Player> players;
+    protected final Player player;
     protected Validator validator;
 
 
@@ -44,11 +45,19 @@ public class MMGameEngine implements GameEngine {
         this.settings = new BasicSetter();
         this.session = null;
         this.players = new ArrayList<>();
+        this.player = createPlayer();
         this.validator = null;
+
+        players.add(player);
 
         // Display welcome message and game instructions
         welcomeMessage();
         instructions();
+    }
+
+    @Override
+    public void startEngine() {
+        createGameSession();
     }
 
     @Override
@@ -62,16 +71,6 @@ public class MMGameEngine implements GameEngine {
      */
     @Override
     public boolean createGameSession() {
-        // Compile Player Names
-        if (players == null || players.isEmpty()) {
-            while (input.isRunning()) {
-                compilePlayersList();
-                if (players != null) {
-                    break;
-                }
-            }
-        }
-
         // Create the session
         String sessionID = UUID.randomUUID().toString();
         try {
@@ -96,22 +95,6 @@ public class MMGameEngine implements GameEngine {
     }
 
     /**
-     * Resets the current game session.
-     */
-    @Override
-    public void resetSession() {
-        session.resetSession();
-    }
-
-    /**
-     * Ends the current game session.
-     */
-    @Override
-    public void endGameSession() {
-        session.endSession();
-    }
-
-    /**
      * Starts the game session.
      * This method must be called after the game session has been created.
      */
@@ -129,22 +112,35 @@ public class MMGameEngine implements GameEngine {
 
             if (session.isGameOver()) {
                 if (!session.isGameWon()) {
+                    player.incrementLosses();
                     input.displayMessage("\nGame over! The code was: ");
                     displayCode();
-                } else {
-                    winner = session.getCurrentPlayer();
-                    winner.incrementWins();
-                    input.displayMessage("Congratulations " + winner.getName() + "!");
-                }
-                for (Player player : players) {
-                    if (!player.equals(winner)) {
-                        player.incrementLosses();
-                    }
-                }
+                } 
+
+                winner = session.getCurrentPlayer();
+                winner.incrementWins();
+                input.displayMessage("Congratulations " + winner.getName() + "!");
+                
                 return;
             }
             session.incrementCurrentPlayer();
         }
+    }
+
+    /**
+     * Resets the current game session.
+     */
+    @Override
+    public void resetSession() {
+        session.resetSession();
+    }
+
+    /**
+     * Ends the current game session.
+     */
+    @Override
+    public void endGameSession() {
+        session.endSession();
     }
 
     /**
@@ -257,19 +253,5 @@ public class MMGameEngine implements GameEngine {
             }
         }
         return null;
-    }
-
-    /**
-     * Compiles a list of players by prompting the user for each player's name via the command-line interface.
-     */
-    protected void compilePlayersList() {
-        int numPlayers = settings.getNumberOfPlayers();
-        for (int i = 0; i < numPlayers; i++) {
-            Player player = createPlayer();
-            if (player == null) {
-                return;
-            }
-            players.add(player);
-        }
     }
 }

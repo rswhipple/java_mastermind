@@ -75,6 +75,10 @@ public class Main {
         GameEngine game = GameEngineFactory.createEngine(gameMode, db, inputHandler, httpHandler);
         inputHandler.addListener(game);
 
+        if (game != null) {
+            game.startEngine();
+        }
+
     }
 
     /**

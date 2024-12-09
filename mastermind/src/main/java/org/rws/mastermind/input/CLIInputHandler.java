@@ -36,7 +36,7 @@ public class CLIInputHandler implements InputHandler {
     /**
      * Notifies all listeners that the menu key has been pressed.
      */
-    private void notifyMenuKeyListeners() {
+    public void notifyMenuKeyListeners() {
         for (GameEngine listener : listeners) {
             listener.onMenuKey();
         }
@@ -87,11 +87,6 @@ public class CLIInputHandler implements InputHandler {
             try {
                 // Get user input using the getInput method
                 String userInput = getInput();
-
-                // Check if the user input is '#'
-                if (userInput.equals("#")) {
-                    notifyMenuKeyListeners();
-                } 
 
                 // Return trimmed, non-blank input
                 if (!userInput.isBlank()) {

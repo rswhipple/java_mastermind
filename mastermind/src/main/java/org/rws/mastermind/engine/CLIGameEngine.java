@@ -48,9 +48,14 @@ public class CLIGameEngine implements GameEngine {
         // Display welcome message and game instructions
         welcomeMessage();
         instructions();
-        mainMenu();
     }
 
+
+    @Override
+    public void startEngine() {
+        // Create a new game session
+        mainMenu();
+    }
 
     /**
      * Processes the menu key.
@@ -140,14 +145,14 @@ public class CLIGameEngine implements GameEngine {
     public int processGuess(String guess) {
         // Check if guess is empty
         if (guess == null || guess.isEmpty()) {
-            input.displayMessage("Guess cannot be empty. Please try again.");
+            input.displayMessage("");
             return 0;
         }
 
         // Check for menu key
         if (guess.equals("#")) {
-            input.displayMessage("Menu key detected. Returning to menu...");
-            // notifyMenuKeyListeners();
+            input.displayMessage("");
+            input.notifyMenuKeyListeners();
             return 0;
         }
 
