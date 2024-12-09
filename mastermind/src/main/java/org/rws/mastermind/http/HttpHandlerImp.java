@@ -1,7 +1,7 @@
 package org.rws.mastermind.http;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
@@ -22,7 +22,7 @@ public class HttpHandlerImp implements HttpHandler {
     @Override
     public String get(String url) throws Exception {
         try {
-            connection = (HttpURLConnection) new URL(url).openConnection();
+            connection = (HttpURLConnection) URI.create(url).toURL().openConnection();
             connection.setRequestMethod("GET");
 
             // Check if the response code is 200 (OK)
