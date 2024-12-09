@@ -35,11 +35,25 @@ public interface InputHandler {
     void displayMultiMessage(String[] message);
 
     /**
-     * Displays an error message to the user.
+     * Logs an error message to file or console.
      *
      * @param message The error message to be displayed.
      */
-    void displayErrMessage(String message);
+    void logError(String message, Exception e);
+
+    /**
+     * Displays a warning message to file or console.
+     *
+     * @param message The error message to be displayed.
+     */
+    void logWarning(String message);
+
+    /**
+     * Displays an information message to file or console.
+     *
+     * @param message The error message to be displayed.
+     */
+    void logInfo(String message);
 
     /**
      * Gets the running flag to control the input loop.

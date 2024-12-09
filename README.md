@@ -53,15 +53,20 @@ Replace `<mode>` with one of the following:
 
 ### Example:
 ```bash
-mvn exec:java -Dexec.mainClass="org.rws.mastermind.Main" -Dexec.args="cli_simple"
+java -jar target/mastermind-1.0-SNAPSHOT.jar cli_robust
 ```
+
+
+## Design
 
 ## Extensions
 
 - **Multiple Game Modes**:
+To showcase the modular design
   - Simple CLI mode (`cli_simple`)
   - Robust CLI mode (`cli_robust`)
-- **Database Integration**: Game data is stored and managed using SQLite.
+- **Dynamic Settings Menu**:  
+- **Database Integration and Leaderboard**: Game data is stored and managed using SQLite.
 - **Clean Shutdown**: Centralized shutdown handling for smooth resource management.
 
 ## Challenges

@@ -78,7 +78,7 @@ public class Main {
                 try {
                     task.run();
                 } catch (Exception e) {
-                    inputHandler.displayErrMessage("Error during shutdown" + e.getMessage());
+                    inputHandler.logError("Error during shutdown", e);
                 }
             }
             inputHandler.displayMessage("Goodbye!");

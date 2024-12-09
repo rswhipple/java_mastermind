@@ -2,6 +2,9 @@ package org.rws.mastermind.input;
 
 import org.rws.mastermind.engine.GameEngine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -13,6 +16,8 @@ import java.util.List;
  * via the command-line interface (CLI).
  */
 public class CLIInputHandler implements InputHandler {
+    private static final Logger logger = LoggerFactory.getLogger(CLIInputHandler.class);
+
     private Scanner scanner;
     private volatile boolean running = true; // Flag to control the input loop
     private final List<GameEngine> listeners = new ArrayList<>();
@@ -121,13 +126,34 @@ public class CLIInputHandler implements InputHandler {
     }
 
     /**
-     * Displays a message to the user via the command-line interface.
+     * Logs an error message to file.
      *
      * @param message The message to be displayed.
+     * @param e The exception that caused the warning.
      */
     @Override
-    public void displayErrMessage(String message) {
-        System.err.println(message);
+    public void logError(String message, Exception e) {
+        logger.error(message, e);
+    }
+
+    /**
+     * Logs a warning message to file.
+     *
+     * @param message The error message to be displayed.
+     */
+    @Override
+    public void logWarning(String message) {
+        logger.warn(message);
+    }
+
+    /**
+     * Logs an informational message to file.
+     *
+     * @param message The error message to be displayed.
+     */
+    @Override
+    public void logInfo(String message) {
+        logger.info(message);
     }
 
     /**
