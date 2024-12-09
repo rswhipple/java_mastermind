@@ -37,13 +37,15 @@ public class Main {
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
+        // PARSE
         int gameMode = parseArgs(args);
         if (args.length != 1 || gameMode < 0) {
             displayUsage();
             return;
         }
 
-        // Setup database, connect, and register shutdown task
+        // DATABASE 
+        // setup, connection, and shutdown task registration
         MastermindDB db;
         if (gameMode == 2) {
             DatabaseSetup.setupDatabase(dbFile);
@@ -55,17 +57,19 @@ public class Main {
         } else {
             db = null;
         }
-        
 
-        // Setup HTTP handler and register shutdown task
+        // HTTP HANDLER
+        // setup and shutdown task registration
         HttpHandlerImp httpHandler = new HttpHandlerImp();
         registerShutdownTask(httpHandler::cleanup);
 
-        // Setup input handler and register shutdown task
+        // INPUT HANDLER
+        // setup and shutdown task registration
         CLIInputHandler inputHandler = new CLIInputHandler();
         registerShutdownTask(inputHandler::cleanup);
 
-        // Central shutdown hook
+
+        // SHUTDOWN HOOK
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             inputHandler.displayMessage("Central shutdown hook triggered. Shutting down cleanly...");
             inputHandler.setRunning(false);       
@@ -80,10 +84,10 @@ public class Main {
             inputHandler.displayMessage("Goodbye!");
         }));
 
-        // Initialize the game engine
+        // INIT GAME ENGINE
+        // create, add listener and start the game engine
         GameEngine game = GameEngineFactory.createEngine(gameMode, db, inputHandler, httpHandler);
         inputHandler.addListener(game);
-
         if (game != null) {
             game.startEngine();
         }
@@ -116,7 +120,6 @@ public class Main {
             default -> -1;
         };
     }
-
 
     /**
      * Checks if a file exists.
