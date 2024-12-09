@@ -28,22 +28,23 @@ Ensure the following are installed on your system:
      ```
 
 3. **Build the Project**:
-   Compile and package the project using Maven:
+   Build and package the project using Maven:
    ```bash
-   mvn package
+   mvn clean install
    ```
 
    This will:
+   - Clean any previous builds,
    - Download dependencies (e.g., SQLite JDBC driver).
    - Compile the source files.
    - Package the application into a runnable JAR located in the `target/` directory.
 
 ## Running the Application
 
-Run the application using Maven:
+Run the application using Java:
 
 ```bash
-mvn exec:java -Dexec.mainClass="org.rws.mastermind.Main" -Dexec.args="<mode>"
+java -jar target/mastermind-1.0-SNAPSHOT.jar <mode>
 ```
 
 Replace `<mode>` with one of the following:
@@ -55,13 +56,17 @@ Replace `<mode>` with one of the following:
 mvn exec:java -Dexec.mainClass="org.rws.mastermind.Main" -Dexec.args="cli_simple"
 ```
 
-## Features
+## Extensions
 
 - **Multiple Game Modes**:
   - Simple CLI mode (`cli_simple`)
   - Robust CLI mode (`cli_robust`)
 - **Database Integration**: Game data is stored and managed using SQLite.
 - **Clean Shutdown**: Centralized shutdown handling for smooth resource management.
+
+## Challenges
+
+
 
 ## Folder Structure
 
