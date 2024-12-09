@@ -296,6 +296,11 @@ public class CLIGameEngine implements GameEngine {
      * Compiles a list of players by prompting the user for each player's name via the command-line interface.
      */
     public void compilePlayersList() {
+        // Skip if players list is not empty
+        if (!players.isEmpty()) {
+            return;
+        }
+        
         // Get the number of players from the settings
         int numPlayers = settings.getNumberOfPlayers();
 

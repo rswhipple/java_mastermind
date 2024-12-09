@@ -214,7 +214,7 @@ public class CLISetter extends BasicSetter {
                 if (userInput >= min && userInput <= max) {
                     return userInput;
                 } else {
-                    input.displayMessage("Please enter an integer between" + min + "and " + max + ".");
+                    input.displayMessage("Please enter an integer between " + min + " 3and " + max + ".");
                 }
             } catch (NumberFormatException e) {
                 input.displayMessage("Invalid input. Please enter a valid integer.");
