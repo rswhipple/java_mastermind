@@ -20,7 +20,7 @@ Ensure the following are installed on your system:
 2. **Compile the Project**:
     - Using `javac`:
       ```bash
-      javac -d out mastermind/src/main/java/org/rws/mastermind/*.java
+      javac -d out mastermind/src/main/java/**/*.java
       ```
     - Using Maven:
       ```bash
