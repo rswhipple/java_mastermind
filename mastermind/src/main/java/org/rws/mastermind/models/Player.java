@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class Player {
     private final MastermindDB db;
-    private final String name;
-    private final int uniqueID;
+    private String name;
+    private int uniqueID;
 
     /**
      * Constructs a Player object with the specified name, database, and input handler.
@@ -38,11 +38,9 @@ public class Player {
                 String choice = input.validateInput().trim().toLowerCase();
                 if (choice.equals("y") || choice.equals("yes")) {
                     List<String> playerData = db.findPlayer(name);
-                    if (!playerData.isEmpty()) {
-                        this.name = playerData.get(1);
-                        this.uniqueID = Integer.parseInt(playerData.get(0));
-                        break;
-                    } 
+                    this.uniqueID = Integer.parseInt(playerData.get(0));
+                    this.name = name;
+                    break;
                 } else {
                     input.displayMessage("Choose a different name: ");
                     name = input.validateInput().trim();
