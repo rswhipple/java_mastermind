@@ -9,6 +9,7 @@ import org.rws.mastermind.http.HttpHandlerImp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 
 /**
  * The {@code Main} class serves as the entry point for the Mastermind game application.
@@ -43,7 +44,7 @@ public class Main {
         }
 
         // Setup database, connect, and register shutdown task
-        DatabaseSetup.setupDatabase(dbFile);
+        if (!checkFileExists(dbFile)) { DatabaseSetup.setupDatabase(dbFile); }
         MastermindDB db = new MastermindDB(dbFile);
         registerShutdownTask(db::closeDB);
 
@@ -105,6 +106,18 @@ public class Main {
             }
             default -> -1;
         };
+    }
+
+
+    /**
+     * Checks if a file exists.
+     *
+     * @param fileName path to file (Mastermind database in this case
+     * @return True if it exists, false if no.
+     */
+    private static boolean checkFileExists(String fileName) {
+        File file = new File(fileName);
+        return file.exists();
     }
 
     /**
