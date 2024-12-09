@@ -48,6 +48,19 @@ public class CLIGameEngine extends MMGameEngine {
         mainMenu();
     }
 
+    @Override
+    public void instructions() {
+        super.instructions();
+        String[] instructions = {
+                "Press '# + enter' at any point to bring up the Main Menu",
+                "You can change settings, see the Leaderboard or restart your game.",
+                "",
+                "Good luck!",
+        };
+
+        input.displayMultiMessage(instructions);
+    }
+
     /**
      * Displays and implements the main menu.
      */
@@ -76,6 +89,7 @@ public class CLIGameEngine extends MMGameEngine {
                 break;
             case "2":
                 displayLeaderboard();
+                mainMenu();
                 break;
             case "3":
                 // Add function to end current game
@@ -87,6 +101,9 @@ public class CLIGameEngine extends MMGameEngine {
                 resetSession();
                 return;
             case "5":
+                if (session.isGameOver()) {
+                    createGameSession();
+                }
                 return; // This may need some work
             case "6":
                 input.setRunning(false);

@@ -93,13 +93,6 @@ public class GameSession {
     public String getSessionId() { return sessionId; }
 
     /**
-     * Gets the list of players in the game session.
-     *
-     * @return The list of players.
-     */
-    public List<Player> getPlayers() { return players; }
-
-    /**
      * Gets the current player.
      *
      * @return The Player object representing the current player

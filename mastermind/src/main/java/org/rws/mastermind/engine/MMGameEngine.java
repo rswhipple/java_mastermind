@@ -23,11 +23,16 @@ public class MMGameEngine implements GameEngine {
     private final HttpHandler http;
     protected final GameSetter settings;
 
-    private GameSession session;
+    protected GameSession session;
     private final List<Player> players;
     private Validator validator;
 
 
+    /**
+     * @param db
+     * @param inputHandler
+     * @param httpHandler
+     */
     public MMGameEngine(
             MastermindDB db,
             InputHandler inputHandler,
@@ -43,6 +48,7 @@ public class MMGameEngine implements GameEngine {
 
         // Display welcome message and game instructions
         welcomeMessage();
+        instructions();
     }
 
     @Override
@@ -151,20 +157,18 @@ public class MMGameEngine implements GameEngine {
      * Generates and displays the feedback.
      */
     @Override
-    public int processGuess(String guess) {
+    public void processGuess(String guess) {
         // Check if guess is empty
         if (guess == null || guess.isEmpty()) {
-            return 1;
+            return;
         }
 
         if (!validator.isValidGuess(guess)) {
             input.displayMessage("Invalid guess. Please try again.");
-            return 0;
+            return;
         }
 
         input.displayMessage(session.processGuess(guess));
-
-        return 0;
     }
 
     /**
@@ -191,8 +195,9 @@ public class MMGameEngine implements GameEngine {
     public void welcomeMessage() {
         // Display welcome message
         String[] welcomeMessage = {
-            "Welcome to Mastermind!",
-            ""
+                "",
+                "Welcome to Mastermind!",
+                ""
         };
 
         for (String message : welcomeMessage) {
@@ -219,16 +224,16 @@ public class MMGameEngine implements GameEngine {
     public void instructions() {
         // Display instructions
         String[] instructions = {
-            "The goal of the game is to guess the secret code.",
-            "The code consists of a series of 4 numbers.",
-            "Each number can be between 1 and 8.",
-            "You have a limited number of attempts to guess the code.",
-            "After each guess, you will receive feedback on your guess.",
-            "A black peg indicates that both the number and position are correct.",
-            "A white peg means you have a correct number in the wrong position.",
-            "You will have 10 attempts to guess the code.",
-            "Good luck!",
-            ""
+                "The goal of the game is to guess the secret code.",
+                "The code consists of a series of 4 numbers.",
+                "Each number can be between 1 and 8.",
+                "Duplicate numbers may appear.",
+                "",
+                "You will have a limited number of attempts to guess the code.",
+                "After each guess, you will receive feedback on your guess.",
+                "A black peg indicates that both the number and position are correct.",
+                "A white peg means you have a correct number in the wrong position.",
+                "",
         };
 
         for (String message : instructions) {

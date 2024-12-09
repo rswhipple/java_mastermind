@@ -35,7 +35,7 @@ public interface GameEngine {
      *
      * @param guess The String representing the player's guess.
      */
-    int processGuess(String guess);
+    void processGuess(String guess);
 
     /**
      * Executes additional behavior after the game session has ended.
