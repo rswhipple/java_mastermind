@@ -20,12 +20,12 @@ import java.util.UUID;
 public class MMGameEngine implements GameEngine {
     protected final MastermindDB db;
     protected final InputHandler input;
-    private final HttpHandler http;
-    protected final GameSetter settings;
+    protected final HttpHandler http;
+    protected GameSetter settings;
 
     protected GameSession session;
-    private final List<Player> players;
-    private Validator validator;
+    protected final List<Player> players;
+    protected Validator validator;
 
 
     /**
@@ -268,7 +268,7 @@ public class MMGameEngine implements GameEngine {
     /**
      * Compiles a list of players by prompting the user for each player's name via the command-line interface.
      */
-    private void compilePlayersList() {
+    protected void compilePlayersList() {
         int numPlayers = settings.getNumberOfPlayers();
         for (int i = 0; i < numPlayers; i++) {
             Player player = createPlayer();
