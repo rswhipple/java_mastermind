@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class CLIGameEngine extends MMGameEngine {
     protected final GameSetter settings;
-    protected final CLIInputHandler input;
 
     /**
      *
@@ -26,7 +25,6 @@ public class CLIGameEngine extends MMGameEngine {
     public CLIGameEngine(MastermindDB db, CLIInputHandler inputHandler, HttpHandler http) {
         super(db, inputHandler, http);
 
-        this.input = inputHandler;
         this.settings = new CLISetter(inputHandler);
 
         instructions();

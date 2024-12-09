@@ -28,6 +28,13 @@ public interface InputHandler {
     void displayMessage(String message);
 
     /**
+     * Displays a multi-line message to the user via the command-line interface.
+     *
+     * @param message The message to be displayed.
+     */
+    void displayMultiMessage(String[] message);
+
+    /**
      * Displays an error message to the user.
      *
      * @param message The error message to be displayed.
