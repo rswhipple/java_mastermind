@@ -1,5 +1,6 @@
 package org.rws.mastermind.http;
 
+
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.io.InputStreamReader;

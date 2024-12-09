@@ -99,15 +99,18 @@ public class CLIInputHandler implements InputHandler {
                 }
             } catch (IOException e) {
                 if (e.getMessage().contains("Ctrl+C")) {
-                    displayMessage("Ctrl+C detected. Shutting down...");
+                    logInfo("Ctrl+C detected.");
+                    displayMessage("Shutting down...");
                     running = false; // Set running to false to stop the loop
                     break;
                 }
                 if (!running) {
                     // If running is false, exit the loop gracefully
+                    displayMessage("Shutting down...");
                     break;
                 }
                 // Handle interrupted input or other IO issues
+                logError("An error occurred while validating input", e);
                 displayMessage("Error reading input. Please try again.");
             }
         }

@@ -79,14 +79,14 @@ public class MMGameEngine implements GameEngine {
             // Attempt to create the GameSession
             session = GameSession.create(settings, http, sessionID, players);
             if (session == null) {
-                System.err.println("Failed to create GameSession. Returning false.");
+                input.logWarning("Failed to create GameSession. Returning false.");
                 return false;
             }
 
             // Attempt to initialize the Validator
             validator = new Validator(settings.getCodeLength(), settings.getCodeCharString());
         } catch (Exception e) {
-            System.err.println("Error occurred during initialization: " + e.getMessage());
+            input.logError("Error occurred during initialization: ", e);
             return false;
         }
 
@@ -186,7 +186,7 @@ public class MMGameEngine implements GameEngine {
                 Player player = new Player(playerName, db, input);
                 return player;
             } catch (Exception e) {
-                input.displayMessage("An unexpected error occurred: " + e.getMessage());
+                input.logError("An unexpected error occurred: ", e);
                 return null;
             }
         }

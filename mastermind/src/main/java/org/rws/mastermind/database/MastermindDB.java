@@ -1,5 +1,8 @@
 package org.rws.mastermind.database;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +14,7 @@ import java.util.List;
  */
 public class MastermindDB {
     private Connection conn;
+    private static final Logger logger = LoggerFactory.getLogger(MastermindDB.class);
 
     /**
      * Constructs a {@code MastermindDB} object with the specified database file.
@@ -22,11 +26,11 @@ public class MastermindDB {
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("Connected to the database.");
+                logger.info("The driver name is " + meta.getDriverName());
+                logger.info("Connected to the database.");
             }
         } catch (SQLException e) {
-            System.err.println("Error connecting to database: " + e.getMessage());
+            logger.error("Error connecting to database: ", e);
         }
     }
 
@@ -37,9 +41,9 @@ public class MastermindDB {
         if (conn != null) {
             try {
                 conn.close();
-                System.out.println("Database connection closed.");
+                logger.info("Database connection closed.");
             } catch (SQLException e) {
-                System.err.println("Error closing database: " + e.getMessage());
+                logger.error("Error closing database: ", e);
             }
         }
     }
@@ -138,7 +142,7 @@ public class MastermindDB {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching leaderboard: " + e.getMessage());
+            logger.error("Error fetching leaderboard: ", e);
         }
         return leaderboard;
     }
@@ -162,7 +166,7 @@ public class MastermindDB {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error executing update: " + e.getMessage());
+            logger.error("Error executing update: " + e);
         }
         return -1;
     }
@@ -184,7 +188,7 @@ public class MastermindDB {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error executing query: " + e.getMessage());
+            logger.error("Error executing query: ", e);
         }
         return results;
     }
@@ -205,7 +209,7 @@ public class MastermindDB {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error executing scalar query: " + e.getMessage());
+            logger.error("Error executing scalar query: ", e);
         }
         return 0;
     }
@@ -232,7 +236,7 @@ public class MastermindDB {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
-            System.err.println("Error executing update: " + e.getMessage());
+            logger.error("Error executing update: ", e);
         }
     }
 }
