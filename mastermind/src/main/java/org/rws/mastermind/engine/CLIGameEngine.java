@@ -296,11 +296,16 @@ public class CLIGameEngine implements GameEngine {
      * @return A Player object representing the new player.
      */
     private Player createPlayer() {
-        input.displayMessage("\nWhat's your name?");
         while (input.isRunning()) {
+            input.displayMessage("\nWhat's your name?");
+
             try {
                 String playerName = input.validateInput();
-                if (playerName == null || playerName.isEmpty()) {
+                if (playerName == null) {
+                    return null;
+                }
+                if (playerName.isEmpty() || playerName.equals("#")) {
+                    input.displayMessage("Invalid name. Please try again.");
                     continue;
                 }
                 Player player = new Player(playerName, db, input);
@@ -359,6 +364,11 @@ public class CLIGameEngine implements GameEngine {
         input.displayMessage("Choose an option: ");
         String choice = input.validateInput();
 
+        // Check if the user has exited the game
+        if (choice == null) {
+            return;
+        }
+
         switch (choice) {
             case "1":
                 displaySettingsMenu();
@@ -414,6 +424,8 @@ public class CLIGameEngine implements GameEngine {
     public void displayLeaderboard() {
         List<String> leaders = db.getLeaderboard(5);
         String[] leaderIntro = {
+            "",
+            "",
             "========================================",
             "*****||||     LEADERBOARD      ||||*****",
             "========================================",
@@ -433,6 +445,17 @@ public class CLIGameEngine implements GameEngine {
                 input.logError("Thread was interrupted: ", e);
             }
             input.displayMessage("Player #" + rank + ": " + leader);
+            rank++;
+        }
+
+        input.displayMessage("");
+        input.displayMessage("");
+        delay = 1000;
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            input.logError("Thread was interrupted: ", e);
         }
     }
 }
