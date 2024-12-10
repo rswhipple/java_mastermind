@@ -12,7 +12,7 @@ This project emphasizes software design principles such as abstraction, encapsul
 
 Ensure the following are installed on your system:
 
-- **Java**: JDK 23.0.1 or later [https://jdk.java.net]
+- **Java**: JDK 17 or later [https://jdk.java.net]
 - **Maven**: Version 3.9.9 or later [https://maven.apache.org/download.cgi]
 
 ## Installation

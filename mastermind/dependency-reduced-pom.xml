@@ -7,6 +7,14 @@
   <build>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <release>17</release>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.4.0</version>
         <executions>
@@ -16,10 +24,24 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF/versions/**</exclude>
+                    <exclude>module-info.class</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <transformers>
                 <transformer>
                   <mainClass>org.rws.mastermind.Main</mainClass>
                 </transformer>
+                <transformer>
+                  <resource>META-INF/spring.handlers</resource>
+                </transformer>
+                <transformer />
               </transformers>
             </configuration>
           </execution>
@@ -83,7 +105,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.compiler.source>17</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 </project>
