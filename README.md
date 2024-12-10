@@ -2,9 +2,11 @@
 
 ## Overview
 
-This project is a Java-based, object-oriented implementation of the Mastermind game. It features a dynamic Command-Line Interface (CLI), database integration using SQLite, and partial support for multi-threading and event-driven design. The game allows players to interactively solve the Mastermind code-breaking puzzle with customizable settings and player tracking.
+In the game of Mastermind you are tasked to crack a code, given only the length of the code and the characters that may be in it. 
 
-This project emphasizes software design principles such as modularity, maintainability, and scalability, laying the foundation for future enhancements like multiplayer or online gameplay.
+This project is a Java implementation of Mastermind using Object Oriented Design principles. It features a Command-Line Interface (CLI) with a dynamic menu options, database integration using SQLite, and partial support for multi-threading and event-driven design. The game allows players to interactively solve the Mastermind code-breaking puzzle with customizable settings and player tracking.
+
+This project emphasizes software design principles such as abstraction, encapsulation, modularity, and scalability, laying the foundation for future enhancements like multiplayer or online gameplay.
 
 ## Prerequisites
 
@@ -52,8 +54,8 @@ java -jar target/mastermind-1.0-SNAPSHOT.jar <mode>
 ```
 
 Replace `<mode>` with one of the following:
-- `cli_basic`: Starts the game with a simple command-line interface.
-- `cli_dynamic`: Starts the game with a more advanced command-line interface.
+- `cli_basic`: Starts the game with the basic command-line interface.
+- `cli_dynamic`: Starts the game with a customizable command-line interface.
 
 
 ### Example:
@@ -61,10 +63,10 @@ Replace `<mode>` with one of the following:
 java -jar target/mastermind-1.0-SNAPSHOT.jar cli_dynamic
 ```
 
-## Play with the Dynamic CLI
+## Playing with the Dynamic CLI
 1. The game starts with the main menu offering various options:
-   * Game Settings: Customize gameplay by adjusting the number of players, rounds, code length, feedback type, or setting a custom code.
-   * Leaderboard: View the top players based on performance metrics like win rates.
+   * Game Settings: Customize gameplay by adjusting the number of players, rounds, code length, feedback type, or choose to set your own custom code.
+   * Leaderboard: View the top players based win rates.
    * Start New Game: Begin a fresh game session with the selected settings
    * ... more options ...
 2. Create a Player name to track your results.
@@ -75,7 +77,7 @@ java -jar target/mastermind-1.0-SNAPSHOT.jar cli_dynamic
 ## Play with the Basic CLI 
 1. Game rules are provided to you before the game begins.
 2. A new game will begin after the last game session ends.
-3. Enter `ctrl` + `c` at any point to exit the program.
+3. `ctrl c` + `enter` at any point to exit the program.
 
 ## Extensions
 - **Multiple Game Modes**:
@@ -98,19 +100,20 @@ java -jar target/mastermind-1.0-SNAPSHOT.jar cli_dynamic
 
 1. Refactoring the two **Game Engine** classes was the most significant challenge. Initially, the **dynamic `CLIGameEngine`** extended the **basic `MMGameEngine`**. My plan was to use `MMGameEngine` as a base class to support future scaling and implementations. However, integrating the two game loops with the rest of the features proved more complex than anticipated. To resolve this, I adopted the **Factory design pattern**, which provided a cleaner, more modular approach to creating game engines.
 
-2. Getting comfortable with Java's ecosystem was another hurdle. As someone relatively new to Java, I had to familiarize myself with its libraries, conventions, and development tools while ensuring my code remained clean and maintainable. 
+2. Getting comfortable with Java's ecosystem was another hurdle. As someone relatively new to Java, I had to familiarize myself with its libraries, conventions, and development tools. 
 
 ## Future Extensions
 - **Play against the computer**
 - **Finish Multiplayer Mode**
 - **Refine Feedback and Scoring**
 - **Refine Statistics**
-- **API version** 
+- **API or Web App version** 
 
 ## Folder Structure
 
 - **`mastermind/src/main/java/`**: Main application source code.
 - **`mastermind/src/main/resources/`**: Database file location.
+- **`mastermind/logs/`**: Logging output file location.
 - **`target/`**: Output directory for compiled classes and packaged JAR files.
 
 
