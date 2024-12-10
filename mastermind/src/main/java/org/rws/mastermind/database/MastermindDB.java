@@ -128,16 +128,24 @@ public class MastermindDB {
      * @return A list of strings containing player names and their statistics.
      */
     public List<String> getLeaderboard(int limit) {
-        String sql = "SELECT name, wins, losses FROM players ORDER BY wins DESC, losses ASC LIMIT ?";
+        String sql = """
+            SELECT name, wins, losses, 
+                (CAST(wins AS FLOAT) / (wins + losses)) AS win_rate
+            FROM players
+            WHERE (wins + losses) > 0
+            ORDER BY win_rate DESC, wins DESC, losses ASC
+            LIMIT ?;
+        """;
+
         List<String> leaderboard = new ArrayList<>();
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, limit);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    String playerData = String.format("Name: %s, Wins: %d, Losses: %d",
-                                                      rs.getString("name"),
-                                                      rs.getInt("wins"),
-                                                      rs.getInt("losses"));
+                    String playerData = String.format("%s, Wins: %d, Losses: %d",
+                                                    rs.getString("name"),
+                                                    rs.getInt("wins"),
+                                                    rs.getInt("losses"));
                     leaderboard.add(playerData);
                 }
             }

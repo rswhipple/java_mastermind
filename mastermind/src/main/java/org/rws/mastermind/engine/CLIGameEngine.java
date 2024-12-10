@@ -414,15 +414,16 @@ public class CLIGameEngine implements GameEngine {
     public void displayLeaderboard() {
         List<String> leaders = db.getLeaderboard(5);
         String[] leaderIntro = {
-                "",
-                "LEADERBOARD",
-                ""
+            "========================================",
+            "*****||||     LEADERBOARD      ||||*****",
+            "========================================",
         };
 
         input.displayMultiMessage(leaderIntro);
 
+        int rank = 1;
         for (String leader : leaders) {
-            input.displayMessage(leader);
+            input.displayMessage("Player #" + rank + ": " + leader);
         }
     }
 }
