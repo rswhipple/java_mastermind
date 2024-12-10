@@ -100,21 +100,21 @@ public class Main {
      * @param args Command-line arguments.
      * @return The game mode as an integer:
      *         <ul>
-     *             <li>1 for simple CLI mode</li>
-     *             <li>2 for robust CLI mode</li>
+     *             <li>1 for basic CLI mode</li>
+     *             <li>2 for dynamic CLI mode</li>
      *             <li>-1 for invalid arguments</li>
      *         </ul>
      */
     private static int parseArgs(String[] args) {
         return switch (args[0].toLowerCase()) {
-            case "cli_simple" -> {
-                // Initialize simple CLI mode
-                System.out.println("Starting game in Simple CLI mode...");
+            case "cli_basic" -> {
+                // Initialize basic CLI mode
+                System.out.println("Starting game in Basic CLI mode...");
                 yield 1;
             }
-            case "cli_robust" -> {
-                // Initialize robust CLI mode
-                System.out.println("Starting game in Robust CLI mode...");
+            case "cli_dynamic" -> {
+                // Initialize dynamic CLI mode
+                System.out.println("Starting game in Dynamic CLI mode...");
                 yield 2;
             }
             default -> -1;
@@ -139,8 +139,8 @@ public class Main {
         String[] usage = {
                 "Invalid arguments.Please use one of the following commands to start the game:",
                 "",
-                "1. java java_mastermind cli_simple(Starts the game with a simple command - line interface)",
-                "2. java java_mastermind cli_robust(Starts the game with an advanced command - line interface)",
+                "1. java java_mastermind cli_basic (Starts the game with a basic command - line interface)",
+                "2. java java_mastermind cli_dynamic (Starts the game with an advanced command - line interface)",
         };
 
         for (String line : usage) {
