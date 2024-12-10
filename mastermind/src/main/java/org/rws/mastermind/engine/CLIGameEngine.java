@@ -97,7 +97,9 @@ public class CLIGameEngine implements GameEngine {
         runGame();
 
         // Return to the main menu
-        mainMenu();
+        if (input.isRunning()) {
+            mainMenu();
+        }
 
         return true;
     }
