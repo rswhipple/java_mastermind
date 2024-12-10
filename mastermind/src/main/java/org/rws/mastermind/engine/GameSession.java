@@ -103,8 +103,15 @@ public class GameSession {
      * Sets the current player.
      */
     public void incrementCurrentPlayer() {
+        // Set current player's state to IN_QUEUE
+        currentPlayer.setCurrentState(Player.PlayerStateEnum.IN_QUEUE);
+
+        // Move to next player
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+
+        // Set new current player's state to TURN
         currentPlayer = players.get(currentPlayerIndex);
+        currentPlayer.setCurrentState(Player.PlayerStateEnum.TURN);
     }
 
     /**

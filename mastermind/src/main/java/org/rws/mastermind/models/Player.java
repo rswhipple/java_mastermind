@@ -10,9 +10,11 @@ import java.util.List;
  * It contains the player's name and score.
  */
 public class Player {
+    public enum PlayerStateEnum { TURN, IN_QUEUE, WIN, LOSE }
     private final MastermindDB db;
     private String name;
     private int uniqueID;
+    private PlayerStateEnum currentState;
 
     /**
      * Constructs a Player object with the specified name, database, and input handler.
@@ -24,6 +26,7 @@ public class Player {
      */
     public Player(String name, MastermindDB db, InputHandler input) {
         this.db = db;
+        currentState = PlayerStateEnum.IN_QUEUE;
 
         // Construct player object without database
         if (db == null) {
@@ -62,6 +65,24 @@ public class Player {
     public void simplePlayer(String name) {
         this.name = name;
         this.uniqueID = -1;
+    }
+
+    /**
+     * Gets the current state of the player.
+     *
+     * @return The current state of the player.
+     */
+    public PlayerStateEnum getCurrentState() {
+        return currentState;
+    }
+
+    /**
+     * Sets the current state of the player.
+     *
+     * @param state The state to set.
+     */
+    public void setCurrentState(PlayerStateEnum state) {
+        currentState = state;
     }
 
     /**
