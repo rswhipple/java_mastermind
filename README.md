@@ -6,7 +6,7 @@ In the game of Mastermind you are tasked to crack a code, given only the length 
 
 This project is a Java implementation of Mastermind using Object Oriented Design principles. It features a Command-Line Interface (CLI) with a dynamic menu options, database integration using SQLite, and partial support for multi-threading and event-driven design. The game allows players to interactively solve the Mastermind code-breaking puzzle with customizable settings and player tracking.
 
-This project emphasizes software design principles such as abstraction, encapsulation, modularity, and scalability, laying the foundation for future enhancements like multiplayer or online gameplay.
+This project emphasizes software design principles such as abstraction, encapsulation, modularity, and scalability, using the Factory, Strategy, Listener and Game State design patterns to lay the foundation for future enhancements like multiplayer or online gameplay.
 
 ## Prerequisites
 
