@@ -421,8 +421,17 @@ public class CLIGameEngine implements GameEngine {
 
         input.displayMultiMessage(leaderIntro);
 
+        long delay = 500;
+
         int rank = 1;
         for (String leader : leaders) {
+            // Add a delay before displaying the next entry
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                input.logError("Thread was interrupted: ", e);
+            }
             input.displayMessage("Player #" + rank + ": " + leader);
         }
     }
