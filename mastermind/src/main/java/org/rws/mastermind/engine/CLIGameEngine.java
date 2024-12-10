@@ -110,6 +110,9 @@ public class CLIGameEngine implements GameEngine {
     public void runGame() {
         input.displayMessage("Starting a new game...");
         Player winner = null;
+
+        openHandMode();
+
         // Game loop
         while (input.isRunning() && !session.isGameOver()) {
             int round = session.getNumRounds() - session.getAttemptsLeft() + 1;
@@ -207,9 +210,19 @@ public class CLIGameEngine implements GameEngine {
      * Displays the secret code.
      * This method is used for debugging purposes.
      */
-    @Override
-    public void displayCode() {
-        input.displayMessage(session.getSecretCodeString());
+
+    public void openHandMode() {
+        if (!settings.getOpenHandFlag()) {
+            return;
+        }
+        
+        String[] openHandMessage = {
+                "",
+                "Open Hand Mode",
+                "The secret code is: "
+        };
+        input.displayMultiMessage(openHandMessage);
+        displayCode();
     }
 
     /**
@@ -266,6 +279,15 @@ public class CLIGameEngine implements GameEngine {
         for (String message : instructions) {
             input.displayMessage(message);
         }
+    }
+
+    /**
+     * Displays the secret code.
+     * This method is used for debugging purposes.
+     */
+    @Override
+    public void displayCode() {
+        input.displayMessage(session.getSecretCodeString());
     }
 
     /**

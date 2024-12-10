@@ -9,11 +9,13 @@ import org.rws.mastermind.input.CLIInputHandler;
 public class CLISetter extends BasicSetter {
     private final CLIInputHandler input;
     private final int numberOfPlayers;
+    private final String codeChars;
+
     private int numberOfRounds;
     private int codeLength;
-    private final String codeChars;
     private String codeType;
     private String feedbackType;
+    private boolean openHandFlag;
 
     /**
      * Constructs a CLISetter with the specified CLIInputHandler.
@@ -28,6 +30,7 @@ public class CLISetter extends BasicSetter {
         this.codeChars = "12345678";
         this.codeType = "random";
         this.feedbackType = "standard";
+        this.openHandFlag = false;
     }
 
     // Copy Constructor
@@ -58,7 +61,8 @@ public class CLISetter extends BasicSetter {
             "3. Select length of code",
             "4. Select feedback type",
             "5. Set your own code",
-            "6. Return to game",
+            "6. Open Hand for debugging",
+            "7. Return to game",
             ""
         };
     
@@ -81,23 +85,25 @@ public class CLISetter extends BasicSetter {
             case 1:
                 setNumberOfPlayers();
                 input.displayMessage("Multiplayer is not functional yet. Sorry!");
-                return;
+                break;
             case 2:
                 setNumberOfRounds();
-                return;
+                break;
             case 3:
                 setCodeLength();
-                return;
+                break;
             case 4:
                 setFeedbackType();
                 return;
             case 5:
                 setCodeType();
-                return;
+                break;
             case 6:
+                setOpenHandFlag();
+            case 7:
             default:
-                input.displayMessage("Returning to the game...");
         }
+        input.displayMessage("Returning to main menu...");
     }
 
     // Getters
@@ -107,6 +113,7 @@ public class CLISetter extends BasicSetter {
     @Override public String getCodeCharString() { return this.codeChars; }
     @Override public String getCodeType() { return this.codeType; }
     @Override public String getFeedbackType() { return this.feedbackType; }
+    public boolean getOpenHandFlag() { return this.openHandFlag; }
 
     /**
      * Sets the number of players in the game from the command-line interface.
@@ -194,6 +201,22 @@ public class CLISetter extends BasicSetter {
             case 1 -> feedbackType = "standard";
             case 2 -> feedbackType = "pattern";
             case 3 -> feedbackType = "hl";
+        }
+    }
+
+    /**
+     * Sets the openHandFlag to true if the user wants to see the code at the start of the game.
+     *
+     */
+    public void setOpenHandFlag() {
+        input.displayMessage("Open Hand for debugging? (y/n): ");
+
+        String response = input.validateInput();
+
+        if (response.equalsIgnoreCase("y")) {
+            openHandFlag = true;
+        } else {
+            openHandFlag = false;
         }
     }
 
