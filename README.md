@@ -40,7 +40,7 @@ Ensure the following are installed on your system:
    ```
 
    This will:
-   - Clean any previous builds,
+   - Clean any previous builds.
    - Download dependencies (e.g., SQLite JDBC driver).
    - Compile the source files.
    - Package the application into a runnable JAR located in the `target/` directory.
@@ -64,11 +64,11 @@ java -jar target/mastermind-1.0-SNAPSHOT.jar cli_dynamic
 ```
 
 ## Playing with the Dynamic CLI
-1. The game starts with the main menu offering various options:
+1. The programs starts with the main menu:
    * Game Settings: Customize gameplay by adjusting the number of players, rounds, code length, feedback type, or choose to set your own custom code.
    * Leaderboard: View the top players based win rates.
    * Start New Game: Begin a fresh game session with the selected settings
-   * ... more options ...
+   * More Options ...
 2. Create a Player name to track your results.
 4. `#` + `enter` at any point to see the Main Menu.
 4. `ctrl c` + `enter` at any point to trigger a clean shutdown.
@@ -98,7 +98,7 @@ java -jar target/mastermind-1.0-SNAPSHOT.jar cli_dynamic
 
 ## **Challenges**
 
-1. Refactoring the two **Game Engine** classes was the most significant challenge. Initially, the **dynamic `CLIGameEngine`** extended the **basic `MMGameEngine`**. My plan was to use `MMGameEngine` as a base class to support future scaling and implementations. However, integrating the two game loops with the rest of the features proved more complex than anticipated. To resolve this, I adopted the **Factory design pattern**, which provided a cleaner, more modular approach to creating game engines.
+1. Refactoring the two **Game Engine** classes was the most significant challenge. Initially, the **dynamic `CLIGameEngine`** extended the **basic `MMGameEngine`**. My plan was to use `MMGameEngine` as a base class to support future scaling and implementations. However, integrating the two game loops with the rest of the features proved more complex than anticipated. To resolve this, I adopted the **Factory** design pattern, which provided a cleaner, more modular approach to creating game engines.
 
 2. Getting comfortable with Java's ecosystem was another hurdle. As someone relatively new to Java, I had to familiarize myself with its libraries, conventions, and development tools. 
 
